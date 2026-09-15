@@ -5,9 +5,10 @@ import { seedDatabase } from './seed';
 
 async function runMigration() {
   console.log('--- Initializing Neon PostgreSQL Schema via HTTP ---');
+  const rawUrl = process.env.DATABASE_URL?.trim();
   const connectionString =
-    process.env.DATABASE_URL ||
-    'postgresql://neondb_owner:npg_G9OX6JTuKnYC@ep-floral-sky-avnwvdc1.c-11.us-east-1.aws.neon.tech/neondb?sslmode=require';
+    (rawUrl && rawUrl.length > 5 ? rawUrl : null) ||
+    'postgresql://neondb_owner:dummy@ep-withered-rain-a5g8k0u2.us-east-2.aws.neon.tech/neondb?sslmode=require';
 
   const sql = neon(connectionString);
 
