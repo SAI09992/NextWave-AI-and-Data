@@ -1,0 +1,560 @@
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import { Loader2, Save, Plus, Trash2, Edit3, Shield, Users, ShieldAlert, Download, AlertTriangle } from 'lucide-react';
+import { toast } from 'sonner';
+
+export default function AdminExamPage() {
+  const [activeTab, setActiveTab] = useState<'settings' | 'questions' | 'attempts'>('settings');
+  
+  // Settings State
+  const [settings, setSettings] = useState<any>(null);
+  const [loadingSettings, setLoadingSettings] = useState(true);
+  const [savingSettings, setSavingSettings] = useState(false);
+
+  // Questions State
+  const [questions, setQuestions] = useState<any[]>([]);
+  const [loadingQuestions, setLoadingQuestions] = useState(true);
+  const [editQuestion, setEditQuestion] = useState<any>(null);
+
+  // Attempts State
+  const [attempts, setAttempts] = useState<any[]>([]);
+  const [loadingAttempts, setLoadingAttempts] = useState(false);
+  const [unblocking, setUnblocking] = useState<string | null>(null);
+  const [editingMarks, setEditingMarks] = useState<{ id: string | null, internalRegId: string, r2: string, r3: string } | null>(null);
+  const [savingMarks, setSavingMarks] = useState(false);
+
+  useEffect(() => {
+    fetchSettings();
+    fetchQuestions();
+  }, []);
+
+  useEffect(() => {
+    if (activeTab === 'attempts') {
+      fetchAttempts();
+    }
+  }, [activeTab]);
+
+  const fetchSettings = async () => {
+    try {
+      const res = await fetch('/api/admin/exam-settings');
+      const data = await res.json();
+      if (data.success) {
+        setSettings(data.settings);
+      }
+    } catch (e) {
+      toast.error('Failed to load settings');
+    } finally {
+      setLoadingSettings(false);
+    }
+  };
+
+  const fetchQuestions = async () => {
+    try {
+      const res = await fetch('/api/admin/exam-questions');
+      const data = await res.json();
+      if (data.success) {
+        setQuestions(data.questions);
+      }
+    } catch (e) {
+      toast.error('Failed to load questions');
+    } finally {
+      setLoadingQuestions(false);
+    }
+  };
+
+  const fetchAttempts = async () => {
+    setLoadingAttempts(true);
+    try {
+      const res = await fetch('/api/admin/exam-attempts');
+      const data = await res.json();
+      if (data.success) {
+        setAttempts(data.attempts);
+      }
+    } catch (e) {
+      toast.error('Failed to load attempts');
+    } finally {
+      setLoadingAttempts(false);
+    }
+  };
+
+  const handleReset = async (attemptId: string) => {
+    if (!confirm('Are you sure you want to completely reset this attempt? This will delete their score and allow them to retake the exam.')) return;
+    setUnblocking(attemptId);
+    try {
+      const res = await fetch('/api/admin/exam-attempts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ attemptId, action: 'unblock' })
+      });
+      const data = await res.json();
+      if (data.success) {
+        toast.success('Attempt successfully reset!');
+        fetchAttempts(); // Refresh list
+      } else {
+        toast.error(data.error || 'Failed to reset attempt');
+      }
+    } catch (e) {
+      toast.error('Network error');
+    } finally {
+      setUnblocking(null);
+    }
+  };
+
+  const handleSaveMarks = async () => {
+    if (!editingMarks) return;
+    setSavingMarks(true);
+    try {
+      const res = await fetch('/api/admin/exam-attempts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          attemptId: editingMarks.id,
+          internalRegId: editingMarks.internalRegId,
+          action: 'update_marks',
+          round2Score: editingMarks.r2,
+          round3Score: editingMarks.r3
+        })
+      });
+      const data = await res.json();
+      if (data.success) {
+        toast.success('Marks updated successfully!');
+        setEditingMarks(null);
+        fetchAttempts();
+      } else {
+        toast.error(data.error || 'Failed to update marks');
+      }
+    } catch (e) {
+      toast.error('Network error');
+    } finally {
+      setSavingMarks(false);
+    }
+  };
+
+  const handleSaveSettings = async () => {
+    if (!settings) return;
+    setSavingSettings(true);
+    try {
+      const res = await fetch('/api/admin/exam-settings', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(settings),
+      });
+      if ((await res.json()).success) {
+        toast.success('Exam settings updated!');
+      } else {
+        toast.error('Failed to update settings');
+      }
+    } catch (e) {
+      toast.error('Network error');
+    } finally {
+      setSavingSettings(false);
+    }
+  };
+
+  const handleSaveQuestion = async (q: any) => {
+    try {
+      const res = await fetch('/api/admin/exam-questions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(q),
+      });
+      if ((await res.json()).success) {
+        toast.success('Question saved!');
+        setEditQuestion(null);
+        fetchQuestions();
+      } else {
+        toast.error('Failed to save question');
+      }
+    } catch (e) {
+      toast.error('Network error');
+    }
+  };
+
+  const handleDeleteQuestion = async (id: string) => {
+    if (!confirm('Delete this question?')) return;
+    try {
+      const res = await fetch(`/api/admin/exam-questions?id=${id}`, { method: 'DELETE' });
+      if ((await res.json()).success) {
+        toast.success('Deleted');
+        fetchQuestions();
+      }
+    } catch (e) {
+      toast.error('Failed to delete');
+    }
+  };
+
+  return (
+    <div className="p-4 md:p-8 space-y-6">
+      <div>
+        <h1 className="text-2xl font-black font-mono text-nexus-primary drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]">
+          SECURE EXAM PORTAL
+        </h1>
+        <p className="text-xs text-nexus-text-dim mt-1 font-mono">Manage anti-cheat configurations, questions, and participant attempts.</p>
+      </div>
+
+      <div className="flex flex-wrap gap-2 pb-2 border-b border-nexus-border">
+        <button
+          onClick={() => setActiveTab('settings')}
+          className={`px-4 py-2 rounded-lg font-mono font-bold text-xs transition-colors flex items-center gap-2 ${
+            activeTab === 'settings' ? 'bg-nexus-primary text-nexus-bg' : 'text-nexus-text-muted hover:bg-nexus-surface'
+          }`}
+        >
+          <Shield className="w-4 h-4" /> CONFIGURATION
+        </button>
+        <button
+          onClick={() => setActiveTab('questions')}
+          className={`px-4 py-2 rounded-lg font-mono font-bold text-xs transition-colors flex items-center gap-2 ${
+            activeTab === 'questions' ? 'bg-nexus-primary text-nexus-bg' : 'text-nexus-text-muted hover:bg-nexus-surface'
+          }`}
+        >
+          <Edit3 className="w-4 h-4" /> QUESTIONS ({questions.length})
+        </button>
+        <button
+          onClick={() => setActiveTab('attempts')}
+          className={`px-4 py-2 rounded-lg font-mono font-bold text-xs transition-colors flex items-center gap-2 ${
+            activeTab === 'attempts' ? 'bg-nexus-primary text-nexus-bg' : 'text-nexus-text-muted hover:bg-nexus-surface'
+          }`}
+        >
+          <Users className="w-4 h-4" /> ATTEMPTS & LOGS
+        </button>
+      </div>
+
+      {/* SETTINGS TAB */}
+      {activeTab === 'settings' && (
+        <div className="space-y-6 max-w-2xl">
+          {loadingSettings ? (
+            <div className="flex justify-center p-8"><Loader2 className="w-6 h-6 animate-spin text-nexus-primary" /></div>
+          ) : (
+            <div className="p-6 rounded-2xl nexus-glass border border-nexus-border space-y-6">
+              <h3 className="text-sm font-bold font-mono text-nexus-primary flex items-center gap-2">
+                <ShieldAlert className="w-4 h-4" /> SECURITY CONFIGURATION
+              </h3>
+
+              <div className="space-y-4">
+                <div className="flex items-center justify-between p-4 rounded-xl bg-nexus-surface/40 border border-nexus-border/50">
+                  <div>
+                    <div className="font-bold font-mono text-nexus-text text-sm">Exam Activation</div>
+                    <div className="text-xs text-nexus-text-dim">Allow participants to access the exam portal</div>
+                  </div>
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      className="sr-only peer"
+                      checked={settings?.examActive || false}
+                      onChange={(e) => setSettings({ ...settings, examActive: e.target.checked })}
+                    />
+                    <div className="w-11 h-6 bg-nexus-surface border border-nexus-border peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-nexus-text-muted after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-nexus-primary peer-checked:after:bg-nexus-bg shadow-[0_0_10px_rgba(34,211,238,0.1)] peer-checked:shadow-[0_0_15px_rgba(34,211,238,0.4)]"></div>
+                  </label>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="p-4 rounded-xl bg-nexus-surface/40 border border-nexus-border/50">
+                    <label className="text-[10px] text-nexus-text-muted block mb-1 font-bold">WARNING LIMIT (MAX VIOLATIONS)</label>
+                    <input
+                      type="number"
+                      value={settings?.warningLimit || 3}
+                      onChange={(e) => setSettings({ ...settings, warningLimit: Number(e.target.value) })}
+                      className="w-full px-3 py-2 rounded-lg bg-nexus-bg border border-nexus-border text-nexus-text text-sm font-mono"
+                    />
+                    <p className="text-[10px] text-nexus-text-dim mt-2">Exam auto-terminates when exceeded.</p>
+                  </div>
+                  <div className="p-4 rounded-xl bg-nexus-surface/40 border border-nexus-border/50">
+                    <label className="text-[10px] text-nexus-text-muted block mb-1 font-bold">DURATION (MINUTES)</label>
+                    <input
+                      type="number"
+                      value={settings?.durationMinutes || 25}
+                      onChange={(e) => setSettings({ ...settings, durationMinutes: Number(e.target.value) })}
+                      className="w-full px-3 py-2 rounded-lg bg-nexus-bg border border-nexus-border text-nexus-text text-sm font-mono"
+                    />
+                    <p className="text-[10px] text-nexus-text-dim mt-2">Auto-submits when time expires.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-4 flex justify-end">
+                <button
+                  onClick={handleSaveSettings}
+                  disabled={savingSettings}
+                  className="px-6 py-2 rounded-xl bg-nexus-primary hover:bg-nexus-primary/90 text-nexus-bg font-black text-sm transition-all flex items-center gap-2 shadow-[0_0_15px_rgba(34,211,238,0.4)]"
+                >
+                  {savingSettings ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+                  SAVE SETTINGS
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* QUESTIONS TAB */}
+      {activeTab === 'questions' && (
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <h2 className="font-mono text-sm font-bold text-nexus-text">Manage MCQs</h2>
+            <button
+              onClick={() => setEditQuestion({ questionText: '', options: ['', '', '', ''], correctOptionIndex: 0, orderIndex: questions.length + 1 })}
+              className="px-4 py-2 rounded-lg bg-emerald-500/20 text-emerald-400 border border-emerald-500/50 hover:bg-emerald-500/30 text-xs font-bold flex items-center gap-2"
+            >
+              <Plus className="w-3.5 h-3.5" /> ADD QUESTION
+            </button>
+          </div>
+
+          {editQuestion && (
+            <div className="p-4 rounded-xl border border-emerald-500/50 bg-emerald-950/20 space-y-4 mb-6">
+              <div>
+                <label className="text-[10px] text-nexus-text-muted block mb-1">QUESTION TEXT</label>
+                <textarea
+                  value={editQuestion.questionText}
+                  onChange={(e) => setEditQuestion({ ...editQuestion, questionText: e.target.value })}
+                  className="w-full px-3 py-2 rounded-lg bg-nexus-surface border border-nexus-border text-nexus-text text-sm font-mono min-h-[80px]"
+                />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {editQuestion.options.map((opt: string, idx: number) => (
+                  <div key={idx} className="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      name="correctOption"
+                      checked={editQuestion.correctOptionIndex === idx}
+                      onChange={() => setEditQuestion({ ...editQuestion, correctOptionIndex: idx })}
+                      className="w-4 h-4 text-emerald-500 bg-nexus-bg border-nexus-border"
+                    />
+                    <input
+                      value={opt}
+                      onChange={(e) => {
+                        const newOpts = [...editQuestion.options];
+                        newOpts[idx] = e.target.value;
+                        setEditQuestion({ ...editQuestion, options: newOpts });
+                      }}
+                      placeholder={`Option ${idx + 1}`}
+                      className={`w-full px-3 py-1.5 rounded-lg bg-nexus-surface border text-sm font-mono ${editQuestion.correctOptionIndex === idx ? 'border-emerald-500/50 text-emerald-400' : 'border-nexus-border text-nexus-text'}`}
+                    />
+                  </div>
+                ))}
+              </div>
+              <div className="flex items-center gap-2 pt-2">
+                <button
+                  onClick={() => handleSaveQuestion(editQuestion)}
+                  className="px-4 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs"
+                >
+                  SAVE QUESTION
+                </button>
+                <button
+                  onClick={() => setEditQuestion(null)}
+                  className="px-4 py-1.5 rounded-lg text-nexus-text-muted hover:text-nexus-text text-xs"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
+
+          <div className="space-y-3">
+            {loadingQuestions ? (
+              <div className="flex justify-center p-8"><Loader2 className="w-6 h-6 animate-spin text-nexus-primary" /></div>
+            ) : questions.length === 0 ? (
+              <div className="p-8 text-center text-nexus-text-muted text-xs font-mono border border-nexus-border border-dashed rounded-2xl">
+                No questions added yet. Add at least 25 for the exam.
+              </div>
+            ) : (
+              questions.map((q, idx) => (
+                <div key={q.id} className="p-4 rounded-xl nexus-glass border border-nexus-border relative group">
+                  <div className="absolute top-4 right-4 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button onClick={() => setEditQuestion(q)} className="p-1.5 text-nexus-text-muted hover:text-nexus-primary bg-nexus-surface rounded-lg border border-nexus-border">
+                      <Edit3 className="w-3.5 h-3.5" />
+                    </button>
+                    <button onClick={() => handleDeleteQuestion(q.id)} className="p-1.5 text-red-400 hover:text-red-300 bg-red-950/30 rounded-lg border border-red-500/20">
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                  <div className="font-mono text-sm text-nexus-text font-bold mb-3 pr-20">
+                    <span className="text-nexus-primary mr-2">Q{idx + 1}.</span>
+                    {q.questionText}
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 pl-6">
+                    {q.options.map((opt: string, oIdx: number) => (
+                      <div key={oIdx} className={`px-3 py-1.5 rounded border text-xs font-mono ${q.correctOptionIndex === oIdx ? 'bg-emerald-950/20 border-emerald-500/40 text-emerald-400' : 'bg-nexus-surface/30 border-nexus-border/30 text-nexus-text-dim'}`}>
+                        {String.fromCharCode(65 + oIdx)}. {opt}
+                        {q.correctOptionIndex === oIdx && <span className="float-right font-bold text-[10px]">✓ CORRECT</span>}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* ATTEMPTS TAB */}
+      {activeTab === 'attempts' && (
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <h2 className="font-mono text-sm font-bold text-nexus-text flex items-center gap-2">
+              <Users className="w-4 h-4" /> EXAM ATTEMPTS
+            </h2>
+            <a 
+              href="/api/admin/exam-attempts/export"
+              download="exam_results.csv"
+              className="px-4 py-2 rounded-lg bg-cyan-950/40 border border-cyan-500/50 hover:bg-cyan-900/50 text-cyan-400 transition-colors text-xs font-bold inline-flex items-center gap-2"
+            >
+              <Download className="w-4 h-4" /> EXPORT LOGS & SCORES
+            </a>
+          </div>
+
+          {loadingAttempts ? (
+            <div className="flex justify-center p-8"><Loader2 className="w-6 h-6 animate-spin text-nexus-primary" /></div>
+          ) : attempts.length === 0 ? (
+            <div className="p-8 text-center text-nexus-text-muted text-xs font-mono border border-nexus-border border-dashed rounded-2xl">
+              No attempts recorded yet.
+            </div>
+          ) : (
+            (() => {
+              const total = attempts.length;
+              const r1Count = attempts.filter(a => a.score !== null).length;
+              const r2Count = attempts.filter(a => a.round2Score !== null).length;
+              const r3Count = attempts.filter(a => a.round3Score !== null).length;
+
+              return (
+                <div className="overflow-x-auto rounded-xl border border-nexus-border">
+                  <table className="w-full text-left text-xs font-mono whitespace-nowrap">
+                    <thead className="bg-nexus-surface/50 border-b border-nexus-border text-nexus-text-dim">
+                      <tr>
+                        <th className="p-4 font-bold w-12 text-center text-nexus-text-muted">#</th>
+                        <th className="p-4 font-bold">CADET / REG ID</th>
+                        <th className="p-4 font-bold">STATUS</th>
+                        <th className="p-4 font-bold">R1 (QUIZ) <span className="text-cyan-500/50 text-[10px] ml-1">({r1Count}/{total})</span></th>
+                        <th className="p-4 font-bold">R2 (UNDERSTANDING) <span className="text-emerald-500/50 text-[10px] ml-1">({r2Count}/{total})</span></th>
+                        <th className="p-4 font-bold">R3 SCORE <span className="text-amber-500/50 text-[10px] ml-1">({r3Count}/{total})</span></th>
+                        <th className="p-4 font-bold">WARNINGS</th>
+                        <th className="p-4 font-bold text-right">ACTIONS</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-nexus-border/50">
+                  {attempts.map((attempt, index) => (
+                    <tr key={attempt.internalRegId} className="hover:bg-nexus-surface/30">
+                      <td className="p-4 font-bold text-nexus-text-muted text-center border-r border-nexus-border/30">
+                        {index + 1}
+                      </td>
+                      <td className="p-4">
+                        <div className="font-bold text-nexus-text">{attempt.name}</div>
+                        <div className="text-[10px] text-nexus-text-muted">{attempt.registrationId}</div>
+                      </td>
+                      <td className="p-4">
+                        <span className={`px-2 py-1 rounded-md text-[10px] font-bold ${
+                          attempt.status === 'completed' ? 'bg-emerald-500/20 text-emerald-400' :
+                          attempt.status === 'terminated' ? 'bg-red-500/20 text-red-400' :
+                          attempt.status === 'in_progress' ? 'bg-amber-500/20 text-amber-400' :
+                          'bg-nexus-surface text-nexus-text-muted'
+                        }`}>
+                          {attempt.status ? attempt.status.toUpperCase().replace('_', ' ') : 'NOT ATTEMPTED'}
+                        </span>
+                      </td>
+                      <td className="p-4 font-bold text-cyan-400">
+                        {attempt.score !== null ? `${attempt.score} / ${questions.length}` : '-'}
+                      </td>
+                      <td className="p-4 font-bold text-emerald-400">
+                        {attempt.round2Score !== null ? attempt.round2Score : '-'}
+                      </td>
+                      <td className="p-4 font-bold text-amber-400">
+                        {attempt.round3Score !== null ? attempt.round3Score : '-'}
+                      </td>
+                      <td className="p-4">
+                        <div className="flex items-center gap-1">
+                          <AlertTriangle className={`w-3.5 h-3.5 ${attempt.warningsCount > 0 ? 'text-amber-400' : 'text-nexus-text-muted'}`} />
+                          <span className={attempt.warningsCount > 0 ? 'text-amber-400' : 'text-nexus-text-muted'}>
+                            {attempt.warningsCount || 0}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="p-4 text-right">
+                        <div className="flex items-center justify-end gap-2">
+                          <button
+                            onClick={() => setEditingMarks({ id: attempt.id || null, internalRegId: attempt.internalRegId, r2: attempt.round2Score !== null && attempt.round2Score !== undefined ? attempt.round2Score.toString() : '', r3: attempt.round3Score !== null && attempt.round3Score !== undefined ? attempt.round3Score.toString() : '' })}
+                            className="px-3 py-1.5 rounded-lg bg-nexus-surface border border-nexus-border hover:bg-nexus-bg-elevated transition-colors font-bold text-[10px] flex items-center gap-1.5 text-nexus-text"
+                          >
+                            <Edit3 className="w-3.5 h-3.5" />
+                            EDIT MARKS
+                          </button>
+                          
+                          {attempt.status === 'terminated' || attempt.status === 'completed' ? (
+                            <button
+                              onClick={() => handleReset(attempt.id)}
+                              disabled={unblocking === attempt.id}
+                              className={`px-3 py-1.5 rounded-lg border transition-colors font-bold text-[10px] flex items-center gap-2 ${
+                                attempt.status === 'terminated' 
+                                  ? 'bg-red-950/40 text-red-400 border-red-500/30 hover:bg-red-950 hover:text-red-300' 
+                                  : 'bg-amber-950/40 text-amber-400 border-amber-500/30 hover:bg-amber-950 hover:text-amber-300'
+                              }`}
+                            >
+                              {unblocking === attempt.id ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <ShieldAlert className="w-3.5 h-3.5" />}
+                              {attempt.status === 'terminated' ? 'UNBLOCK USER' : 'RESET'}
+                            </button>
+                          ) : (
+                            <span className="text-[10px] text-nexus-text-muted"></span>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          );
+          })()
+          )}
+        </div>
+      )}
+
+      {/* Edit Marks Modal */}
+      {editingMarks && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-[#0a0a0f] border border-nexus-border rounded-2xl p-6 w-full max-w-sm space-y-4">
+            <h3 className="font-mono font-bold text-nexus-text">EDIT MANUAL MARKS</h3>
+            
+            <div className="space-y-3">
+              <div>
+                <label className="text-xs font-mono text-nexus-text-muted mb-1 block">R2 (Understanding)</label>
+                <input 
+                  type="number" 
+                  value={editingMarks.r2} 
+                  onChange={(e) => setEditingMarks({...editingMarks, r2: e.target.value})}
+                  className="w-full bg-nexus-surface/50 border border-nexus-border rounded-lg px-3 py-2 text-sm font-mono focus:border-cyan-500 outline-none"
+                  placeholder="Enter score"
+                />
+              </div>
+              <div>
+                <label className="text-xs font-mono text-nexus-text-muted mb-1 block">R3 Score</label>
+                <input 
+                  type="number" 
+                  value={editingMarks.r3} 
+                  onChange={(e) => setEditingMarks({...editingMarks, r3: e.target.value})}
+                  className="w-full bg-nexus-surface/50 border border-nexus-border rounded-lg px-3 py-2 text-sm font-mono focus:border-cyan-500 outline-none"
+                  placeholder="Enter score"
+                />
+              </div>
+            </div>
+
+            <div className="flex justify-end gap-2 pt-2">
+              <button 
+                onClick={() => setEditingMarks(null)}
+                className="px-4 py-2 rounded-lg bg-nexus-surface hover:bg-nexus-border text-xs font-mono font-bold transition-colors"
+              >
+                CANCEL
+              </button>
+              <button 
+                onClick={handleSaveMarks}
+                disabled={savingMarks}
+                className="px-4 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-mono font-bold transition-colors flex items-center gap-2"
+              >
+                {savingMarks ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Save className="w-3.5 h-3.5" />}
+                SAVE MARKS
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

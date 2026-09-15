@@ -1,0 +1,885 @@
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import { NexusButton } from '@/components/ui/NexusButton';
+import {
+  Users,
+  UserPlus,
+  Trash2,
+  Crown,
+  Search,
+  FileText,
+  Plus,
+  Save,
+  Eye,
+  EyeOff,
+  Loader2,
+  RefreshCw,
+  Dices,
+  Upload,
+  X,
+  Shield,
+  AlertTriangle,
+  CheckCircle2,
+  Hash,
+} from 'lucide-react';
+import { toast } from 'sonner';
+
+interface TeamMember {
+  id: string;
+  tmId?: string;
+  registrationId: string;
+  regDisplayId?: string;
+  name: string;
+  email: string;
+  registerNumber: string;
+  department: string;
+  year: string;
+  section: string;
+}
+
+interface ProblemStatement {
+  id: string;
+  slotNumber: number;
+  title: string;
+  documentUrl: string | null;
+  maxTeams: number;
+}
+
+interface Team {
+  id: string;
+  teamName: string;
+  teamLeadRegistrationId: string | null;
+  problemStatementId: string | null;
+  problemStatement: ProblemStatement | null;
+  members: TeamMember[];
+}
+
+export default function AdminTeamsPage() {
+  const [activeTab, setActiveTab] = useState<'teams' | 'unassigned' | 'ps' | 'controls'>('teams');
+  const [loading, setLoading] = useState(true);
+  const [teams, setTeams] = useState<Team[]>([]);
+  const [unassignedUsers, setUnassignedUsers] = useState<any[]>([]);
+  const [psList, setPsList] = useState<ProblemStatement[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Visibility controls
+  const [teamPortalVisible, setTeamPortalVisible] = useState(false);
+  const [psSelectionVisible, setPsSelectionVisible] = useState(false);
+  const [savingVisibility, setSavingVisibility] = useState(false);
+
+  // Add member modal
+  const [addMemberTeamId, setAddMemberTeamId] = useState<string | null>(null);
+  const [addMemberRegNum, setAddMemberRegNum] = useState('');
+  const [addingMember, setAddingMember] = useState(false);
+
+  // Unassigned user actions
+  const [creatingTeamFor, setCreatingTeamFor] = useState<string | null>(null);
+  const [assigningUser, setAssigningUser] = useState<string | null>(null);
+  const [assignTeamSelectId, setAssignTeamSelectId] = useState<string>('');
+
+  // Edit team name modal
+  const [editTeamId, setEditTeamId] = useState<string | null>(null);
+  const [editTeamName, setEditTeamName] = useState('');
+
+  // PS form
+  const [psSlot, setPsSlot] = useState(1);
+  const [psTitle, setPsTitle] = useState('');
+  const [psDocUrl, setPsDocUrl] = useState('');
+  const [psMaxTeams, setPsMaxTeams] = useState(7);
+  const [editPsId, setEditPsId] = useState<string | null>(null);
+  const [savingPS, setSavingPS] = useState(false);
+
+  const fetchTeams = async () => {
+    try {
+      const res = await fetch('/api/admin/teams');
+      const data = await res.json();
+      if (data.success) {
+        setTeams(data.teams || []);
+        setUnassignedUsers(data.unassignedUsers || []);
+      }
+    } catch (e) { console.error(e); }
+  };
+
+  const fetchPS = async () => {
+    try {
+      const res = await fetch('/api/admin/problem-statements');
+      const data = await res.json();
+      if (data.success) setPsList(data.problemStatements || []);
+    } catch (e) { console.error(e); }
+  };
+
+  const fetchSettings = async () => {
+    try {
+      const res = await fetch('/api/admin/settings');
+      const data = await res.json();
+      if (data.success && data.settings) {
+        setTeamPortalVisible(!!data.settings.teamPortalVisible);
+        setPsSelectionVisible(!!data.settings.psSelectionVisible);
+      }
+    } catch (e) { console.error(e); }
+  };
+
+  useEffect(() => {
+    Promise.all([fetchTeams(), fetchPS(), fetchSettings()]).finally(() => setLoading(false));
+  }, []);
+
+  const handleToggleVisibility = async (field: 'teamPortalVisible' | 'psSelectionVisible', value: boolean) => {
+    setSavingVisibility(true);
+    try {
+      const res = await fetch('/api/admin/settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ [field]: value }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        if (field === 'teamPortalVisible') setTeamPortalVisible(value);
+        else setPsSelectionVisible(value);
+        toast.success(value ? '🟢 Enabled!' : '🔴 Disabled!');
+      }
+    } catch (e) { toast.error('Failed to update'); }
+    finally { setSavingVisibility(false); }
+  };
+
+  const handleSaveTeamName = async () => {
+    if (!editTeamId) return;
+    try {
+      const res = await fetch('/api/admin/teams', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ teamId: editTeamId, teamName: editTeamName }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        toast.success('Team name updated!');
+        setEditTeamId(null);
+        fetchTeams();
+      }
+    } catch (e) { toast.error('Failed to update team name'); }
+  };
+
+  const handleSetLead = async (teamId: string, registrationId: string) => {
+    try {
+      const res = await fetch('/api/admin/teams', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ teamId, teamLeadRegistrationId: registrationId }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        toast.success('Team lead updated!');
+        fetchTeams();
+      }
+    } catch (e) { toast.error('Failed'); }
+  };
+
+  const handleAddMember = async () => {
+    if (!addMemberTeamId || !addMemberRegNum.trim()) return;
+    setAddingMember(true);
+    try {
+      const res = await fetch('/api/admin/teams/members', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ teamId: addMemberTeamId, registerNumber: addMemberRegNum.trim() }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        toast.success(`Added ${data.member?.name || 'member'}!`);
+        setAddMemberRegNum('');
+        setAddMemberTeamId(null);
+        fetchTeams();
+      } else {
+        toast.error(data.error || 'Failed to add');
+      }
+    } catch (e) { toast.error('Network error'); }
+    finally { setAddingMember(false); }
+  };
+
+  const handleCreateTeamForUser = async (registerNumber: string) => {
+    setCreatingTeamFor(registerNumber);
+    try {
+      const res = await fetch('/api/admin/teams', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          teamName: '',
+          leadRegistrationNumber: registerNumber,
+          memberRegistrationNumbers: [registerNumber],
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        toast.success('Team created with user as lead!');
+        fetchTeams();
+      } else {
+        toast.error(data.error || 'Failed to create team');
+      }
+    } catch (e) { toast.error('Network error'); }
+    finally { setCreatingTeamFor(null); }
+  };
+
+  const handleAssignUserToTeam = async (registerNumber: string, teamId: string) => {
+    if (!teamId) return;
+    setAssigningUser(registerNumber);
+    try {
+      const res = await fetch('/api/admin/teams/members', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ teamId, registerNumber }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        toast.success('User assigned to team!');
+        setAssigningUser(null);
+        setAssignTeamSelectId('');
+        fetchTeams();
+      } else {
+        toast.error(data.error || 'Failed to assign');
+      }
+    } catch (e) { toast.error('Network error'); }
+    finally { setAssigningUser(null); }
+  };
+
+  const handleRemoveMember = async (memberId: string) => {
+    try {
+      const res = await fetch(`/api/admin/teams/members?memberId=${memberId}`, { method: 'DELETE' });
+      const data = await res.json();
+      if (data.success) {
+        toast.success('Member removed');
+        fetchTeams();
+      }
+    } catch (e) { toast.error('Failed'); }
+  };
+
+  const handleDeleteTeam = async (teamId: string) => {
+    if (!confirm('Delete this team? All members will be unassigned.')) return;
+    try {
+      const res = await fetch(`/api/admin/teams?teamId=${teamId}`, { method: 'DELETE' });
+      const data = await res.json();
+      if (data.success) {
+        toast.success('Team deleted');
+        fetchTeams();
+      }
+    } catch (e) { toast.error('Failed'); }
+  };
+
+  const handleSavePS = async () => {
+    if (!psTitle.trim()) return;
+    setSavingPS(true);
+    try {
+      const res = await fetch('/api/admin/problem-statements', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: editPsId || undefined,
+          slotNumber: psSlot,
+          title: psTitle.trim(),
+          documentUrl: psDocUrl.trim() || null,
+          maxTeams: psMaxTeams,
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        toast.success(editPsId ? 'PS updated!' : 'PS created!');
+        setPsSlot(psList.length + 1 > 5 ? 1 : psList.length + 1);
+        setPsTitle('');
+        setPsDocUrl('');
+        setEditPsId(null);
+        fetchPS();
+      } else {
+        toast.error(data.error || 'Failed');
+      }
+    } catch (e) { toast.error('Network error'); }
+    finally { setSavingPS(false); }
+  };
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    
+    if (file.size > 2 * 1024 * 1024) { // 2MB limit
+      toast.error('File too large. Max 2MB.');
+      return;
+    }
+    
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setPsDocUrl(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleDeletePS = async (id: string) => {
+    try {
+      const res = await fetch(`/api/admin/problem-statements?id=${id}`, { method: 'DELETE' });
+      if ((await res.json()).success) { toast.success('Deleted'); fetchPS(); }
+    } catch (e) { toast.error('Failed'); }
+  };
+
+  const handleResetTeamPS = async (teamId: string) => {
+    if (!confirm('Are you sure you want to reset the problem statement for this team? They will need to re-roll.')) return;
+    try {
+      const res = await fetch('/api/admin/teams', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ teamId, problemStatementId: null }),
+      });
+      if ((await res.json()).success) {
+        toast.success('PS allocation reset!');
+        fetchTeams();
+      } else {
+        toast.error('Failed to reset');
+      }
+    } catch (e) { toast.error('Network error'); }
+  };
+
+  const filteredTeams = teams.filter((t) => {
+    if (!searchQuery) return true;
+    const q = searchQuery.toLowerCase();
+    return (
+      t.teamName.toLowerCase().includes(q) ||
+      t.members.some(
+        (m) =>
+          m.name?.toLowerCase().includes(q) ||
+          m.registerNumber?.includes(q) ||
+          m.email?.toLowerCase().includes(q)
+      )
+    );
+  });
+
+  // Stats
+  const totalMembers = teams.reduce((acc, t) => acc + t.members.length, 0);
+  const teamsUnder = teams.filter((t) => t.members.length < 3);
+  const teamsOver = teams.filter((t) => t.members.length > 5);
+  const teamsWithPS = teams.filter((t) => t.problemStatementId);
+
+  if (loading) {
+    return (
+      <div className="flex-1 flex items-center justify-center p-8">
+        <Loader2 className="w-6 h-6 text-nexus-primary animate-spin" />
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold font-mono text-nexus-text flex items-center gap-3">
+            <Users className="w-7 h-7 text-nexus-primary" />
+            TEAMS & PROBLEM STATEMENTS
+          </h1>
+          <p className="text-xs text-nexus-text-muted mt-1 font-mono">
+            MANAGE BOOTCAMP TEAMS, ASSIGN LEADS, AND UPLOAD PROBLEM STATEMENTS
+          </p>
+        </div>
+        <button onClick={() => { fetchTeams(); fetchPS(); }} className="p-2 rounded-xl bg-nexus-surface border border-nexus-border text-nexus-text-muted hover:text-nexus-primary transition-colors">
+          <RefreshCw className="w-4 h-4" />
+        </button>
+      </div>
+
+      <div className="flex gap-2 border-b border-nexus-border pb-1 overflow-x-auto">
+        {[
+          { key: 'teams' as const, label: 'TEAMS OVERVIEW', icon: Users },
+          { key: 'unassigned' as const, label: 'UNASSIGNED USERS', icon: UserPlus },
+          { key: 'ps' as const, label: 'PROBLEM STATEMENTS', icon: FileText },
+          { key: 'controls' as const, label: 'VISIBILITY CONTROLS', icon: Eye },
+        ].map((tab) => (
+          <button
+            key={tab.key}
+            onClick={() => setActiveTab(tab.key)}
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-t-xl font-bold text-xs font-mono transition-all ${
+              activeTab === tab.key
+                ? 'bg-nexus-primary/15 text-nexus-primary border border-nexus-primary/40 border-b-0'
+                : 'text-nexus-text-muted hover:text-nexus-text hover:bg-nexus-surface/60'
+            }`}
+          >
+            <tab.icon className="w-4 h-4" />
+            <span className="hidden sm:inline">{tab.label}</span>
+          </button>
+        ))}
+      </div>
+
+      {/* TAB 1: TEAMS OVERVIEW */}
+      {activeTab === 'teams' && (
+        <div className="space-y-4">
+          {/* Stats Row */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div className="p-4 rounded-xl nexus-glass border border-nexus-border text-center">
+              <div className="text-[10px] text-nexus-text-muted">TOTAL TEAMS</div>
+              <div className="text-xl font-bold text-nexus-primary">{teams.length}</div>
+            </div>
+            <div className="p-4 rounded-xl nexus-glass border border-nexus-border text-center">
+              <div className="text-[10px] text-nexus-text-muted">MEMBERS ASSIGNED</div>
+              <div className="text-xl font-bold text-emerald-400">{totalMembers}</div>
+            </div>
+            <div className="p-4 rounded-xl nexus-glass border border-amber-500/30 text-center">
+              <div className="text-[10px] text-nexus-text-muted">NEED MEMBERS (&lt;3)</div>
+              <div className="text-xl font-bold text-amber-400">{teamsUnder.length}</div>
+            </div>
+            <div className="p-4 rounded-xl nexus-glass border border-nexus-border text-center">
+              <div className="text-[10px] text-nexus-text-muted">PS ASSIGNED</div>
+              <div className="text-xl font-bold text-violet-400">{teamsWithPS.length}</div>
+            </div>
+          </div>
+
+          {/* Search */}
+          <div className="relative">
+            <Search className="w-4 h-4 text-nexus-text-dim absolute left-3 top-2.5" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search team name, member name, reg number..."
+              className="w-full pl-9 pr-3.5 py-2 rounded-lg bg-nexus-surface border border-nexus-border text-nexus-text focus:outline-none focus:border-nexus-primary text-xs font-mono"
+            />
+          </div>
+
+          {/* Teams Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {filteredTeams.map((team) => {
+              const memberCount = team.members.length;
+              const sizeStatus =
+                memberCount < 3 ? 'under' : memberCount > 5 ? 'over' : 'ok';
+
+              return (
+                <div
+                  key={team.id}
+                  className={`rounded-2xl nexus-glass border p-4 space-y-3 ${
+                    sizeStatus === 'under'
+                      ? 'border-amber-500/50'
+                      : sizeStatus === 'over'
+                      ? 'border-red-500/50'
+                      : 'border-nexus-border'
+                  }`}
+                >
+                  {/* Team Header */}
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      {editTeamId === team.id ? (
+                        <div className="flex items-center gap-1">
+                          <input
+                            value={editTeamName}
+                            onChange={(e) => setEditTeamName(e.target.value)}
+                            className="px-2 py-1 bg-nexus-surface border border-nexus-primary rounded text-nexus-text text-xs font-mono w-40"
+                            placeholder="Team name..."
+                            autoFocus
+                          />
+                          <button onClick={handleSaveTeamName} className="p-1 text-emerald-400 hover:text-emerald-300">
+                            <Save className="w-4 h-4" />
+                          </button>
+                          <button onClick={() => setEditTeamId(null)} className="p-1 text-red-400">
+                            <X className="w-4 h-4" />
+                          </button>
+                        </div>
+                      ) : (
+                        <button
+                          onClick={() => { setEditTeamId(team.id); setEditTeamName(team.teamName); }}
+                          className="text-sm font-bold font-mono text-nexus-text hover:text-nexus-primary transition-colors"
+                        >
+                          {team.teamName || '(unnamed team)'}
+                        </button>
+                      )}
+
+                      {/* Size badge */}
+                      <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold ${
+                        sizeStatus === 'under' ? 'bg-amber-500/20 text-amber-400' :
+                        sizeStatus === 'over' ? 'bg-red-500/20 text-red-400' :
+                        'bg-emerald-500/20 text-emerald-400'
+                      }`}>
+                        {memberCount}/5
+                      </span>
+
+                      {team.problemStatement && (
+                        <span className="px-2 py-0.5 rounded-full text-[9px] font-bold bg-violet-500/20 text-violet-400">
+                          PS #{team.problemStatement.slotNumber}
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="flex items-center gap-1">
+                      {memberCount < 5 && (
+                        <button
+                          onClick={() => setAddMemberTeamId(team.id)}
+                          className="p-1.5 rounded-lg bg-emerald-950/40 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-900/60 transition-colors"
+                          title="Add member"
+                        >
+                          <UserPlus className="w-3.5 h-3.5" />
+                        </button>
+                      )}
+                      <button
+                        onClick={() => handleDeleteTeam(team.id)}
+                        className="p-1.5 rounded-lg bg-red-950/40 border border-red-500/30 text-red-400 hover:bg-red-900/60 transition-colors"
+                        title="Delete team"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Add Member Input */}
+                  {addMemberTeamId === team.id && (
+                    <div className="flex items-center gap-2 p-2 rounded-xl bg-nexus-surface border border-emerald-500/30">
+                      <input
+                        value={addMemberRegNum}
+                        onChange={(e) => setAddMemberRegNum(e.target.value)}
+                        placeholder="Enter registration number..."
+                        className="flex-1 px-2 py-1.5 bg-nexus-bg border border-nexus-border rounded text-nexus-text text-xs font-mono"
+                        autoFocus
+                      />
+                      <button
+                        onClick={handleAddMember}
+                        disabled={addingMember}
+                        className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded text-xs font-bold"
+                      >
+                        {addingMember ? <Loader2 className="w-3 h-3 animate-spin" /> : 'ADD'}
+                      </button>
+                      <button onClick={() => setAddMemberTeamId(null)} className="p-1 text-red-400">
+                        <X className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  )}
+
+                  {/* Members List */}
+                  <div className="space-y-1">
+                    {team.members.map((m) => {
+                      const isLead = m.registrationId === team.teamLeadRegistrationId;
+                      return (
+                        <div
+                          key={m.id || m.registrationId}
+                          className={`flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs font-mono ${
+                            isLead ? 'bg-nexus-primary/10 border border-nexus-primary/30' : 'bg-nexus-surface/50'
+                          }`}
+                        >
+                          <div className="flex items-center gap-2 min-w-0">
+                            {isLead && <Crown className="w-3.5 h-3.5 text-amber-400 shrink-0" />}
+                            <span className="text-nexus-text truncate">{m.name}</span>
+                            <span className="text-nexus-text-dim shrink-0">{m.registerNumber}</span>
+                          </div>
+                          <div className="flex items-center gap-1 shrink-0">
+                            {!isLead && (
+                              <button
+                                onClick={() => handleSetLead(team.id, m.registrationId)}
+                                className="p-1 text-nexus-text-dim hover:text-amber-400 transition-colors"
+                                title="Make team lead"
+                              >
+                                <Crown className="w-3 h-3" />
+                              </button>
+                            )}
+                            <button
+                              onClick={() => handleRemoveMember(m.id || m.tmId || '')}
+                              className="p-1 text-nexus-text-dim hover:text-red-400 transition-colors"
+                              title="Remove member"
+                            >
+                              <X className="w-3 h-3" />
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* TAB 1.5: UNASSIGNED USERS */}
+      {activeTab === 'unassigned' && (
+        <div className="space-y-4">
+          <div className="p-4 rounded-xl nexus-glass border border-amber-500/30 text-center max-w-sm mx-auto">
+            <div className="text-[10px] text-nexus-text-muted">TOTAL UNASSIGNED</div>
+            <div className="text-2xl font-bold text-amber-400">{unassignedUsers.length}</div>
+          </div>
+          
+          <div className="bg-nexus-surface/30 rounded-2xl border border-nexus-border overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs font-mono whitespace-nowrap">
+                <thead className="bg-nexus-surface/80 text-nexus-text-dim border-b border-nexus-border">
+                  <tr>
+                    <th className="px-4 py-3 font-bold">NAME</th>
+                    <th className="px-4 py-3 font-bold">REG NUMBER</th>
+                    <th className="px-4 py-3 font-bold">DEPT & SECTION</th>
+                    <th className="px-4 py-3 font-bold">ACTIONS</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-nexus-border/50 text-nexus-text">
+                  {unassignedUsers.length === 0 ? (
+                    <tr>
+                      <td colSpan={4} className="px-4 py-8 text-center text-nexus-text-muted">
+                        All registered users are assigned to a team.
+                      </td>
+                    </tr>
+                  ) : (
+                    unassignedUsers.map((u) => (
+                      <tr key={u.id} className="hover:bg-nexus-surface/40 transition-colors">
+                        <td className="px-4 py-3 font-bold">{u.name}</td>
+                        <td className="px-4 py-3 text-nexus-text-dim">{u.registerNumber}</td>
+                        <td className="px-4 py-3">{u.department} - {u.section}</td>
+                        <td className="px-4 py-3">
+                          <div className="flex items-center gap-2">
+                            <button
+                              onClick={() => handleCreateTeamForUser(u.registerNumber)}
+                              disabled={creatingTeamFor === u.registerNumber}
+                              className="px-3 py-1.5 rounded-lg bg-nexus-primary/20 text-nexus-primary hover:bg-nexus-primary/30 font-bold transition-colors disabled:opacity-50 flex items-center gap-1"
+                            >
+                              {creatingTeamFor === u.registerNumber ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Crown className="w-3.5 h-3.5" />}
+                              CREATE TEAM
+                            </button>
+                            
+                            <div className="flex items-center gap-1">
+                              {assigningUser === u.registerNumber ? (
+                                <div className="flex items-center gap-1">
+                                  <select
+                                    value={assignTeamSelectId}
+                                    onChange={(e) => setAssignTeamSelectId(e.target.value)}
+                                    className="px-2 py-1.5 bg-nexus-surface border border-emerald-500/50 rounded-lg text-nexus-text text-xs focus:outline-none w-36"
+                                  >
+                                    <option value="">Select Team...</option>
+                                    {teams.filter(t => t.members.length < 5).map(t => (
+                                      <option key={t.id} value={t.id}>
+                                        {t.teamName || '(unnamed)'} ({t.members.length}/5)
+                                      </option>
+                                    ))}
+                                  </select>
+                                  <button
+                                    onClick={() => handleAssignUserToTeam(u.registerNumber, assignTeamSelectId)}
+                                    disabled={!assignTeamSelectId}
+                                    className="px-2 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold transition-colors disabled:opacity-50"
+                                  >
+                                    <CheckCircle2 className="w-4 h-4" />
+                                  </button>
+                                  <button
+                                    onClick={() => { setAssigningUser(null); setAssignTeamSelectId(''); }}
+                                    className="px-2 py-1.5 rounded-lg bg-red-950/40 text-red-400 hover:bg-red-900/60 transition-colors"
+                                  >
+                                    <X className="w-4 h-4" />
+                                  </button>
+                                </div>
+                              ) : (
+                                <button
+                                  onClick={() => setAssigningUser(u.registerNumber)}
+                                  className="px-3 py-1.5 rounded-lg bg-emerald-950/40 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-900/60 font-bold transition-colors flex items-center gap-1"
+                                >
+                                  <UserPlus className="w-3.5 h-3.5" /> ASSIGN
+                                </button>
+                              )}
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* TAB 2: PROBLEM STATEMENTS */}
+      {activeTab === 'ps' && (
+        <div className="space-y-6">
+          {/* PS Form */}
+          <div className="p-5 rounded-2xl nexus-glass border border-nexus-border space-y-4">
+            <h3 className="text-sm font-bold font-mono text-nexus-primary flex items-center gap-2">
+              <FileText className="w-4 h-4" />
+              {editPsId ? 'EDIT PROBLEM STATEMENT' : 'ADD PROBLEM STATEMENT'}
+            </h3>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label className="text-[10px] text-nexus-text-muted block mb-1">DICE SLOT # (1-5)</label>
+                <input
+                  type="number"
+                  min={1}
+                  max={5}
+                  value={psSlot}
+                  onChange={(e) => setPsSlot(Number(e.target.value))}
+                  className="w-full px-3 py-2 rounded-lg bg-nexus-surface border border-nexus-border text-nexus-text text-xs font-mono"
+                />
+              </div>
+              <div>
+                <label className="text-[10px] text-nexus-text-muted block mb-1">MAX TEAMS</label>
+                <input
+                  type="number"
+                  min={1}
+                  max={20}
+                  value={psMaxTeams}
+                  onChange={(e) => setPsMaxTeams(Number(e.target.value))}
+                  className="w-full px-3 py-2 rounded-lg bg-nexus-surface border border-nexus-border text-nexus-text text-xs font-mono"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="text-[10px] text-nexus-text-muted block mb-1">PS TITLE</label>
+              <input
+                value={psTitle}
+                onChange={(e) => setPsTitle(e.target.value)}
+                placeholder="Enter problem statement title..."
+                className="w-full px-3 py-2 rounded-lg bg-nexus-surface border border-nexus-border text-nexus-text text-xs font-mono"
+              />
+            </div>
+
+            <div>
+              <label className="text-[10px] text-nexus-text-muted block mb-1">UPLOAD PROBLEM STATEMENT (PDF)</label>
+              <div className="flex items-center gap-3">
+                <input
+                  type="file"
+                  accept="application/pdf"
+                  onChange={handleFileUpload}
+                  className="w-full px-3 py-2 rounded-lg bg-nexus-surface border border-nexus-border text-nexus-text text-xs font-mono file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-nexus-primary/20 file:text-nexus-primary hover:file:bg-nexus-primary/30"
+                />
+                {psDocUrl && (
+                  <div className="text-[10px] text-emerald-400 font-bold whitespace-nowrap">✓ File Attached</div>
+                )}
+              </div>
+              <p className="text-[10px] text-nexus-text-dim mt-1">Max file size: 2MB. The PDF will be converted to Base64 and stored directly in the database.</p>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                onClick={handleSavePS}
+                disabled={savingPS || !psTitle.trim()}
+                className="px-4 py-2 rounded-xl bg-nexus-primary/20 border border-nexus-primary/50 text-nexus-primary font-bold text-xs flex items-center gap-2 hover:bg-nexus-primary/30 transition-colors"
+              >
+                {savingPS ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Save className="w-3.5 h-3.5" />}
+                {editPsId ? 'UPDATE PS' : 'ADD PS'}
+              </button>
+              {editPsId && (
+                <button onClick={() => { setEditPsId(null); setPsTitle(''); setPsDocUrl(''); setPsSlot(psList.length + 1); }} className="px-3 py-2 text-xs text-nexus-text-muted hover:text-nexus-text">
+                  Cancel
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* PS List */}
+          <div className="space-y-3">
+            {psList.length === 0 ? (
+              <div className="p-8 text-center text-nexus-text-muted text-xs font-mono">
+                No problem statements uploaded yet. Add your first one above.
+              </div>
+            ) : (
+              psList.map((ps) => {
+                const assignedTeams = teams.filter((t) => t.problemStatementId === ps.id);
+                return (
+                  <div key={ps.id} className="p-4 rounded-xl nexus-glass border border-nexus-border space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 rounded-xl bg-violet-950/40 border border-violet-500/30 flex items-center justify-center text-violet-400 font-bold text-lg">
+                          {ps.slotNumber}
+                        </div>
+                        <div>
+                          <div className="text-sm font-bold text-nexus-text font-mono">{ps.title}</div>
+                          <div className="text-[10px] text-nexus-text-dim flex items-center gap-3 mt-0.5">
+                            <span>Teams: {assignedTeams.length}/{ps.maxTeams}</span>
+                            {ps.documentUrl && (
+                              <a href={ps.documentUrl} target="_blank" rel="noopener noreferrer" className="text-nexus-primary hover:underline">
+                                📄 View Document
+                              </a>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <button
+                          onClick={() => { setEditPsId(ps.id); setPsSlot(ps.slotNumber); setPsTitle(ps.title); setPsDocUrl(ps.documentUrl || ''); setPsMaxTeams(ps.maxTeams); }}
+                          className="px-2 py-1 text-xs text-nexus-text-muted hover:text-nexus-primary"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => handleDeletePS(ps.id)}
+                          className="p-1.5 text-red-400 hover:text-red-300"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    </div>
+                    
+                    {assignedTeams.length > 0 && (
+                      <div className="mt-3 pt-3 border-t border-nexus-border/50">
+                        <div className="text-[10px] text-nexus-text-muted mb-2 font-mono">ASSIGNED TEAMS</div>
+                        <div className="space-y-2">
+                          {assignedTeams.map(t => (
+                            <div key={t.id} className="flex items-center justify-between bg-nexus-surface/30 px-3 py-2 rounded-lg border border-nexus-border/30">
+                              <span className="text-xs font-mono text-nexus-text">{t.teamName || '(unnamed)'}</span>
+                              <button
+                                onClick={() => handleResetTeamPS(t.id)}
+                                className="text-[10px] text-amber-400 hover:text-amber-300 px-2 py-1 bg-amber-950/30 rounded border border-amber-500/20"
+                              >
+                                RESET ROLL
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* TAB 3: VISIBILITY CONTROLS */}
+      {activeTab === 'controls' && (
+        <div className="space-y-4">
+          {/* Team Portal Visibility */}
+          <div className="p-6 rounded-2xl nexus-glass-glow border border-nexus-border flex items-center justify-between">
+            <div className="space-y-1">
+              <div className="text-sm font-bold text-nexus-text font-mono">TEAM PORTAL VISIBILITY</div>
+              <p className="text-xs text-nexus-text-muted">
+                {teamPortalVisible
+                  ? '🟢 Team section is VISIBLE to participants in their portal.'
+                  : '🔴 Team section is HIDDEN from participants.'}
+              </p>
+            </div>
+            <button
+              onClick={() => handleToggleVisibility('teamPortalVisible', !teamPortalVisible)}
+              disabled={savingVisibility}
+              className={`px-5 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 transition-all ${
+                teamPortalVisible
+                  ? 'bg-emerald-500 hover:bg-emerald-400 text-black'
+                  : 'bg-red-950/60 hover:bg-red-900/60 border border-red-500 text-red-400'
+              }`}
+            >
+              {teamPortalVisible ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+              {teamPortalVisible ? 'VISIBLE' : 'HIDDEN'}
+            </button>
+          </div>
+
+          {/* PS Selection Visibility */}
+          <div className="p-6 rounded-2xl nexus-glass-glow border border-nexus-border flex items-center justify-between">
+            <div className="space-y-1">
+              <div className="text-sm font-bold text-nexus-text font-mono">PS SELECTION (DICE ROLL)</div>
+              <p className="text-xs text-nexus-text-muted">
+                {psSelectionVisible
+                  ? '🟢 Team leads can now ROLL THE DICE to select their problem statement.'
+                  : '🔴 Dice roll is DISABLED. Team leads cannot select PS yet.'}
+              </p>
+            </div>
+            <button
+              onClick={() => handleToggleVisibility('psSelectionVisible', !psSelectionVisible)}
+              disabled={savingVisibility}
+              className={`px-5 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 transition-all ${
+                psSelectionVisible
+                  ? 'bg-emerald-500 hover:bg-emerald-400 text-black'
+                  : 'bg-red-950/60 hover:bg-red-900/60 border border-red-500 text-red-400'
+              }`}
+            >
+              {psSelectionVisible ? <Dices className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+              {psSelectionVisible ? 'ENABLED' : 'DISABLED'}
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
