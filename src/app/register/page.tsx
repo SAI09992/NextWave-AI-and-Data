@@ -229,6 +229,7 @@ function RegisterContent() {
             </Link>
           </div>
         </motion.div>
+        </CodeRevealWrapper>
       </div>
     );
   }
