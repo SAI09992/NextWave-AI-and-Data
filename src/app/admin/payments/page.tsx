@@ -369,6 +369,13 @@ export default function AdminPaymentsPage() {
                             </span>
                           </div>
 
+                          <div className="flex items-center justify-between">
+                            <span className="text-nexus-text-dim font-bold">IMAGE DETECTED AMOUNT:</span>
+                            <span className="text-nexus-text font-mono font-bold select-all bg-nexus-surface px-2 py-0.5 rounded border border-nexus-border">
+                              {selectedPayment.ocrAmount ? `₹${selectedPayment.ocrAmount}` : 'NONE DETECTED'}
+                            </span>
+                          </div>
+
                           <div className="flex items-center justify-between pt-1 border-t border-nexus-border/50">
                             <span className="text-nexus-text font-bold">UTR MATCH STATUS:</span>
                             {isUtrMatch ? (
@@ -388,7 +395,7 @@ export default function AdminPaymentsPage() {
                           <span>FEE AMOUNT MATCH</span>
                           {isAmountMatch ? (
                             <span className="text-emerald-400 font-bold flex items-center gap-1">
-                              <CheckCircle2 className="w-3.5 h-3.5" /> ₹{selectedPayment.amount} (EXACT)
+                              <CheckCircle2 className="w-3.5 h-3.5" /> ₹{selectedPayment.amount} (USER SUBMITTED)
                             </span>
                           ) : (
                             <span className="text-red-400 font-bold flex items-center gap-1">
