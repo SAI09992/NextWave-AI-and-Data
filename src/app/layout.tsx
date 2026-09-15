@@ -14,8 +14,16 @@ const jetbrainsMono = JetBrains_Mono({
   variable: '--font-jetbrains',
 });
 
+const getBaseUrl = () => {
+  const customUrl = process.env.NEXT_PUBLIC_APP_URL?.trim();
+  if (customUrl && customUrl.startsWith('http')) return customUrl;
+  const vercelUrl = process.env.VERCEL_URL?.trim();
+  if (vercelUrl) return `https://${vercelUrl}`;
+  return 'http://localhost:3000';
+};
+
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ? process.env.NEXT_PUBLIC_APP_URL : (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000')),
+  metadataBase: new URL(getBaseUrl()),
   title: 'NextWave AI and Data',
   description:
     'Learn. Build. Lead the Future. A premium futuristic AI + Data event platform for NextWave.',
