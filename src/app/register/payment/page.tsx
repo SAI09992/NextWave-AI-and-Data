@@ -18,7 +18,7 @@ function PaymentContent() {
   const regIdParam = searchParams.get('regId');
 
   const [registrationId, setRegistrationId] = useState<string>(regIdParam || '');
-  const [feeAmount, setFeeAmount] = useState<number>(300);
+  const [feeAmount, setFeeAmount] = useState<number>(200);
   const [upiId, setUpiId] = useState<string>('nexus@upi');
   const [customQrUrl, setCustomQrUrl] = useState<string | null>(null);
   const [copiedUpi, setCopiedUpi] = useState(false);

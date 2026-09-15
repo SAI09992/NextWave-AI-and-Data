@@ -107,7 +107,7 @@ export default function Step2Academic({ form }: Props) {
             className="w-full px-3.5 py-2.5 rounded-lg bg-nexus-surface border border-nexus-border text-nexus-text text-sm focus:outline-none focus:border-nexus-primary transition-colors"
           >
             <option value="">Select your year</option>
-            <option value="2nd Year">2nd Year (CSE)</option>
+            <option value="2nd Year">2nd Year</option>
             <option value="3rd Year">3rd Year</option>
             <option value="4th Year">4th Year</option>
           </select>
@@ -131,13 +131,13 @@ export default function Step2Academic({ form }: Props) {
             <>
               <input
                 type="text"
-                value="CSE — PE (Program Elective)"
+                value="CSE & IT — PE (Program Elective)"
                 readOnly
                 disabled
                 className="w-full px-3.5 py-2.5 rounded-lg bg-nexus-bg-elevated border border-nexus-primary/40 text-nexus-primary text-sm font-bold cursor-not-allowed select-none"
               />
               <p className="text-[10px] text-amber-400 font-sans">
-                ⚠️ 2nd Year registrations are only open for CSE department (PE Credit).
+                ⚠️ 2nd Year registrations are only open for CSE & IT departments (PE Credit).
               </p>
             </>
           ) : (
@@ -149,7 +149,7 @@ export default function Step2Academic({ form }: Props) {
                 className="w-full px-3.5 py-2.5 rounded-lg bg-nexus-surface border border-nexus-border text-nexus-text text-sm focus:outline-none focus:border-nexus-primary transition-colors font-mono"
               >
                 <option value="">Select Department</option>
-                <option value="CSE">CSE - PE (Program Elective)</option>
+                <option value="CSE">CSE & IT - PE (Program Elective)</option>
                 <option value="Other">Others - UE (University Elective)</option>
               </select>
               {errors.department && !deptChoice && (
