@@ -103,7 +103,7 @@ export default function AdminRegistrationsPage() {
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-gray-800">
         <div>
           <h1 className="text-2xl font-bold tracking-wide flex items-center gap-2">
-            <Users className="w-6 h-6 text-cyan-400" />
+            <Users className="w-6 h-6 text-yellow-400" />
             <span>PARTICIPANT ROSTER & REGISTRATIONS</span>
           </h1>
           <p className="text-xs text-gray-500 mt-1 font-mono">
@@ -114,7 +114,7 @@ export default function AdminRegistrationsPage() {
         <div className="flex items-center gap-3">
           <button
             onClick={handleExportCsv}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-bold font-sans text-sm transition-colors shadow-lg shadow-cyan-500/20"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-yellow-600 hover:bg-yellow-500 text-white font-bold font-sans text-sm transition-colors shadow-lg shadow-yellow-500/20"
           >
             <Download className="w-4 h-4" />
             <span>EXPORT CSV</span>
@@ -139,7 +139,7 @@ export default function AdminRegistrationsPage() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search Name, Reg ID, Roll No..."
-            className="w-full pl-9 pr-3.5 py-2 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-cyan-500 transition-colors placeholder:text-gray-600"
+            className="w-full pl-9 pr-3.5 py-2 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-yellow-500 transition-colors placeholder:text-gray-600"
           />
         </div>
 
@@ -147,7 +147,7 @@ export default function AdminRegistrationsPage() {
         <select
           value={creditFilter}
           onChange={(e) => setCreditFilter(e.target.value)}
-          className="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-cyan-500 transition-colors appearance-none"
+          className="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-yellow-500 transition-colors appearance-none"
         >
           <option value="ALL">All Tracks</option>
           <option value="UE_CSE">PE — CSE</option>
@@ -158,7 +158,7 @@ export default function AdminRegistrationsPage() {
         <select
           value={paymentFilter}
           onChange={(e) => setPaymentFilter(e.target.value)}
-          className="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-cyan-500 transition-colors appearance-none"
+          className="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-yellow-500 transition-colors appearance-none"
         >
           <option value="ALL">All Payment Statuses</option>
           <option value="verified">Verified</option>
@@ -194,7 +194,7 @@ export default function AdminRegistrationsPage() {
               ) : (
                 filtered.map((r) => (
                   <tr key={r.id} className="hover:bg-gray-800/50 transition-colors">
-                    <td className="p-4 font-bold text-cyan-400 font-mono">{r.registrationId}</td>
+                    <td className="p-4 font-bold text-yellow-400 font-mono">{r.registrationId}</td>
                     <td className="p-4">
                       <div className="font-bold text-white">{r.name}</div>
                       <div className="text-[10px] text-gray-500 font-mono">{r.email}</div>
@@ -205,7 +205,7 @@ export default function AdminRegistrationsPage() {
                       <div className="text-[10px] text-gray-500 font-mono">{r.year} (Sec {r.section})</div>
                     </td>
                     <td className="p-4">
-                      <span className="font-bold text-emerald-400">
+                      <span className="font-bold text-orange-400">
                         {r.creditType === 'UE_CSE' ? 'PE — CSE' : 'UE — OTHER'}
                       </span>
                     </td>
@@ -216,7 +216,7 @@ export default function AdminRegistrationsPage() {
                     <td className="p-4 text-center space-x-2">
                       <button
                         onClick={() => setInspectingRecord(r)}
-                        className="p-2 rounded-lg bg-blue-950/40 border border-blue-500/40 text-blue-400 hover:bg-blue-900/60 hover:text-blue-300 transition-colors shadow-sm"
+                        className="p-2 rounded-lg bg-red-950/40 border border-red-500/40 text-red-400 hover:bg-red-900/60 hover:text-red-300 transition-colors shadow-sm"
                         title="Inspect Application & Payment"
                       >
                         <Eye className="w-4 h-4" />
@@ -257,7 +257,7 @@ export default function AdminRegistrationsPage() {
             <div className="space-y-3 text-sm leading-relaxed text-gray-400">
               <p>
                 Are you sure you want to permanently delete registration{' '}
-                <strong className="text-cyan-400 font-mono">{deletingRecord.registrationId}</strong> for{' '}
+                <strong className="text-yellow-400 font-mono">{deletingRecord.registrationId}</strong> for{' '}
                 <strong className="text-white">{deletingRecord.name}</strong> ({deletingRecord.registerNumber})?
               </p>
               <div className="p-4 rounded-xl bg-red-950/50 border border-red-500/40 text-red-300 text-xs font-mono">
@@ -291,11 +291,11 @@ export default function AdminRegistrationsPage() {
       {/* Inspect Record Modal */}
       {inspectingRecord && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-          <div className="w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-gray-900 rounded-2xl p-6 border border-gray-800 shadow-[0_0_40px_rgba(0,229,255,0.15)] space-y-6">
+          <div className="w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-gray-900 rounded-2xl p-6 border border-gray-800 shadow-[0_0_40px_rgba(255,215,0,0.15)] space-y-6">
             <div className="flex items-center justify-between pb-4 border-b border-gray-800">
               <div className="flex items-center gap-2 text-white font-bold text-lg">
-                <Eye className="w-5 h-5 text-cyan-400" />
-                <span>PARTICIPANT DOSSIER: <span className="text-cyan-400 font-mono">{inspectingRecord.registrationId}</span></span>
+                <Eye className="w-5 h-5 text-yellow-400" />
+                <span>PARTICIPANT DOSSIER: <span className="text-yellow-400 font-mono">{inspectingRecord.registrationId}</span></span>
               </div>
               <button
                 onClick={() => setInspectingRecord(null)}
@@ -308,7 +308,7 @@ export default function AdminRegistrationsPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
               {/* Profile Details */}
               <div className="space-y-4">
-                <h3 className="font-bold text-cyan-400 uppercase border-b border-gray-800 pb-2 tracking-wide font-mono text-xs">
+                <h3 className="font-bold text-yellow-400 uppercase border-b border-gray-800 pb-2 tracking-wide font-mono text-xs">
                   Academic Profile
                 </h3>
                 <div className="space-y-3">
@@ -340,13 +340,13 @@ export default function AdminRegistrationsPage() {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-500">Track Registered</span>
-                    <span className="font-bold text-emerald-400">
+                    <span className="font-bold text-orange-400">
                       {inspectingRecord.creditType === 'UE_CSE' ? 'PE — CSE' : 'UE — OTHER'}
                     </span>
                   </div>
                 </div>
 
-                <h3 className="font-bold text-blue-400 uppercase border-b border-gray-800 pb-2 tracking-wide font-mono text-xs pt-2">
+                <h3 className="font-bold text-red-400 uppercase border-b border-gray-800 pb-2 tracking-wide font-mono text-xs pt-2">
                   Residence Details
                 </h3>
                 <div className="space-y-3">
@@ -373,7 +373,7 @@ export default function AdminRegistrationsPage() {
 
               {/* Payment Details */}
               <div className="space-y-4">
-                <h3 className="font-bold text-emerald-400 uppercase border-b border-gray-800 pb-2 tracking-wide font-mono text-xs">
+                <h3 className="font-bold text-orange-400 uppercase border-b border-gray-800 pb-2 tracking-wide font-mono text-xs">
                   Payment Profile
                 </h3>
                 <div className="space-y-3">
@@ -387,7 +387,7 @@ export default function AdminRegistrationsPage() {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-500">UTR Number</span>
-                    <span className="font-bold text-cyan-400 font-mono bg-gray-950 px-2 py-1 rounded border border-gray-800 text-xs">
+                    <span className="font-bold text-yellow-400 font-mono bg-gray-950 px-2 py-1 rounded border border-gray-800 text-xs">
                       {inspectingRecord.utr || 'N/A'}
                     </span>
                   </div>
@@ -400,12 +400,12 @@ export default function AdminRegistrationsPage() {
                       href={inspectingRecord.screenshotUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block group relative rounded-lg overflow-hidden border border-gray-800 hover:border-cyan-500 transition-colors bg-gray-950 p-2"
+                      className="block group relative rounded-lg overflow-hidden border border-gray-800 hover:border-yellow-500 transition-colors bg-gray-950 p-2"
                     >
                       <div className="aspect-[4/3] relative flex items-center justify-center overflow-hidden rounded">
                         {inspectingRecord.screenshotUrl.length > 32000 ? (
                           <div className="text-center p-4">
-                            <Eye className="w-8 h-8 text-cyan-400 mx-auto mb-2 opacity-50" />
+                            <Eye className="w-8 h-8 text-yellow-400 mx-auto mb-2 opacity-50" />
                             <p className="text-[10px] text-gray-500 font-mono">Base64 Image Data.<br/>Cannot preview reliably.</p>
                           </div>
                         ) : (

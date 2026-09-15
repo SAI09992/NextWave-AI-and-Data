@@ -33,12 +33,12 @@ export default function EventQuickInfo() {
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14 space-y-4">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-950/40 border border-cyan-500/30 text-cyan-400 text-xs font-mono shadow-[0_0_10px_rgba(0,229,255,0.1)]">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-950/40 border border-yellow-500/30 text-yellow-400 text-xs font-mono shadow-[0_0_10px_rgba(255,215,0,0.1)]">
             <Terminal className="w-3.5 h-3.5" />
             <span>// 02. EXECUTIVE BRIEFING & OVERVIEW</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-black font-sans text-white tracking-tight">
-            WHAT IS <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">NEXTWAVE?</span>
+            WHAT IS <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-red-500">NEXTWAVE?</span>
           </h2>
           <p className="text-base sm:text-lg text-gray-400 font-sans max-w-2xl mx-auto">
             Core objectives, student target audience, and the operational bootcamp mission.
@@ -57,10 +57,10 @@ export default function EventQuickInfo() {
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ delay: idx * 0.1, duration: 0.6 }}
                 whileHover={{ y: -5 }}
-                className="p-8 rounded-2xl bg-gray-900/50 backdrop-blur-sm border border-gray-800 hover:border-cyan-500/50 transition-all duration-300 space-y-4 shadow-xl"
+                className="p-8 rounded-2xl bg-gray-900/50 backdrop-blur-sm border border-gray-800 hover:border-yellow-500/50 transition-all duration-300 space-y-4 shadow-xl"
               >
                 <div className="flex items-center gap-4">
-                  <div className="p-3 rounded-xl bg-cyan-950/50 border border-cyan-500/30 text-cyan-400 shadow-[0_0_15px_rgba(0,229,255,0.2)]">
+                  <div className="p-3 rounded-xl bg-yellow-950/50 border border-yellow-500/30 text-yellow-400 shadow-[0_0_15px_rgba(255,215,0,0.2)]">
                     <Icon className="w-6 h-6" />
                   </div>
                   <h3 className="text-lg sm:text-xl font-bold font-sans text-white tracking-wide">

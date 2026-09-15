@@ -87,7 +87,7 @@ export default function Step2Academic({ form }: Props) {
         {/* Year of Study */}
         <div className="space-y-1.5">
           <label className="text-xs text-nexus-text flex items-center gap-1.5">
-            <Layers className="w-3.5 h-3.5 text-emerald-400" />
+            <Layers className="w-3.5 h-3.5 text-orange-400" />
             <span>Year of Study *</span>
           </label>
           <select

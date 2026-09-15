@@ -11,7 +11,7 @@ export default function AlumniClubCardSection() {
         
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-950/60 border border-nexus-primary/40 text-nexus-primary text-xs font-mono">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-yellow-950/60 border border-nexus-primary/40 text-nexus-primary text-xs font-mono">
             <Sparkles className="w-3.5 h-3.5" />
             <span>// 14. EXCLUSIVE MEMBERSHIP</span>
           </div>
@@ -27,7 +27,7 @@ export default function AlumniClubCardSection() {
         <div className="max-w-3xl mx-auto relative group perspective-1000">
           
           {/* Background ambient glow matching the card */}
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 via-cyan-500/20 to-purple-600/20 blur-3xl rounded-[2rem] transition-opacity duration-500 opacity-50 group-hover:opacity-100" />
+          <div className="absolute inset-0 bg-gradient-to-r from-red-600/20 via-yellow-500/20 to-purple-600/20 blur-3xl rounded-[2rem] transition-opacity duration-500 opacity-50 group-hover:opacity-100" />
 
           {/* The Card */}
           <motion.div
@@ -47,16 +47,16 @@ export default function AlumniClubCardSection() {
             {/* Top section: Logo & Membership */}
             <div className="relative z-10 flex justify-between items-start">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full overflow-hidden border-2 border-cyan-500/50 shadow-[0_0_15px_rgba(0,229,255,0.3)] bg-white p-1">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full overflow-hidden border-2 border-yellow-500/50 shadow-[0_0_15px_rgba(255,215,0,0.3)] bg-white p-1">
                   <img src="/alumni-logo.png" alt="Alumni Logo" className="w-full h-full object-contain" />
                 </div>
                 <div>
                   <h3 className="text-white font-bold text-lg sm:text-2xl font-mono tracking-widest uppercase">AKCE KLU KARE</h3>
-                  <div className="text-cyan-400 text-xs sm:text-sm font-mono tracking-widest">ALUMNI ASSOCIATION</div>
+                  <div className="text-yellow-400 text-xs sm:text-sm font-mono tracking-widest">ALUMNI ASSOCIATION</div>
                 </div>
               </div>
               <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded bg-white/5 border border-white/10 backdrop-blur-sm">
-                <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                <ShieldCheck className="w-4 h-4 text-orange-400" />
                 <span className="text-xs text-white/80 font-mono tracking-wider">VERIFIED ALUMNI</span>
               </div>
             </div>
@@ -75,7 +75,7 @@ export default function AlumniClubCardSection() {
               <div className="space-y-1">
                 <div className="text-[10px] sm:text-xs text-white/50 font-mono uppercase tracking-[0.3em]">Network Access</div>
                 <div className="text-white text-sm sm:text-xl font-mono tracking-[0.2em] font-light">
-                  GLOBAL <span className="text-cyan-400 font-bold">LIFETIME</span> MEMBER
+                  GLOBAL <span className="text-yellow-400 font-bold">LIFETIME</span> MEMBER
                 </div>
               </div>
               <div className="text-right space-y-1 hidden sm:block">
@@ -95,7 +95,7 @@ export default function AlumniClubCardSection() {
             { icon: Sparkles, title: 'Special Events', desc: 'Priority access to premium technical bootcamps.' }
           ].map((item, idx) => (
             <div key={idx} className="flex flex-col items-center text-center p-4 rounded-xl bg-nexus-surface/40 border border-nexus-border">
-              <item.icon className="w-6 h-6 text-cyan-400 mb-3" />
+              <item.icon className="w-6 h-6 text-yellow-400 mb-3" />
               <div className="text-white font-bold text-sm font-mono mb-1">{item.title}</div>
               <div className="text-nexus-text-dim text-xs font-mono">{item.desc}</div>
             </div>

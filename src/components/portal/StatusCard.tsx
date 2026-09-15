@@ -55,7 +55,7 @@ export default function StatusCard({ payment, registrationId }: Props) {
       animate={{ opacity: 1, y: 0 }}
       className={`p-6 rounded-2xl bg-gray-900/50 backdrop-blur-md border font-mono text-xs space-y-4 transition-all duration-500 shadow-xl ${
         isVerified
-          ? 'border-emerald-500/50 shadow-[0_0_20px_rgba(16,185,129,0.2)]'
+          ? 'border-orange-500/50 shadow-[0_0_20px_rgba(16,185,129,0.2)]'
           : isRejected
           ? 'border-red-500/50 shadow-[0_0_20px_rgba(239,68,68,0.2)]'
           : 'border-amber-500/50 shadow-[0_0_20px_rgba(245,158,11,0.2)]'
@@ -65,7 +65,7 @@ export default function StatusCard({ payment, registrationId }: Props) {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-gray-800">
         <div className="flex items-center gap-2">
           {isVerified ? (
-            <ShieldCheck className="w-5 h-5 text-emerald-400" />
+            <ShieldCheck className="w-5 h-5 text-orange-400" />
           ) : isRejected ? (
             <AlertTriangle className="w-5 h-5 text-red-400" />
           ) : (
@@ -82,7 +82,7 @@ export default function StatusCard({ payment, registrationId }: Props) {
       {/* Verified State Info */}
       {isVerified && (
         <div className="space-y-4 pt-1">
-          <div className="p-4 rounded-xl bg-emerald-950/20 border border-emerald-500/30 text-emerald-400 leading-relaxed font-sans text-sm">
+          <div className="p-4 rounded-xl bg-orange-950/20 border border-orange-500/30 text-orange-400 leading-relaxed font-sans text-sm">
             ✓ Your payment has been verified. Your bootcamp seat is officially confirmed.
           </div>
 
@@ -121,8 +121,8 @@ export default function StatusCard({ payment, registrationId }: Props) {
             </div>
           </div>
 
-          <div className="flex items-center gap-2 text-[11px] text-cyan-400">
-            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
+          <div className="flex items-center gap-2 text-[11px] text-yellow-400">
+            <span className="w-2 h-2 rounded-full bg-yellow-400 animate-ping" />
             <span>LIVE SYNC ACTIVE // Dashboard updates immediately upon verification</span>
           </div>
         </div>

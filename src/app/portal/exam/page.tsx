@@ -178,7 +178,7 @@ export default function SecureExamPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#0a0a0f]">
-        <div className="flex flex-col items-center gap-4 text-cyan-400 font-mono">
+        <div className="flex flex-col items-center gap-4 text-yellow-400 font-mono">
           <Loader2 className="w-8 h-8 animate-spin" />
           <p>INITIALIZING SECURE ENVIRONMENT...</p>
         </div>
@@ -208,15 +208,15 @@ export default function SecureExamPage() {
   if (examState === 'completed') {
     return (
       <div className="min-h-screen flex items-center justify-center p-4 bg-[#0a0a0f]">
-        <div className="max-w-md w-full p-8 rounded-2xl nexus-glass border border-emerald-500/50 bg-emerald-950/20 text-center space-y-6">
-          <CheckCircle className="w-16 h-16 text-emerald-500 mx-auto" />
+        <div className="max-w-md w-full p-8 rounded-2xl nexus-glass border border-orange-500/50 bg-orange-950/20 text-center space-y-6">
+          <CheckCircle className="w-16 h-16 text-orange-500 mx-auto" />
           <div>
-            <h1 className="text-2xl font-black font-mono text-emerald-500">EXAM SUBMITTED</h1>
-            <p className="text-sm text-emerald-400 mt-2 font-mono">
+            <h1 className="text-2xl font-black font-mono text-orange-500">EXAM SUBMITTED</h1>
+            <p className="text-sm text-orange-400 mt-2 font-mono">
               Your responses have been successfully recorded.
             </p>
           </div>
-          <NexusButton variant="primary" glow className="w-full bg-emerald-600 hover:bg-emerald-500 text-white" onClick={() => router.push('/portal')}>
+          <NexusButton variant="primary" glow className="w-full bg-orange-600 hover:bg-orange-500 text-white" onClick={() => router.push('/portal')}>
             RETURN TO PORTAL
           </NexusButton>
         </div>
@@ -234,7 +234,7 @@ export default function SecureExamPage() {
     <div className="min-h-screen bg-[#0a0a0f] text-nexus-text font-sans pb-20 select-none">
       {/* Fixed Header */}
       <header className="sticky top-0 z-40 bg-nexus-bg-elevated/95 backdrop-blur-md border-b border-nexus-border px-4 py-4 flex flex-col md:flex-row items-center justify-between gap-4">
-        <div className="flex items-center gap-3 text-cyan-400 w-full md:w-auto justify-center md:justify-start">
+        <div className="flex items-center gap-3 text-yellow-400 w-full md:w-auto justify-center md:justify-start">
           <ShieldAlert className="w-6 h-6" />
           <h1 className="font-mono font-bold tracking-widest text-sm md:text-base truncate">NEXTGEN SECURE EXAM</h1>
         </div>
@@ -245,7 +245,7 @@ export default function SecureExamPage() {
             <span className="whitespace-nowrap">WARNINGS: <span className={warningsCount > 0 ? 'text-red-400' : ''}>{warningsCount}/{warningLimit}</span></span>
           </div>
           
-          <div className={`flex items-center justify-center gap-2 px-3 md:px-4 py-2 rounded-xl border font-mono font-bold text-sm md:text-lg flex-1 md:flex-none ${timeLeft && timeLeft < 300 ? 'bg-red-950/40 border-red-500 text-red-500 animate-pulse' : 'bg-cyan-950/30 border-cyan-500/30 text-cyan-400'}`}>
+          <div className={`flex items-center justify-center gap-2 px-3 md:px-4 py-2 rounded-xl border font-mono font-bold text-sm md:text-lg flex-1 md:flex-none ${timeLeft && timeLeft < 300 ? 'bg-red-950/40 border-red-500 text-red-500 animate-pulse' : 'bg-yellow-950/30 border-yellow-500/30 text-yellow-400'}`}>
             <Clock className="w-4 h-4 md:w-5 md:h-5 shrink-0" />
             {timeLeft !== null ? formatTime(timeLeft) : '--:--'}
           </div>
@@ -253,7 +253,7 @@ export default function SecureExamPage() {
           <NexusButton 
             variant="primary" 
             glow 
-            className="bg-cyan-600 hover:bg-cyan-500 text-white gap-2 w-full md:w-auto py-2 text-xs md:text-sm"
+            className="bg-yellow-600 hover:bg-yellow-500 text-white gap-2 w-full md:w-auto py-2 text-xs md:text-sm"
             onClick={() => {
               const answeredCount = Object.keys(answers).length;
               if (confirm(`You have answered ${answeredCount} out of ${questions.length} questions. Are you sure you want to submit your exam early?`)) {
@@ -274,7 +274,7 @@ export default function SecureExamPage() {
           <>
             <div className="p-6 md:p-8 rounded-2xl nexus-glass border border-nexus-border space-y-6">
               <div className="flex items-start gap-3 md:gap-4">
-                <div className="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full bg-cyan-950/50 border border-cyan-500 text-cyan-400 flex items-center justify-center font-bold font-mono text-sm md:text-base">
+                <div className="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full bg-yellow-950/50 border border-yellow-500 text-yellow-400 flex items-center justify-center font-bold font-mono text-sm md:text-base">
                   {currentQuestionIndex + 1}
                 </div>
                 <p className="text-lg md:text-xl font-medium leading-relaxed mt-0.5">{questions[currentQuestionIndex].questionText}</p>
@@ -289,12 +289,12 @@ export default function SecureExamPage() {
                       onClick={() => setAnswers(prev => ({ ...prev, [questions[currentQuestionIndex].id]: opt }))}
                       className={`text-left px-5 py-4 rounded-xl border font-mono text-sm transition-all flex items-center gap-4 ${
                         isSelected 
-                          ? 'bg-cyan-950/40 border-cyan-500 text-cyan-300 shadow-[0_0_15px_rgba(34,211,238,0.2)]' 
-                          : 'bg-nexus-surface/50 border-nexus-border/50 text-nexus-text hover:border-cyan-500/50 hover:bg-nexus-surface'
+                          ? 'bg-yellow-950/40 border-yellow-500 text-yellow-300 shadow-[0_0_15px_rgba(34,211,238,0.2)]' 
+                          : 'bg-nexus-surface/50 border-nexus-border/50 text-nexus-text hover:border-yellow-500/50 hover:bg-nexus-surface'
                       }`}
                     >
-                      <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${isSelected ? 'border-cyan-500' : 'border-nexus-border'}`}>
-                        {isSelected && <div className="w-2.5 h-2.5 rounded-full bg-cyan-500" />}
+                      <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${isSelected ? 'border-yellow-500' : 'border-nexus-border'}`}>
+                        {isSelected && <div className="w-2.5 h-2.5 rounded-full bg-yellow-500" />}
                       </div>
                       {opt}
                     </button>
@@ -320,7 +320,7 @@ export default function SecureExamPage() {
               {currentQuestionIndex < questions.length - 1 ? (
                 <button
                   onClick={() => setCurrentQuestionIndex(prev => Math.min(questions.length - 1, prev + 1))}
-                  className="px-6 py-3 rounded-xl font-mono text-sm font-bold bg-cyan-950/40 border border-cyan-500/50 text-cyan-400 hover:bg-cyan-900/40 transition-colors"
+                  className="px-6 py-3 rounded-xl font-mono text-sm font-bold bg-yellow-950/40 border border-yellow-500/50 text-yellow-400 hover:bg-yellow-900/40 transition-colors"
                 >
                   NEXT
                 </button>
@@ -333,7 +333,7 @@ export default function SecureExamPage() {
                     }
                   }}
                   disabled={submitting}
-                  className="px-6 py-3 rounded-xl font-mono text-sm font-bold bg-cyan-600 border border-cyan-500 text-white hover:bg-cyan-500 transition-colors flex items-center gap-2"
+                  className="px-6 py-3 rounded-xl font-mono text-sm font-bold bg-yellow-600 border border-yellow-500 text-white hover:bg-yellow-500 transition-colors flex items-center gap-2"
                 >
                   {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <CheckCircle2 className="w-4 h-4" />}
                   SUBMIT EXAM

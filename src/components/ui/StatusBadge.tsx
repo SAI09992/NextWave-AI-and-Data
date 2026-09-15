@@ -18,15 +18,15 @@ export function StatusBadge({ status, className, showIcon = true }: StatusBadgeP
       case 'present':
         return {
           label: status === 'present' ? 'PRESENT' : 'VERIFIED',
-          bg: 'bg-emerald-950/60 border-emerald-500/50 text-emerald-400',
-          dot: 'bg-emerald-400',
+          bg: 'bg-orange-950/60 border-orange-500/50 text-orange-400',
+          dot: 'bg-orange-400',
           icon: CheckCircle2,
         };
       case 'unpaid':
         return {
           label: 'AWAITING PAYMENT',
-          bg: 'bg-cyan-950/60 border-cyan-500/50 text-cyan-400',
-          dot: 'bg-cyan-400 animate-pulse',
+          bg: 'bg-yellow-950/60 border-yellow-500/50 text-yellow-400',
+          dot: 'bg-yellow-400 animate-pulse',
           icon: Clock,
         };
       case 'pending':

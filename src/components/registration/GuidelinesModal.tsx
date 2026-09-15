@@ -35,34 +35,34 @@ export default function GuidelinesModal({ onContinue }: Props) {
       {/* Grid: DOs vs DON'Ts */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono">
         {/* DOs */}
-        <div className="p-4 rounded-xl bg-emerald-950/20 border border-emerald-500/30 space-y-3">
-          <div className="flex items-center gap-2 text-emerald-400 font-bold text-sm">
+        <div className="p-4 rounded-xl bg-orange-950/20 border border-orange-500/30 space-y-3">
+          <div className="flex items-center gap-2 text-orange-400 font-bold text-sm">
             <CheckCircle2 className="w-4 h-4" />
             <span>MANDATORY DOs</span>
           </div>
           <ul className="space-y-2.5 text-nexus-text-muted">
             <li className="flex items-start gap-2">
-              <span className="text-emerald-400">✓</span>
+              <span className="text-orange-400">✓</span>
               <span>Enter name strictly as per SIS login (No changes will be allowed after submission)</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-emerald-400">✓</span>
+              <span className="text-orange-400">✓</span>
               <span>Use your own authentic Google account</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-emerald-400">✓</span>
+              <span className="text-orange-400">✓</span>
               <span>Provide accurate University Register / Roll Number</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-emerald-400">✓</span>
+              <span className="text-orange-400">✓</span>
               <span>Verify your credit type (PE for CSE / UE for Others)</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-emerald-400">✓</span>
+              <span className="text-orange-400">✓</span>
               <span>Enter authentic 12-digit UPI UTR transaction reference</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-emerald-400">✓</span>
+              <span className="text-orange-400">✓</span>
               <span>Upload clear, legible payment screenshot receipt</span>
             </li>
           </ul>

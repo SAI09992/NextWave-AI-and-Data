@@ -452,7 +452,7 @@ export default function AdminAttendanceAndSnacksPage() {
                   <div
                     className={`p-5 rounded-2xl border transition-all duration-300 space-y-4 ${
                       lastScanResult.status === 'GIVE_SNACKS'
-                        ? 'bg-emerald-950/40 border-emerald-500 shadow-[0_0_30px_rgba(16,185,129,0.3)]'
+                        ? 'bg-orange-950/40 border-orange-500 shadow-[0_0_30px_rgba(16,185,129,0.3)]'
                         : 'bg-red-950/50 border-red-500 shadow-[0_0_30px_rgba(239,68,68,0.35)]'
                     }`}
                   >
@@ -461,7 +461,7 @@ export default function AdminAttendanceAndSnacksPage() {
                       <div
                         className={`text-base font-black tracking-wider flex items-center gap-2 ${
                           lastScanResult.status === 'GIVE_SNACKS'
-                            ? 'text-emerald-400'
+                            ? 'text-orange-400'
                             : 'text-red-400'
                         }`}
                       >
@@ -521,7 +521,7 @@ export default function AdminAttendanceAndSnacksPage() {
                         </div>
                         <div>
                           Track:{' '}
-                          <span className="text-emerald-400 font-bold">
+                          <span className="text-orange-400 font-bold">
                             {lastScanResult.participant.creditType === 'UE_CSE'
                               ? 'PE — CSE'
                               : 'PEOPLE — OTHER'}
@@ -564,7 +564,7 @@ export default function AdminAttendanceAndSnacksPage() {
                             </div>
                           </div>
                           <div className="text-right">
-                            <span className="text-[10px] text-emerald-400 font-bold">
+                            <span className="text-[10px] text-orange-400 font-bold">
                               SERVED
                             </span>
                             <div className="text-[9px] text-nexus-text-dim">
@@ -683,7 +683,7 @@ export default function AdminAttendanceAndSnacksPage() {
           {/* Absentees Export & Quick Actions Bar */}
           <div className="p-4 rounded-2xl nexus-glass border border-nexus-border flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
             <div className="flex items-center gap-2.5 text-nexus-text">
-              <div className="p-2 rounded-xl bg-emerald-950/40 border border-emerald-500/30 text-emerald-400">
+              <div className="p-2 rounded-xl bg-orange-950/40 border border-orange-500/30 text-orange-400">
                 <FileSpreadsheet className="w-5 h-5" />
               </div>
               <div>
@@ -713,7 +713,7 @@ export default function AdminAttendanceAndSnacksPage() {
 
               <button
                 onClick={() => handleExportAbsentees('all')}
-                className="px-3.5 py-2 rounded-xl bg-emerald-950/40 hover:bg-emerald-900/60 border border-emerald-500/50 text-emerald-400 font-bold transition-all flex items-center gap-2 text-xs shadow-sm"
+                className="px-3.5 py-2 rounded-xl bg-orange-950/40 hover:bg-orange-900/60 border border-orange-500/50 text-orange-400 font-bold transition-all flex items-center gap-2 text-xs shadow-sm"
               >
                 <Download className="w-4 h-4" />
                 <span>ALL ABSENTEES</span>
@@ -739,24 +739,24 @@ export default function AdminAttendanceAndSnacksPage() {
               <Users className="w-6 h-6 text-nexus-primary" />
             </div>
 
-            <div className="p-4 rounded-xl nexus-glass border border-emerald-500/30 flex items-center justify-between">
+            <div className="p-4 rounded-xl nexus-glass border border-orange-500/30 flex items-center justify-between">
               <div>
                 <span className="text-nexus-text-muted text-[10px] block">DAY 1 PRESENT</span>
-                <span className="text-xl font-bold text-emerald-400">
+                <span className="text-xl font-bold text-orange-400">
                   {cadets.filter((c) => c.day1Present).length} / {cadets.length}
                 </span>
               </div>
-              <Calendar className="w-6 h-6 text-emerald-400" />
+              <Calendar className="w-6 h-6 text-orange-400" />
             </div>
 
-            <div className="p-4 rounded-xl nexus-glass border border-emerald-500/30 flex items-center justify-between">
+            <div className="p-4 rounded-xl nexus-glass border border-orange-500/30 flex items-center justify-between">
               <div>
                 <span className="text-nexus-text-muted text-[10px] block">DAY 2 PRESENT</span>
-                <span className="text-xl font-bold text-emerald-400">
+                <span className="text-xl font-bold text-orange-400">
                   {cadets.filter((c) => c.day2Present).length} / {cadets.length}
                 </span>
               </div>
-              <Calendar className="w-6 h-6 text-emerald-400" />
+              <Calendar className="w-6 h-6 text-orange-400" />
             </div>
           </div>
 
@@ -811,7 +811,7 @@ export default function AdminAttendanceAndSnacksPage() {
                             </div>
                           </td>
                           <td className="p-4">
-                            <span className="font-bold text-emerald-400">
+                            <span className="font-bold text-orange-400">
                               {cadet.creditType === 'UE_CSE' ? 'PE — CSE' : 'PEOPLE — OTHER'}
                             </span>
                           </td>
@@ -823,14 +823,14 @@ export default function AdminAttendanceAndSnacksPage() {
                               disabled={isUpdatingDay1}
                               className={`px-3 py-1.5 rounded-xl font-bold transition-all text-xs inline-flex items-center gap-1.5 ${
                                 cadet.day1Present
-                                  ? 'bg-emerald-950/60 border border-emerald-500/60 text-emerald-400 shadow-nexus-glow-sm'
+                                  ? 'bg-orange-950/60 border border-orange-500/60 text-orange-400 shadow-nexus-glow-sm'
                                   : 'bg-red-950/40 border border-red-500/40 text-red-400 hover:bg-red-900/50'
                               }`}
                             >
                               {isUpdatingDay1 ? (
                                 <RefreshCw className="w-3.5 h-3.5 animate-spin" />
                               ) : cadet.day1Present ? (
-                                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                                <CheckCircle2 className="w-3.5 h-3.5 text-orange-400" />
                               ) : (
                                 <X className="w-3.5 h-3.5 text-red-400" />
                               )}
@@ -845,14 +845,14 @@ export default function AdminAttendanceAndSnacksPage() {
                               disabled={isUpdatingDay2}
                               className={`px-3 py-1.5 rounded-xl font-bold transition-all text-xs inline-flex items-center gap-1.5 ${
                                 cadet.day2Present
-                                  ? 'bg-emerald-950/60 border border-emerald-500/60 text-emerald-400 shadow-nexus-glow-sm'
+                                  ? 'bg-orange-950/60 border border-orange-500/60 text-orange-400 shadow-nexus-glow-sm'
                                   : 'bg-red-950/40 border border-red-500/40 text-red-400 hover:bg-red-900/50'
                               }`}
                             >
                               {isUpdatingDay2 ? (
                                 <RefreshCw className="w-3.5 h-3.5 animate-spin" />
                               ) : cadet.day2Present ? (
-                                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                                <CheckCircle2 className="w-3.5 h-3.5 text-orange-400" />
                               ) : (
                                 <X className="w-3.5 h-3.5 text-red-400" />
                               )}

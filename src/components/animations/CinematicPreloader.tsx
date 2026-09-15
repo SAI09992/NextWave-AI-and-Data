@@ -147,7 +147,7 @@ export default function CinematicPreloader({ onComplete }: PreloaderProps) {
             initial={{ scale: 0.1, opacity: 1, borderWidth: '20px' }}
             animate={{ scale: 15, opacity: 0, borderWidth: '1px' }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
-            className="absolute z-20 rounded-full border-emerald-400 pointer-events-none"
+            className="absolute z-20 rounded-full border-orange-400 pointer-events-none"
             style={{ width: '100px', height: '100px' }}
           />
         )}
@@ -168,7 +168,7 @@ export default function CinematicPreloader({ onComplete }: PreloaderProps) {
               className="mb-8 flex flex-col items-center"
             >
               <div className="w-24 h-24 bg-nexus-bg/90 border border-nexus-primary backdrop-blur-md rounded-2xl flex items-center justify-center shadow-[0_0_40px_rgba(16,185,129,0.4)] overflow-hidden p-1">
-                <img src="/alumni-logo.png" alt="NextWave Logo" className="w-full h-full object-contain filter drop-shadow-[0_0_15px_rgba(0,229,255,0.6)]" />
+                <img src="/alumni-logo.png" alt="NextWave Logo" className="w-full h-full object-contain filter drop-shadow-[0_0_15px_rgba(255,215,0,0.6)]" />
               </div>
             </motion.div>
 

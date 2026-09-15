@@ -13,24 +13,24 @@
     --popover: 217 33% 8%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 187 100% 50%;
-    --primary-foreground: 215 50% 4%;
+    --primary: 45 100% 50%;
+    --primary-foreground: 0 50% 4%;
 
-    --secondary: 206 87% 53%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 0 84% 60%;
+    --secondary-foreground: 0 40% 98%;
 
-    --muted: 217 33% 14%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 0 33% 14%;
+    --muted-foreground: 0 20% 65%;
 
-    --accent: 187 100% 50%;
-    --accent-foreground: 215 50% 4%;
+    --accent: 45 100% 50%;
+    --accent-foreground: 0 50% 4%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 217 33% 18%;
-    --input: 217 33% 18%;
-    --ring: 187 100% 50%;
+    --border: 0 33% 18%;
+    --input: 0 33% 18%;
+    --ring: 45 100% 50%;
 
     --radius: 0.5rem;
   }
@@ -42,8 +42,8 @@
   }
   body {
     @apply bg-nexus-bg text-nexus-text font-sans antialiased selection:bg-nexus-primary/20 selection:text-nexus-primary;
-    background-color: #050A0F;
-    color: #E2E8F0;
+    background-color: #0A0505;
+    color: #F1E5E5;
     overflow-x: hidden;
   }
 }
@@ -55,44 +55,44 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #050A0F;
+  background: #0A0505;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1E2D40;
+  background: #401E1E;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #00E5FF88;
+  background: #FFD70088;
 }
 
 /* nexus Grid Effect */
 .nexus-grid-bg {
   background-size: 40px 40px;
   background-image: 
-    linear-gradient(to right, rgba(0, 229, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 229, 255, 0.05) 1px, transparent 1px);
+    linear-gradient(to right, rgba(255, 215, 0, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 215, 0, 0.05) 1px, transparent 1px);
 }
 
 .nexus-dots-bg {
-  background-image: radial-gradient(rgba(0, 229, 255, 0.15) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(255, 215, 0, 0.15) 1px, transparent 1px);
   background-size: 24px 24px;
 }
 
 /* Glassmorphism Surface */
 .nexus-glass {
-  background: rgba(15, 23, 32, 0.75);
+  background: rgba(32, 15, 15, 0.75);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(30, 45, 64, 0.8);
+  border: 1px solid rgba(64, 30, 30, 0.8);
 }
 
 .nexus-glass-glow {
-  background: rgba(15, 23, 32, 0.85);
+  background: rgba(32, 15, 15, 0.85);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(0, 229, 255, 0.25);
-  box-shadow: 0 0 30px -10px rgba(0, 229, 255, 0.2);
+  border: 1px solid rgba(255, 215, 0, 0.25);
+  box-shadow: 0 0 30px -10px rgba(255, 215, 0, 0.2);
 }
 
 /* Mobile Performance Optimization — Disable GPU-heavy blur on touch scroll */
@@ -111,8 +111,8 @@
     to bottom,
     rgba(255,255,255,0),
     rgba(255,255,255,0) 50%,
-    rgba(0, 229, 255, 0.02) 50%,
-    rgba(0, 229, 255, 0.02)
+    rgba(255, 215, 0, 0.02) 50%,
+    rgba(255, 215, 0, 0.02)
   );
   background-size: 100% 4px;
   pointer-events: none;

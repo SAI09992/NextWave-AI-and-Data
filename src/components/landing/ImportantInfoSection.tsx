@@ -52,7 +52,7 @@ export default function ImportantInfoSection() {
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-950/60 border border-nexus-primary/40 text-nexus-primary text-xs font-mono">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-yellow-950/60 border border-nexus-primary/40 text-nexus-primary text-xs font-mono">
             <Info className="w-3.5 h-3.5" />
             <span>// 11. IMPORTANT DIRECTIVES & GUIDELINES</span>
           </div>

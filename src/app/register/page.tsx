@@ -16,6 +16,7 @@ import Step4Review from '@/components/registration/Step4Review';
 import { NexusButton } from '@/components/ui/NexusButton';
 import { Shield, ArrowRight, ArrowLeft, CheckCircle2, Lock, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
+import CodeRevealWrapper from '@/components/animations/CodeRevealWrapper';
 import Link from 'next/link';
 
 const TOTAL_STEPS = 4;
@@ -198,16 +199,17 @@ function RegisterContent() {
   if (successRegId) {
     return (
       <div className="flex-1 flex items-center justify-center p-4 min-h-[60vh]">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="w-full max-w-md nexus-glass-glow rounded-2xl p-8 border border-emerald-500/40 text-center space-y-6"
-        >
-          <div className="w-14 h-14 rounded-full bg-emerald-950/40 border border-emerald-500/40 mx-auto flex items-center justify-center text-emerald-400">
-            <CheckCircle2 className="w-7 h-7" />
-          </div>
-          <div>
-            <h2 className="text-xl font-bold font-mono text-emerald-400">
+        <CodeRevealWrapper>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="w-full max-w-md nexus-glass-glow rounded-2xl p-8 border border-yellow-500/40 text-center space-y-6"
+          >
+            <div className="w-14 h-14 rounded-full bg-yellow-950/40 border border-yellow-500/40 mx-auto flex items-center justify-center text-yellow-400">
+              <CheckCircle2 className="w-7 h-7" />
+            </div>
+            <div>
+              <h2 className="text-xl font-bold font-mono text-yellow-400">
               REGISTRATION SUCCESSFUL!
             </h2>
             <p className="text-xs font-mono text-nexus-text-muted mt-2">
@@ -237,16 +239,17 @@ function RegisterContent() {
 
     return (
       <div className="flex-1 flex items-center justify-center p-4 min-h-[60vh]">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className={`w-full max-w-md nexus-glass-glow rounded-2xl p-8 border ${isUnpaid ? 'border-cyan-500/40' : 'border-nexus-primary/40'} text-center space-y-6`}
-        >
-          <div className={`w-14 h-14 rounded-full ${isUnpaid ? 'bg-cyan-950/40 border-cyan-500/40 text-cyan-400' : 'bg-emerald-950/40 border-emerald-500/40 text-emerald-400'} mx-auto flex items-center justify-center border`}>
-            <CheckCircle2 className="w-7 h-7" />
-          </div>
-          <div>
-            <h2 className={`text-xl font-bold font-mono ${isUnpaid ? 'text-cyan-400' : 'text-nexus-text'}`}>
+        <CodeRevealWrapper>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className={`w-full max-w-md nexus-glass-glow rounded-2xl p-8 border ${isUnpaid ? 'border-red-500/40' : 'border-nexus-primary/40'} text-center space-y-6`}
+          >
+            <div className={`w-14 h-14 rounded-full ${isUnpaid ? 'bg-red-950/40 border-red-500/40 text-red-500' : 'bg-yellow-950/40 border-yellow-500/40 text-yellow-400'} mx-auto flex items-center justify-center border`}>
+              <CheckCircle2 className="w-7 h-7" />
+            </div>
+            <div>
+              <h2 className={`text-xl font-bold font-mono ${isUnpaid ? 'text-red-500' : 'text-nexus-text'}`}>
               {isUnpaid ? 'PAYMENT PENDING' : 'ALREADY REGISTERED'}
             </h2>
             <p className="text-xs font-mono text-nexus-text-muted mt-2 leading-relaxed">
@@ -273,9 +276,10 @@ function RegisterContent() {
                   GO TO PARTICIPANT PORTAL
                 </NexusButton>
               </Link>
-            )}
-          </div>
-        </motion.div>
+              )}
+            </div>
+          </motion.div>
+        </CodeRevealWrapper>
       </div>
     );
   }
@@ -320,21 +324,26 @@ function RegisterContent() {
       <div className="container mx-auto max-w-2xl">
         {/* Stage 1: Guidelines */}
         {flowStage === 'guidelines' && (
-          <GuidelinesModal onContinue={() => setFlowStage('terms')} />
+          <CodeRevealWrapper>
+            <GuidelinesModal onContinue={() => setFlowStage('terms')} />
+          </CodeRevealWrapper>
         )}
 
         {/* Stage 2: Terms */}
         {flowStage === 'terms' && (
-          <TermsModal onAccept={() => setFlowStage('form')} />
+          <CodeRevealWrapper>
+            <TermsModal onAccept={() => setFlowStage('form')} />
+          </CodeRevealWrapper>
         )}
 
         {/* Stage 3: Multi-step Registration Form (3 Steps) */}
         {flowStage === 'form' && (
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="nexus-glass-glow rounded-2xl p-5 sm:p-8 border border-nexus-border shadow-nexus-card space-y-6"
-          >
+          <CodeRevealWrapper>
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="nexus-glass-glow rounded-2xl p-5 sm:p-8 border border-nexus-border shadow-nexus-card space-y-6"
+            >
             {/* Stepper Progress Bar */}
             <div className="space-y-3">
               <div className="flex items-center justify-between text-xs font-mono text-nexus-text-muted">
@@ -348,7 +357,7 @@ function RegisterContent() {
                   initial={false}
                   animate={{ width: `${progressPercent}%` }}
                   transition={{ duration: 0.3 }}
-                  className="h-full rounded-full bg-gradient-to-r from-nexus-secondary via-nexus-primary to-emerald-400"
+                  className="h-full rounded-full bg-gradient-to-r from-nexus-secondary via-nexus-primary to-yellow-400"
                 />
               </div>
             </div>
@@ -452,6 +461,7 @@ function RegisterContent() {
               </div>
             </form>
           </motion.div>
+          </CodeRevealWrapper>
         )}
       </div>
     </div>

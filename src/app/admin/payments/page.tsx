@@ -233,7 +233,7 @@ export default function AdminPaymentsPage() {
                       </td>
                       <td className="p-4 font-bold text-nexus-text">{p.utr}</td>
                       <td className="p-4">
-                        <span className="text-emerald-400 font-bold">₹{p.amount}</span>
+                        <span className="text-orange-400 font-bold">₹{p.amount}</span>
                         <span className="text-[10px] text-nexus-text-dim block">
                           Expected: ₹{p.expectedAmount}
                         </span>
@@ -242,7 +242,7 @@ export default function AdminPaymentsPage() {
                         <div className="flex items-center gap-1.5">
                           <span
                             className={`w-2 h-2 rounded-full ${
-                              utrMatch ? 'bg-emerald-400' : 'bg-amber-400'
+                              utrMatch ? 'bg-orange-400' : 'bg-amber-400'
                             }`}
                           />
                           <span className="text-nexus-text font-bold">
@@ -319,11 +319,11 @@ export default function AdminPaymentsPage() {
                       <div>Name: <span className="text-nexus-text font-bold">{selectedPayment.participant.name}</span></div>
                       <div>Roll No: <span className="text-nexus-text">{selectedPayment.participant.registerNumber}</span></div>
                       <div>Email: <span className="text-nexus-text truncate block">{selectedPayment.participant.email}</span></div>
-                      <div>Track: <span className="text-emerald-400 font-bold">{selectedPayment.participant.creditType === 'UE_CSE' ? 'PE — CSE & IT' : 'UE — OTHER'}</span></div>
+                      <div>Track: <span className="text-orange-400 font-bold">{selectedPayment.participant.creditType === 'UE_CSE' ? 'PE — CSE & IT' : 'UE — OTHER'}</span></div>
                     </div>
 
                     {/* Prominent User-Submitted UTR */}
-                    <div className="p-2.5 rounded-lg bg-cyan-950/60 border border-nexus-primary/60 flex items-center justify-between text-xs font-mono">
+                    <div className="p-2.5 rounded-lg bg-yellow-950/60 border border-nexus-primary/60 flex items-center justify-between text-xs font-mono">
                       <span className="text-nexus-text-dim font-bold">SUBMITTED UTR:</span>
                       <span className="text-nexus-primary font-extrabold text-sm tracking-wider select-all">
                         {selectedPayment.utr || 'NOT PROVIDED'}
@@ -347,7 +347,7 @@ export default function AdminPaymentsPage() {
                     const isAmountMatch = selectedPayment.amount === expectedFee;
 
                     return (
-                      <div className="p-4 rounded-xl bg-nexus-surface/80 border border-cyan-500/40 space-y-3">
+                      <div className="p-4 rounded-xl bg-nexus-surface/80 border border-yellow-500/40 space-y-3">
                         <div className="text-nexus-primary font-bold text-xs uppercase tracking-wider flex items-center justify-between">
                           <span>AUTOMATED SOC CHECKS</span>
                           <span className="text-[10px] text-nexus-text-dim">OCR CONFIDENCE: {selectedPayment.ocrConfidence || 0}%</span>
@@ -357,7 +357,7 @@ export default function AdminPaymentsPage() {
                         <div className="p-2.5 rounded bg-nexus-bg border border-nexus-border/80 space-y-1.5 text-[11px]">
                           <div className="flex items-center justify-between">
                             <span className="text-nexus-text-dim font-bold">SUBMITTED UTR (USER):</span>
-                            <span className="text-cyan-300 font-mono font-bold select-all bg-cyan-950/60 px-2 py-0.5 rounded border border-cyan-500/30">
+                            <span className="text-yellow-300 font-mono font-bold select-all bg-yellow-950/60 px-2 py-0.5 rounded border border-yellow-500/30">
                               {userUtr || 'NOT PROVIDED'}
                             </span>
                           </div>
@@ -379,7 +379,7 @@ export default function AdminPaymentsPage() {
                           <div className="flex items-center justify-between pt-1 border-t border-nexus-border/50">
                             <span className="text-nexus-text font-bold">UTR MATCH STATUS:</span>
                             {isUtrMatch ? (
-                              <span className="text-emerald-400 font-bold flex items-center gap-1">
+                              <span className="text-orange-400 font-bold flex items-center gap-1">
                                 <CheckCircle2 className="w-3.5 h-3.5" /> MATCH (VERIFIED)
                               </span>
                             ) : (
@@ -394,7 +394,7 @@ export default function AdminPaymentsPage() {
                         <div className="flex items-center justify-between p-2 rounded bg-nexus-bg border border-nexus-border text-[11px]">
                           <span>FEE AMOUNT MATCH</span>
                           {isAmountMatch ? (
-                            <span className="text-emerald-400 font-bold flex items-center gap-1">
+                            <span className="text-orange-400 font-bold flex items-center gap-1">
                               <CheckCircle2 className="w-3.5 h-3.5" /> ₹{selectedPayment.amount} (USER SUBMITTED)
                             </span>
                           ) : (
@@ -407,7 +407,7 @@ export default function AdminPaymentsPage() {
                         {/* Duplicate UTR Check */}
                         <div className="flex items-center justify-between p-2 rounded bg-nexus-bg border border-nexus-border text-[11px]">
                           <span>DUPLICATE UTR CHECK</span>
-                          <span className="text-emerald-400 font-bold flex items-center gap-1">
+                          <span className="text-orange-400 font-bold flex items-center gap-1">
                             <CheckCircle2 className="w-3.5 h-3.5" /> UNIQUE SUBMISSION
                           </span>
                         </div>

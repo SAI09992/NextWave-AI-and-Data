@@ -294,14 +294,14 @@ export default function AdminExamPage() {
             <h2 className="font-mono text-sm font-bold text-nexus-text">Manage MCQs</h2>
             <button
               onClick={() => setEditQuestion({ questionText: '', options: ['', '', '', ''], correctOptionIndex: 0, orderIndex: questions.length + 1 })}
-              className="px-4 py-2 rounded-lg bg-emerald-500/20 text-emerald-400 border border-emerald-500/50 hover:bg-emerald-500/30 text-xs font-bold flex items-center gap-2"
+              className="px-4 py-2 rounded-lg bg-orange-500/20 text-orange-400 border border-orange-500/50 hover:bg-orange-500/30 text-xs font-bold flex items-center gap-2"
             >
               <Plus className="w-3.5 h-3.5" /> ADD QUESTION
             </button>
           </div>
 
           {editQuestion && (
-            <div className="p-4 rounded-xl border border-emerald-500/50 bg-emerald-950/20 space-y-4 mb-6">
+            <div className="p-4 rounded-xl border border-orange-500/50 bg-orange-950/20 space-y-4 mb-6">
               <div>
                 <label className="text-[10px] text-nexus-text-muted block mb-1">QUESTION TEXT</label>
                 <textarea
@@ -318,7 +318,7 @@ export default function AdminExamPage() {
                       name="correctOption"
                       checked={editQuestion.correctOptionIndex === idx}
                       onChange={() => setEditQuestion({ ...editQuestion, correctOptionIndex: idx })}
-                      className="w-4 h-4 text-emerald-500 bg-nexus-bg border-nexus-border"
+                      className="w-4 h-4 text-orange-500 bg-nexus-bg border-nexus-border"
                     />
                     <input
                       value={opt}
@@ -328,7 +328,7 @@ export default function AdminExamPage() {
                         setEditQuestion({ ...editQuestion, options: newOpts });
                       }}
                       placeholder={`Option ${idx + 1}`}
-                      className={`w-full px-3 py-1.5 rounded-lg bg-nexus-surface border text-sm font-mono ${editQuestion.correctOptionIndex === idx ? 'border-emerald-500/50 text-emerald-400' : 'border-nexus-border text-nexus-text'}`}
+                      className={`w-full px-3 py-1.5 rounded-lg bg-nexus-surface border text-sm font-mono ${editQuestion.correctOptionIndex === idx ? 'border-orange-500/50 text-orange-400' : 'border-nexus-border text-nexus-text'}`}
                     />
                   </div>
                 ))}
@@ -336,7 +336,7 @@ export default function AdminExamPage() {
               <div className="flex items-center gap-2 pt-2">
                 <button
                   onClick={() => handleSaveQuestion(editQuestion)}
-                  className="px-4 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs"
+                  className="px-4 py-1.5 rounded-lg bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs"
                 >
                   SAVE QUESTION
                 </button>
@@ -374,7 +374,7 @@ export default function AdminExamPage() {
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-2 pl-6">
                     {q.options.map((opt: string, oIdx: number) => (
-                      <div key={oIdx} className={`px-3 py-1.5 rounded border text-xs font-mono ${q.correctOptionIndex === oIdx ? 'bg-emerald-950/20 border-emerald-500/40 text-emerald-400' : 'bg-nexus-surface/30 border-nexus-border/30 text-nexus-text-dim'}`}>
+                      <div key={oIdx} className={`px-3 py-1.5 rounded border text-xs font-mono ${q.correctOptionIndex === oIdx ? 'bg-orange-950/20 border-orange-500/40 text-orange-400' : 'bg-nexus-surface/30 border-nexus-border/30 text-nexus-text-dim'}`}>
                         {String.fromCharCode(65 + oIdx)}. {opt}
                         {q.correctOptionIndex === oIdx && <span className="float-right font-bold text-[10px]">✓ CORRECT</span>}
                       </div>
@@ -397,7 +397,7 @@ export default function AdminExamPage() {
             <a 
               href="/api/admin/exam-attempts/export"
               download="exam_results.csv"
-              className="px-4 py-2 rounded-lg bg-cyan-950/40 border border-cyan-500/50 hover:bg-cyan-900/50 text-cyan-400 transition-colors text-xs font-bold inline-flex items-center gap-2"
+              className="px-4 py-2 rounded-lg bg-yellow-950/40 border border-yellow-500/50 hover:bg-yellow-900/50 text-yellow-400 transition-colors text-xs font-bold inline-flex items-center gap-2"
             >
               <Download className="w-4 h-4" /> EXPORT LOGS & SCORES
             </a>
@@ -424,8 +424,8 @@ export default function AdminExamPage() {
                         <th className="p-4 font-bold w-12 text-center text-nexus-text-muted">#</th>
                         <th className="p-4 font-bold">CADET / REG ID</th>
                         <th className="p-4 font-bold">STATUS</th>
-                        <th className="p-4 font-bold">R1 (QUIZ) <span className="text-cyan-500/50 text-[10px] ml-1">({r1Count}/{total})</span></th>
-                        <th className="p-4 font-bold">R2 (UNDERSTANDING) <span className="text-emerald-500/50 text-[10px] ml-1">({r2Count}/{total})</span></th>
+                        <th className="p-4 font-bold">R1 (QUIZ) <span className="text-yellow-500/50 text-[10px] ml-1">({r1Count}/{total})</span></th>
+                        <th className="p-4 font-bold">R2 (UNDERSTANDING) <span className="text-orange-500/50 text-[10px] ml-1">({r2Count}/{total})</span></th>
                         <th className="p-4 font-bold">R3 SCORE <span className="text-amber-500/50 text-[10px] ml-1">({r3Count}/{total})</span></th>
                         <th className="p-4 font-bold">WARNINGS</th>
                         <th className="p-4 font-bold text-right">ACTIONS</th>
@@ -443,7 +443,7 @@ export default function AdminExamPage() {
                       </td>
                       <td className="p-4">
                         <span className={`px-2 py-1 rounded-md text-[10px] font-bold ${
-                          attempt.status === 'completed' ? 'bg-emerald-500/20 text-emerald-400' :
+                          attempt.status === 'completed' ? 'bg-orange-500/20 text-orange-400' :
                           attempt.status === 'terminated' ? 'bg-red-500/20 text-red-400' :
                           attempt.status === 'in_progress' ? 'bg-amber-500/20 text-amber-400' :
                           'bg-nexus-surface text-nexus-text-muted'
@@ -451,10 +451,10 @@ export default function AdminExamPage() {
                           {attempt.status ? attempt.status.toUpperCase().replace('_', ' ') : 'NOT ATTEMPTED'}
                         </span>
                       </td>
-                      <td className="p-4 font-bold text-cyan-400">
+                      <td className="p-4 font-bold text-yellow-400">
                         {attempt.score !== null ? `${attempt.score} / ${questions.length}` : '-'}
                       </td>
-                      <td className="p-4 font-bold text-emerald-400">
+                      <td className="p-4 font-bold text-orange-400">
                         {attempt.round2Score !== null ? attempt.round2Score : '-'}
                       </td>
                       <td className="p-4 font-bold text-amber-400">
@@ -520,7 +520,7 @@ export default function AdminExamPage() {
                   type="number" 
                   value={editingMarks.r2} 
                   onChange={(e) => setEditingMarks({...editingMarks, r2: e.target.value})}
-                  className="w-full bg-nexus-surface/50 border border-nexus-border rounded-lg px-3 py-2 text-sm font-mono focus:border-cyan-500 outline-none"
+                  className="w-full bg-nexus-surface/50 border border-nexus-border rounded-lg px-3 py-2 text-sm font-mono focus:border-yellow-500 outline-none"
                   placeholder="Enter score"
                 />
               </div>
@@ -530,7 +530,7 @@ export default function AdminExamPage() {
                   type="number" 
                   value={editingMarks.r3} 
                   onChange={(e) => setEditingMarks({...editingMarks, r3: e.target.value})}
-                  className="w-full bg-nexus-surface/50 border border-nexus-border rounded-lg px-3 py-2 text-sm font-mono focus:border-cyan-500 outline-none"
+                  className="w-full bg-nexus-surface/50 border border-nexus-border rounded-lg px-3 py-2 text-sm font-mono focus:border-yellow-500 outline-none"
                   placeholder="Enter score"
                 />
               </div>
@@ -546,7 +546,7 @@ export default function AdminExamPage() {
               <button 
                 onClick={handleSaveMarks}
                 disabled={savingMarks}
-                className="px-4 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-mono font-bold transition-colors flex items-center gap-2"
+                className="px-4 py-2 rounded-lg bg-yellow-600 hover:bg-yellow-500 text-white text-xs font-mono font-bold transition-colors flex items-center gap-2"
               >
                 {savingMarks ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Save className="w-3.5 h-3.5" />}
                 SAVE MARKS

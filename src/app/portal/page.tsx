@@ -107,8 +107,8 @@ export default function ParticipantPortalPage() {
   if (status === 'loading' || loading) {
     return (
       <div className="flex-1 flex items-center justify-center p-4">
-        <div className="flex items-center gap-3 font-mono text-cyan-400 text-sm">
-          <span className="w-5 h-5 rounded-full border-2 border-cyan-500 border-t-transparent animate-spin" />
+        <div className="flex items-center gap-3 font-mono text-yellow-400 text-sm">
+          <span className="w-5 h-5 rounded-full border-2 border-yellow-500 border-t-transparent animate-spin" />
           <span>LOADING PARTICIPANT DOSSIER...</span>
         </div>
       </div>
@@ -120,7 +120,7 @@ export default function ParticipantPortalPage() {
     return (
       <div className="flex-1 flex items-center justify-center p-4">
         <div className="w-full max-w-md bg-gray-900/60 backdrop-blur-md rounded-2xl p-8 border border-gray-800 text-center space-y-6 shadow-xl">
-          <div className="w-14 h-14 rounded-full bg-gray-950 border border-cyan-500/40 mx-auto flex items-center justify-center text-cyan-400 shadow-[0_0_15px_rgba(0,229,255,0.2)]">
+          <div className="w-14 h-14 rounded-full bg-gray-950 border border-yellow-500/40 mx-auto flex items-center justify-center text-yellow-400 shadow-[0_0_15px_rgba(255,215,0,0.2)]">
             <Terminal className="w-6 h-6" />
           </div>
           <div>
@@ -133,7 +133,7 @@ export default function ParticipantPortalPage() {
           </div>
 
           <Link href="/register" className="block">
-            <button className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold font-sans transition-colors shadow-[0_0_15px_rgba(0,229,255,0.3)]">
+            <button className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-yellow-600 hover:bg-yellow-500 text-white font-bold font-sans transition-colors shadow-[0_0_15px_rgba(255,215,0,0.3)]">
               <span>REGISTER FOR BOOTCAMP</span>
               <ArrowRight className="w-4 h-4" />
             </button>
@@ -172,9 +172,9 @@ export default function ParticipantPortalPage() {
 
         {/* Certificate Unlock Banner */}
         {isEligibleForCert && (
-          <div className="p-6 rounded-2xl bg-emerald-950/20 backdrop-blur-md border border-emerald-500/50 shadow-[0_0_20px_rgba(16,185,129,0.15)] flex flex-col sm:flex-row items-center justify-between gap-4 font-sans text-sm">
+          <div className="p-6 rounded-2xl bg-orange-950/20 backdrop-blur-md border border-orange-500/50 shadow-[0_0_20px_rgba(16,185,129,0.15)] flex flex-col sm:flex-row items-center justify-between gap-4 font-sans text-sm">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-xl bg-emerald-950/60 border border-emerald-500 text-emerald-400 flex items-center justify-center shrink-0">
+              <div className="w-12 h-12 rounded-xl bg-orange-950/60 border border-orange-500 text-orange-400 flex items-center justify-center shrink-0">
                 <Award className="w-6 h-6" />
               </div>
               <div>
@@ -188,7 +188,7 @@ export default function ParticipantPortalPage() {
             </div>
 
             <Link href="/certificate">
-              <button className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold transition-colors w-full sm:w-auto shadow-lg shadow-emerald-500/20">
+              <button className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-orange-600 hover:bg-orange-500 text-white font-bold transition-colors w-full sm:w-auto shadow-lg shadow-orange-500/20">
                 <span>VIEW CERTIFICATE</span>
                 <ExternalLink className="w-4 h-4" />
               </button>
@@ -229,13 +229,13 @@ function WhatsAppJoinCard() {
   if (!whatsappLink) return null;
 
   return (
-    <div className="p-6 rounded-2xl bg-emerald-950/10 backdrop-blur-md border border-emerald-500/40 space-y-4 shadow-xl">
+    <div className="p-6 rounded-2xl bg-orange-950/10 backdrop-blur-md border border-orange-500/40 space-y-4 shadow-xl">
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-xl bg-emerald-950/60 border border-emerald-500 text-emerald-400 flex items-center justify-center shrink-0">
+        <div className="w-10 h-10 rounded-xl bg-orange-950/60 border border-orange-500 text-orange-400 flex items-center justify-center shrink-0">
           <ExternalLink className="w-5 h-5" />
         </div>
         <div>
-          <h3 className="text-sm font-bold font-mono text-emerald-400">
+          <h3 className="text-sm font-bold font-mono text-orange-400">
             JOIN OFFICIAL WHATSAPP GROUP
           </h3>
           <p className="text-[11px] text-gray-500 mt-0.5 font-sans">
@@ -246,7 +246,7 @@ function WhatsAppJoinCard() {
 
       <div className="flex flex-col sm:flex-row items-center gap-4">
         {whatsappQr && (
-          <div className="w-40 h-40 rounded-xl overflow-hidden border border-emerald-500/30 bg-white p-2 shrink-0">
+          <div className="w-40 h-40 rounded-xl overflow-hidden border border-orange-500/30 bg-white p-2 shrink-0">
             <img
               src={whatsappQr}
               alt="WhatsApp Group QR Code"
@@ -262,7 +262,7 @@ function WhatsAppJoinCard() {
             href={whatsappLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold font-sans text-sm transition-all shadow-lg"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-orange-600 hover:bg-orange-500 text-white font-bold font-sans text-sm transition-all shadow-lg"
           >
             <ExternalLink className="w-4 h-4" />
             JOIN WHATSAPP GROUP
@@ -371,11 +371,11 @@ function TeamPortalCard() {
   const psSelectionVisible = teamData.psSelectionVisible;
 
   return (
-    <div className="p-6 rounded-2xl bg-blue-950/10 backdrop-blur-md border border-blue-500/40 space-y-5 shadow-xl">
+    <div className="p-6 rounded-2xl bg-red-950/10 backdrop-blur-md border border-red-500/40 space-y-5 shadow-xl">
       {/* Team Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-xl bg-blue-950/60 border border-blue-500 text-blue-400 flex items-center justify-center shrink-0">
+          <div className="w-12 h-12 rounded-xl bg-red-950/60 border border-red-500 text-red-400 flex items-center justify-center shrink-0">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 21a8 8 0 0 0-16 0"/><circle cx="10" cy="8" r="5"/><path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3"/></svg>
           </div>
           <div>
@@ -388,7 +388,7 @@ function TeamPortalCard() {
           </div>
         </div>
         {ps && (
-          <div className="px-3 py-1.5 rounded-xl bg-blue-500/20 border border-blue-500/30 text-blue-400 text-[10px] font-bold font-mono shadow-[0_0_10px_rgba(59,130,246,0.2)]">
+          <div className="px-3 py-1.5 rounded-xl bg-red-500/20 border border-red-500/30 text-red-400 text-[10px] font-bold font-mono shadow-[0_0_10px_rgba(59,130,246,0.2)]">
             PS #{ps.slotNumber}
           </div>
         )}
@@ -423,15 +423,15 @@ function TeamPortalCard() {
 
       {/* Problem Statement - assigned */}
       {ps && (
-        <div className="p-5 rounded-xl bg-blue-950/30 border border-blue-500/30 space-y-3">
-          <div className="text-[10px] text-blue-400 font-bold font-mono">ASSIGNED PROBLEM STATEMENT</div>
+        <div className="p-5 rounded-xl bg-red-950/30 border border-red-500/30 space-y-3">
+          <div className="text-[10px] text-red-400 font-bold font-mono">ASSIGNED PROBLEM STATEMENT</div>
           <div className="text-base font-bold text-white font-sans">{ps.title}</div>
           {ps.documentUrl && (
             <a
               href={ps.documentUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold font-mono transition-colors mt-2 shadow-lg"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-red-600 hover:bg-red-500 text-white text-xs font-bold font-mono transition-colors mt-2 shadow-lg"
             >
               📄 VIEW DOCUMENT
             </a>
@@ -441,8 +441,8 @@ function TeamPortalCard() {
 
       {/* Dice Roll Game - only for team lead when PS not assigned */}
       {!ps && isLead && psSelectionVisible && (
-        <div className="p-6 rounded-2xl bg-gradient-to-br from-blue-950/60 to-gray-900 border border-blue-500/30 text-center space-y-5">
-          <div className="text-xs text-blue-400 font-bold font-mono tracking-widest">
+        <div className="p-6 rounded-2xl bg-gradient-to-br from-red-950/60 to-gray-900 border border-red-500/30 text-center space-y-5">
+          <div className="text-xs text-red-400 font-bold font-mono tracking-widest">
             🎲 PROBLEM STATEMENT SELECTION
           </div>
           <p className="text-sm text-gray-400 font-sans">
@@ -454,9 +454,9 @@ function TeamPortalCard() {
             <div
               className={`w-28 h-28 rounded-2xl border-2 flex items-center justify-center text-5xl font-black font-mono transition-all duration-300 ${
                 diceAnimating
-                  ? 'border-blue-500 bg-blue-500/20 text-blue-400 animate-bounce shadow-[0_0_30px_rgba(59,130,246,0.3)]'
+                  ? 'border-red-500 bg-red-500/20 text-red-400 animate-bounce shadow-[0_0_30px_rgba(59,130,246,0.3)]'
                   : diceNumber
-                  ? 'border-emerald-500 bg-emerald-500/20 text-emerald-400 shadow-[0_0_30px_rgba(16,185,129,0.3)]'
+                  ? 'border-orange-500 bg-orange-500/20 text-orange-400 shadow-[0_0_30px_rgba(16,185,129,0.3)]'
                   : 'border-gray-700 bg-gray-900 text-gray-600'
               }`}
             >
@@ -470,8 +470,8 @@ function TeamPortalCard() {
               disabled={rolling}
               className={`px-8 py-3 rounded-xl font-bold text-sm font-sans transition-all w-full sm:w-auto ${
                 rolling
-                  ? 'bg-blue-500/30 text-blue-400 cursor-not-allowed'
-                  : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50'
+                  ? 'bg-red-500/30 text-red-400 cursor-not-allowed'
+                  : 'bg-gradient-to-r from-red-600 to-indigo-600 hover:from-red-500 hover:to-indigo-500 text-white shadow-lg shadow-red-500/30 hover:shadow-red-500/50'
               }`}
             >
               {rolling ? '🎲 ROLLING...' : '🎲 ROLL THE DICE'}
@@ -479,15 +479,15 @@ function TeamPortalCard() {
           )}
 
           {rolledPS && (
-            <div className="p-5 rounded-xl bg-emerald-950/30 border border-emerald-500/30 space-y-2 text-left mt-4">
-              <div className="text-[10px] text-emerald-400 font-bold font-mono">🎉 YOU GOT</div>
+            <div className="p-5 rounded-xl bg-orange-950/30 border border-orange-500/30 space-y-2 text-left mt-4">
+              <div className="text-[10px] text-orange-400 font-bold font-mono">🎉 YOU GOT</div>
               <div className="text-sm font-bold text-white font-sans">{rolledPS.title}</div>
               {rolledPS.documentUrl && (
                 <a
                   href={rolledPS.documentUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold font-sans transition-colors mt-2 shadow-lg"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-orange-600 hover:bg-orange-500 text-white text-xs font-bold font-sans transition-colors mt-2 shadow-lg"
                 >
                   📄 VIEW DOCUMENT
                 </a>
@@ -531,13 +531,13 @@ function ExamPortalCard() {
   const attempt = data.attempt;
 
   return (
-    <div className="p-6 rounded-2xl bg-cyan-950/10 backdrop-blur-md border border-cyan-500/40 space-y-4 shadow-xl">
+    <div className="p-6 rounded-2xl bg-yellow-950/10 backdrop-blur-md border border-yellow-500/40 space-y-4 shadow-xl">
       <div className="flex items-center gap-4">
-        <div className="w-12 h-12 rounded-xl bg-cyan-950/60 border border-cyan-500 text-cyan-400 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(0,229,255,0.2)]">
+        <div className="w-12 h-12 rounded-xl bg-yellow-950/60 border border-yellow-500 text-yellow-400 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(255,215,0,0.2)]">
           <ShieldCheck className="w-6 h-6" />
         </div>
         <div>
-          <h3 className="text-lg font-bold font-sans text-cyan-400">
+          <h3 className="text-lg font-bold font-sans text-yellow-400">
             SECURE EXAM PORTAL
           </h3>
           <p className="text-xs text-gray-400 mt-0.5 font-sans">
@@ -552,15 +552,15 @@ function ExamPortalCard() {
             You have not started your exam yet. Ensure you are in a quiet environment before proceeding.
           </p>
           <Link href="/portal/exam">
-            <button className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold font-sans transition-colors w-full sm:w-auto shadow-lg shadow-cyan-500/20">
+            <button className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-yellow-600 hover:bg-yellow-500 text-white font-bold font-sans transition-colors w-full sm:w-auto shadow-lg shadow-yellow-500/20">
               <ShieldCheck className="w-5 h-5" />
               <span>START SECURE EXAM</span>
             </button>
           </Link>
         </div>
       ) : attempt.status === 'completed' ? (
-        <div className="p-4 rounded-xl bg-emerald-950/20 border border-emerald-500/30 text-center">
-          <div className="text-emerald-400 font-bold font-sans text-sm">EXAM COMPLETED</div>
+        <div className="p-4 rounded-xl bg-orange-950/20 border border-orange-500/30 text-center">
+          <div className="text-orange-400 font-bold font-sans text-sm">EXAM COMPLETED</div>
           <div className="text-xs text-gray-500 mt-1 font-sans">Your responses have been recorded successfully.</div>
         </div>
       ) : attempt.status === 'terminated' ? (

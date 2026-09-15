@@ -23,15 +23,15 @@ export default function AttendanceBadge({
     <div className="p-6 rounded-2xl bg-gray-900/50 backdrop-blur-md border border-gray-800 font-mono text-xs space-y-6 shadow-xl">
       <div className="flex items-center justify-between border-b border-gray-800 pb-3">
         <h3 className="text-sm font-bold text-white tracking-wider uppercase flex items-center gap-2">
-          <QrCode className="w-4 h-4 text-cyan-400" />
+          <QrCode className="w-4 h-4 text-yellow-400" />
           <span>ATTENDANCE PASS & QR CODE</span>
         </h3>
-        <span className="text-[11px] text-cyan-500 font-bold">DAY 1 & 2</span>
+        <span className="text-[11px] text-yellow-500 font-bold">DAY 1 & 2</span>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-12 gap-6 items-center">
         {/* Attendance QR Pass */}
-        <div className="sm:col-span-5 flex flex-col items-center justify-center p-4 rounded-xl bg-white text-black shadow-[0_0_15px_rgba(0,229,255,0.2)]">
+        <div className="sm:col-span-5 flex flex-col items-center justify-center p-4 rounded-xl bg-white text-black shadow-[0_0_15px_rgba(255,215,0,0.2)]">
           {paymentVerified ? (
             <>
               <QRCodeSVG
@@ -58,7 +58,7 @@ export default function AttendanceBadge({
           <div
             className={`p-3.5 rounded-xl border-2 flex items-center justify-between transition-colors ${
               day1Present
-                ? 'bg-emerald-950/30 border-emerald-500/40 text-emerald-400'
+                ? 'bg-orange-950/30 border-orange-500/40 text-orange-400'
                 : 'bg-gray-950/50 border-gray-800 text-gray-500'
             }`}
           >
@@ -72,7 +72,7 @@ export default function AttendanceBadge({
             <div className="flex items-center gap-1.5 font-bold">
               {day1Present ? (
                 <>
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                  <CheckCircle2 className="w-4 h-4 text-orange-400" />
                   <span>PRESENT</span>
                 </>
               ) : (
@@ -88,7 +88,7 @@ export default function AttendanceBadge({
           <div
             className={`p-3.5 rounded-xl border-2 flex items-center justify-between transition-colors ${
               day2Present
-                ? 'bg-emerald-950/30 border-emerald-500/40 text-emerald-400'
+                ? 'bg-orange-950/30 border-orange-500/40 text-orange-400'
                 : 'bg-gray-950/50 border-gray-800 text-gray-500'
             }`}
           >
@@ -102,7 +102,7 @@ export default function AttendanceBadge({
             <div className="flex items-center gap-1.5 font-bold">
               {day2Present ? (
                 <>
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                  <CheckCircle2 className="w-4 h-4 text-orange-400" />
                   <span>PRESENT</span>
                 </>
               ) : (

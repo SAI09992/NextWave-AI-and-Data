@@ -25,14 +25,14 @@ export function MetricCard({
   className,
 }: MetricCardProps) {
   const variantStyles = {
-    cyan: 'border-nexus-primary/30 text-nexus-primary bg-cyan-950/10 hover:border-nexus-primary/60',
-    emerald: 'border-emerald-500/30 text-emerald-400 bg-emerald-950/10 hover:border-emerald-500/60',
+    cyan: 'border-nexus-primary/30 text-nexus-primary bg-yellow-950/10 hover:border-nexus-primary/60',
+    emerald: 'border-orange-500/30 text-orange-400 bg-orange-950/10 hover:border-orange-500/60',
     amber: 'border-amber-500/30 text-amber-400 bg-amber-950/10 hover:border-amber-500/60',
     crimson: 'border-red-500/30 text-red-400 bg-red-950/10 hover:border-red-500/60',
   };
 
   const glowStyles = {
-    cyan: 'shadow-[0_0_15px_-3px_rgba(0,229,255,0.15)]',
+    cyan: 'shadow-[0_0_15px_-3px_rgba(255,215,0,0.15)]',
     emerald: 'shadow-[0_0_15px_-3px_rgba(16,185,129,0.15)]',
     amber: 'shadow-[0_0_15px_-3px_rgba(245,158,11,0.15)]',
     crimson: 'shadow-[0_0_15px_-3px_rgba(239,68,68,0.15)]',

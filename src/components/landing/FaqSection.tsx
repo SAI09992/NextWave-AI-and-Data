@@ -35,12 +35,12 @@ export default function FaqSection() {
     <section id="faq" className="py-16 sm:py-24 relative border-t border-gray-800/60 bg-transparent">
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-14 space-y-4">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-950/40 border border-cyan-500/30 text-cyan-400 text-xs font-mono shadow-[0_0_10px_rgba(0,229,255,0.1)]">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-950/40 border border-yellow-500/30 text-yellow-400 text-xs font-mono shadow-[0_0_10px_rgba(255,215,0,0.1)]">
             <HelpCircle className="w-3.5 h-3.5" />
             <span>// 12. FREQUENTLY ASKED QUESTIONS</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-black font-sans text-white">
-            HAVE <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">QUESTIONS?</span>
+            HAVE <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-red-500">QUESTIONS?</span>
           </h2>
         </div>
 
@@ -56,7 +56,7 @@ export default function FaqSection() {
                 transition={{ delay: idx * 0.1, duration: 0.4 }}
                 className={cn(
                   'rounded-2xl border transition-all duration-300 overflow-hidden',
-                  isOpen ? 'bg-gray-900 border-cyan-500/50 shadow-[0_0_15px_rgba(0,229,255,0.1)]' : 'bg-gray-900/50 border-gray-800 hover:border-gray-700'
+                  isOpen ? 'bg-gray-900 border-yellow-500/50 shadow-[0_0_15px_rgba(255,215,0,0.1)]' : 'bg-gray-900/50 border-gray-800 hover:border-gray-700'
                 )}
               >
                 <button
@@ -66,7 +66,7 @@ export default function FaqSection() {
                   <span className={cn('font-bold font-sans text-base sm:text-lg transition-colors', isOpen ? 'text-white' : 'text-gray-300')}>
                     {faq.q}
                   </span>
-                  <div className={cn('p-1 rounded-full transition-colors', isOpen ? 'bg-cyan-500/20 text-cyan-400' : 'bg-gray-800 text-gray-400')}>
+                  <div className={cn('p-1 rounded-full transition-colors', isOpen ? 'bg-yellow-500/20 text-yellow-400' : 'bg-gray-800 text-gray-400')}>
                     <ChevronDown className={cn('w-5 h-5 transition-transform duration-300', isOpen && 'rotate-180')} />
                   </div>
                 </button>

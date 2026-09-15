@@ -178,7 +178,7 @@ export function ImageUploadField({
             />
             <div className="min-w-0">
               <span className="text-xs font-bold text-nexus-text flex items-center gap-1.5 truncate">
-                <CheckCircle className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                <CheckCircle className="w-3.5 h-3.5 text-orange-400 shrink-0" />
                 <span className="truncate">Image Loaded & Configured</span>
               </span>
               <span className="text-[10px] text-nexus-text-dim block truncate mt-0.5">

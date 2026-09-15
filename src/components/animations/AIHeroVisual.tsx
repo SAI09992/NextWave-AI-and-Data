@@ -139,7 +139,7 @@ export default function AIHeroVisual() {
   return (
     <div className="absolute inset-0 w-full h-full z-0">
       {/* Ambient background glow */}
-      <div className="absolute inset-0 bg-gradient-radial from-cyan-900/20 via-transparent to-transparent opacity-60 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-radial from-yellow-900/20 via-transparent to-transparent opacity-60 pointer-events-none" />
       
       <Canvas camera={{ position: [0, 0, 6], fov: 60 }} dpr={[1, 2]}>
         <color attach="background" args={['#050A0F']} />
@@ -157,8 +157,8 @@ export default function AIHeroVisual() {
 
       {/* Decorative Overlay UI */}
       <div className="absolute top-8 right-8 pointer-events-none">
-        <div className="flex items-center gap-2 text-cyan-400 font-mono text-[10px] tracking-[0.2em]">
-          <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse shadow-[0_0_8px_#00E5FF]" />
+        <div className="flex items-center gap-2 text-yellow-400 font-mono text-[10px] tracking-[0.2em]">
+          <div className="w-1.5 h-1.5 bg-yellow-400 rounded-full animate-pulse shadow-[0_0_8px_#00E5FF]" />
           NEURAL LINK: STABLE
         </div>
       </div>

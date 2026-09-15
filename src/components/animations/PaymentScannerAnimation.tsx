@@ -71,7 +71,7 @@ export default function PaymentScannerAnimation({ onComplete, ocrDetails }: Prop
               transition={{ delay: idx * 0.1 }}
               className={`flex items-start gap-4 p-3 rounded-lg border transition-all ${
                 isDone
-                  ? 'bg-emerald-950/20 border-emerald-500/30 text-emerald-400'
+                  ? 'bg-orange-950/20 border-orange-500/30 text-orange-400'
                   : isCurrent
                   ? 'bg-nexus-primary/10 border-nexus-primary text-nexus-primary shadow-nexus-glow-sm'
                   : 'bg-nexus-surface/40 border-nexus-border/40 text-nexus-text-dim'
@@ -79,7 +79,7 @@ export default function PaymentScannerAnimation({ onComplete, ocrDetails }: Prop
             >
               <div className="mt-0.5">
                 {isDone ? (
-                  <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+                  <CheckCircle2 className="w-5 h-5 text-orange-400" />
                 ) : isCurrent ? (
                   <div className="w-5 h-5 rounded-full border-2 border-nexus-primary border-t-transparent animate-spin" />
                 ) : (
@@ -104,7 +104,7 @@ export default function PaymentScannerAnimation({ onComplete, ocrDetails }: Prop
         >
           <div className="text-nexus-primary font-bold mb-1 flex items-center justify-between">
             <span>TRANSACTION STREAM PARSED</span>
-            <span className="text-emerald-400">{ocrDetails.confidence || 96}% CONFIDENCE</span>
+            <span className="text-orange-400">{ocrDetails.confidence || 96}% CONFIDENCE</span>
           </div>
           <div>UTR: <span className="text-nexus-text">{ocrDetails.extractedUtr}</span></div>
           {ocrDetails.extractedAmount && (

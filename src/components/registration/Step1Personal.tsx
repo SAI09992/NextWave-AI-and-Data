@@ -66,7 +66,7 @@ export default function Step1Personal({ form, googleEmail }: Props) {
       {/* Phone Number */}
       <div className="space-y-1.5">
         <label className="text-xs text-nexus-text flex items-center gap-1.5">
-          <Phone className="w-3.5 h-3.5 text-emerald-400" />
+          <Phone className="w-3.5 h-3.5 text-orange-400" />
           <span>WhatsApp / Contact Number (10 Digits) *</span>
         </label>
         <input

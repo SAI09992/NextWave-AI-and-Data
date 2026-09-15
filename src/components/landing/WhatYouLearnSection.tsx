@@ -62,12 +62,12 @@ export default function AboutSection() {
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14 space-y-4">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-950/40 border border-cyan-500/30 text-cyan-400 text-xs font-mono shadow-[0_0_10px_rgba(0,229,255,0.1)]">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-950/40 border border-yellow-500/30 text-yellow-400 text-xs font-mono shadow-[0_0_10px_rgba(255,215,0,0.1)]">
             <Terminal className="w-3.5 h-3.5" />
             <span>// 05. WHAT YOU WILL LEARN</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-black font-sans text-white tracking-tight">
-            8-MODULE <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">AI SYLLABUS</span>
+            8-MODULE <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-red-500">AI SYLLABUS</span>
           </h2>
           <p className="text-base sm:text-lg text-gray-400 font-sans max-w-2xl mx-auto">
             Eight core tactical domains engineered to transform students into job-ready AI & Data engineers.
@@ -86,13 +86,13 @@ export default function AboutSection() {
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ delay: idx * 0.05, duration: 0.4 }}
                 whileHover={{ y: -5 }}
-                className="p-6 rounded-2xl bg-gray-900/50 backdrop-blur-sm border border-gray-800 hover:border-cyan-500/50 transition-all duration-300 space-y-4 flex flex-col justify-between group font-sans shadow-lg"
+                className="p-6 rounded-2xl bg-gray-900/50 backdrop-blur-sm border border-gray-800 hover:border-yellow-500/50 transition-all duration-300 space-y-4 flex flex-col justify-between group font-sans shadow-lg"
               >
                 <div className="space-y-4">
-                  <div className="w-12 h-12 rounded-xl bg-cyan-950/40 border border-cyan-500/30 text-cyan-400 flex items-center justify-center group-hover:bg-cyan-500 group-hover:text-white transition-colors duration-300 shadow-[0_0_15px_rgba(0,229,255,0.1)] group-hover:shadow-[0_0_20px_rgba(0,229,255,0.4)]">
+                  <div className="w-12 h-12 rounded-xl bg-yellow-950/40 border border-yellow-500/30 text-yellow-400 flex items-center justify-center group-hover:bg-yellow-500 group-hover:text-white transition-colors duration-300 shadow-[0_0_15px_rgba(255,215,0,0.1)] group-hover:shadow-[0_0_20px_rgba(255,215,0,0.4)]">
                     <Icon className="w-6 h-6" />
                   </div>
-                  <h3 className="text-base font-bold text-white tracking-wide group-hover:text-cyan-400 transition-colors">
+                  <h3 className="text-base font-bold text-white tracking-wide group-hover:text-yellow-400 transition-colors">
                     {item.title}
                   </h3>
                   <p className="text-sm text-gray-400 leading-relaxed">
@@ -100,7 +100,7 @@ export default function AboutSection() {
                   </p>
                 </div>
 
-                <div className="pt-4 mt-auto text-[10px] text-cyan-500 flex items-center gap-2 font-mono font-bold opacity-70 group-hover:opacity-100 transition-opacity">
+                <div className="pt-4 mt-auto text-[10px] text-yellow-500 flex items-center gap-2 font-mono font-bold opacity-70 group-hover:opacity-100 transition-opacity">
                   <span>MODULE 0{idx + 1}</span>
                   <span className="group-hover:translate-x-1 transition-transform">→</span>
                 </div>

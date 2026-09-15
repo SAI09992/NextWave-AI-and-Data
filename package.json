@@ -57,7 +57,7 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
-    "@types/animejs": "^3.1.12",
+    "@types/animejs": "^3.1.13",
     "@types/canvas-confetti": "^1.9.0",
     "@types/node": "^22.10.5",
     "@types/react": "^19.0.4",

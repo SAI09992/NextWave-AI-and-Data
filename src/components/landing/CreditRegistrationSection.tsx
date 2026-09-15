@@ -20,7 +20,7 @@ export default function CreditRegistrationSection() {
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-950/60 border border-nexus-primary/40 text-nexus-primary text-xs font-mono">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-yellow-950/60 border border-nexus-primary/40 text-nexus-primary text-xs font-mono">
             <Sparkles className="w-3.5 h-3.5" />
             <span>// 04. CREDIT & REGISTRATION</span>
           </div>
@@ -64,7 +64,7 @@ export default function CreditRegistrationSection() {
               <p className="text-nexus-text-muted font-mono text-sm">
                 Open to all 2nd, 3rd & 4th year students across all departments.
               </p>
-              <div className="flex items-end gap-3 text-cyan-400 pt-2">
+              <div className="flex items-end gap-3 text-yellow-400 pt-2">
                 <span className="text-6xl sm:text-7xl font-black font-sans leading-none tracking-tighter">₹200</span>
                 <span className="text-nexus-text-dim font-mono text-sm mb-2">/ registration fee</span>
               </div>
@@ -72,20 +72,20 @@ export default function CreditRegistrationSection() {
 
             {/* Credit Info Box */}
             <div className="p-6 rounded-xl bg-nexus-surface border border-nexus-border mb-10">
-              <div className="text-[10px] text-cyan-400 font-bold font-mono uppercase tracking-widest mb-4">
+              <div className="text-[10px] text-yellow-400 font-bold font-mono uppercase tracking-widest mb-4">
                 Credit Information
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm font-mono text-nexus-text-muted">
                 <div className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
+                  <Check className="w-4 h-4 text-yellow-400 shrink-0 mt-0.5" />
                   <div><span className="text-white font-bold">CSE & IT Students:</span> Program Elective (PE) Credit</div>
                 </div>
                 <div className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
+                  <Check className="w-4 h-4 text-yellow-400 shrink-0 mt-0.5" />
                   <div><span className="text-white font-bold">All Others:</span> University Elective (UE) Credit</div>
                 </div>
                 <div className="flex items-start gap-2 col-span-1 md:col-span-2 mt-2 pt-4 border-t border-nexus-border/50">
-                  <Check className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
+                  <Check className="w-4 h-4 text-yellow-400 shrink-0 mt-0.5" />
                   <div><span className="text-white font-bold">Subject:</span> Artificial Intelligence / Data Science</div>
                 </div>
               </div>
@@ -95,7 +95,7 @@ export default function CreditRegistrationSection() {
             <div className="space-y-3 mb-10">
               {highlights.map((item, idx) => (
                 <div key={idx} className="flex items-start gap-3 font-mono text-sm text-nexus-text-muted">
-                  <Check className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
+                  <Check className="w-4 h-4 text-yellow-400 shrink-0 mt-0.5" />
                   <span>{item}</span>
                 </div>
               ))}

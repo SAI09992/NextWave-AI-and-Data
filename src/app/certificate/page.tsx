@@ -109,7 +109,7 @@ export default function CertificatePage() {
         {/* Certificate Display Card (Print-optimized) */}
         <div
           ref={certificateRef}
-          className="relative rounded-3xl p-8 sm:p-14 bg-gradient-to-b from-[#0F1720] via-[#0A0F14] to-[#050A0F] border-4 border-nexus-primary/60 shadow-[0_0_50px_rgba(0,229,255,0.25)] text-center space-y-8 overflow-hidden font-sans print:border-black print:bg-white print:text-black"
+          className="relative rounded-3xl p-8 sm:p-14 bg-gradient-to-b from-[#0F1720] via-[#0A0F14] to-[#050A0F] border-4 border-nexus-primary/60 shadow-[0_0_50px_rgba(255,215,0,0.25)] text-center space-y-8 overflow-hidden font-sans print:border-black print:bg-white print:text-black"
         >
           {/* Subtle Background Grid & Emblem */}
           <div className="absolute inset-0 nexus-grid-bg opacity-15 pointer-events-none" />
@@ -135,7 +135,7 @@ export default function CertificatePage() {
               </div>
             </div>
 
-            <h1 className="text-2xl sm:text-4xl font-extrabold font-mono tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-nexus-primary via-cyan-200 to-nexus-secondary pt-4">
+            <h1 className="text-2xl sm:text-4xl font-extrabold font-mono tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-nexus-primary via-yellow-200 to-nexus-secondary pt-4">
               CERTIFICATE OF COMPLETION
             </h1>
             <p className="text-xs font-mono text-nexus-text-muted uppercase tracking-widest">

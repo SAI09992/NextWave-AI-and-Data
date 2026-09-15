@@ -30,7 +30,7 @@ export function NexusButton({
 
   const variantClasses = {
     primary:
-      'bg-nexus-primary text-nexus-bg font-bold border border-cyan-300 hover:bg-cyan-300 active:scale-[0.98]',
+      'bg-nexus-primary text-nexus-bg font-bold border border-yellow-300 hover:bg-yellow-300 active:scale-[0.98]',
     secondary:
       'bg-nexus-surface-elevated text-nexus-primary border border-nexus-primary/40 hover:border-nexus-primary hover:bg-nexus-surface-highlight',
     danger:
@@ -44,7 +44,7 @@ export function NexusButton({
   const glowClasses = glow
     ? variant === 'danger'
       ? 'shadow-nexus-glow-danger'
-      : 'shadow-nexus-glow hover:shadow-[0_0_35px_-5px_rgba(0,229,255,0.6)]'
+      : 'shadow-nexus-glow hover:shadow-[0_0_35px_-5px_rgba(255,215,0,0.6)]'
     : '';
 
   return (

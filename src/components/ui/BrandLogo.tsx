@@ -28,7 +28,7 @@ export function BrandLogo({
 
   const content = (
     <div className={cn('flex items-center gap-3 select-none group', className)}>
-      <div className={cn('relative shrink-0 rounded-xl overflow-hidden shadow-[0_0_15px_rgba(0,229,255,0.2)]', current.img)}>
+      <div className={cn('relative shrink-0 rounded-xl overflow-hidden shadow-[0_0_15px_rgba(255,215,0,0.2)]', current.img)}>
         <img
           src="/alumni-logo.png"
           alt="AKCE KLU KARE Alumni Association"
@@ -39,11 +39,11 @@ export function BrandLogo({
       {variant !== 'icon-only' && (
         <div className="flex flex-col text-left">
           <div className="flex items-center gap-1.5 leading-tight">
-            <span className={cn('font-sans font-black tracking-tight text-white group-hover:text-cyan-400 transition-colors', current.text)}>
-              NEXTWAVE <span className="text-cyan-500">AI</span>
+            <span className={cn('font-sans font-black tracking-tight text-white group-hover:text-yellow-400 transition-colors', current.text)}>
+              NEXTWAVE <span className="text-yellow-500">AI</span>
             </span>
           </div>
-          <span className={cn('hidden sm:block font-mono font-semibold tracking-widest text-gray-500 group-hover:text-cyan-400/80 transition-colors uppercase', current.subtext)}>
+          <span className={cn('hidden sm:block font-mono font-semibold tracking-widest text-gray-500 group-hover:text-yellow-400/80 transition-colors uppercase', current.subtext)}>
             AKCE • KLU • KARE ALUMNI
           </span>
         </div>

@@ -102,7 +102,7 @@ export default function AdminDashboardPage() {
         <div>
           <h1 className="text-2xl font-bold tracking-wide flex items-center gap-2">
             NEXTWAVE COMMAND CENTER
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.8)]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-orange-400 animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.8)]" />
           </h1>
           <p className="text-xs text-gray-500 mt-1 font-mono uppercase">
             OPERATIONAL OVERVIEW & REAL-TIME EVENT TELEMETRY
@@ -110,7 +110,7 @@ export default function AdminDashboardPage() {
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-900 border border-gray-700 text-cyan-400 font-mono text-xs shadow-lg">
+          <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-900 border border-gray-700 text-yellow-400 font-mono text-xs shadow-lg">
             <Radio className="w-4 h-4 animate-pulse" />
             <span>SYSTEM ONLINE</span>
           </div>
@@ -164,7 +164,7 @@ export default function AdminDashboardPage() {
         {/* Quick Action Panels */}
         <div className="lg:col-span-7 space-y-6">
           <div className="p-6 rounded-2xl bg-gray-900/50 backdrop-blur-md border border-gray-800 space-y-6 shadow-xl">
-            <h3 className="text-sm font-bold text-cyan-400 uppercase tracking-wider flex items-center gap-2 font-mono">
+            <h3 className="text-sm font-bold text-yellow-400 uppercase tracking-wider flex items-center gap-2 font-mono">
               <Activity className="w-5 h-5" />
               <span>COMMAND ACTIONS & SHORTCUTS</span>
             </h3>
@@ -173,10 +173,10 @@ export default function AdminDashboardPage() {
             <div className="p-5 rounded-xl bg-gray-950 border border-gray-800 space-y-4 shadow-inner">
               <div className="flex items-center justify-between">
                 <span className="font-bold font-mono text-xs flex items-center gap-2 text-white">
-                  <Users className="w-4 h-4 text-cyan-400" /> LIVE BOOTCAMP CAPACITY CONTROL
+                  <Users className="w-4 h-4 text-yellow-400" /> LIVE BOOTCAMP CAPACITY CONTROL
                 </span>
                 <span className="text-[11px] text-gray-500 font-mono">
-                  TOTAL: <strong className="text-cyan-400 text-sm font-bold">{stats.totalCapacity} SLOTS</strong>
+                  TOTAL: <strong className="text-yellow-400 text-sm font-bold">{stats.totalCapacity} SLOTS</strong>
                 </span>
               </div>
 
@@ -229,7 +229,7 @@ export default function AdminDashboardPage() {
                       });
                       toast.success(`Capacity increased to ${newCap} slots`);
                     }}
-                    className="px-3 py-2 rounded-lg bg-emerald-950/40 border border-emerald-500/40 text-emerald-400 font-bold hover:bg-emerald-900/60 transition-colors text-xs font-mono"
+                    className="px-3 py-2 rounded-lg bg-orange-950/40 border border-orange-500/40 text-orange-400 font-bold hover:bg-orange-900/60 transition-colors text-xs font-mono"
                   >
                     +1 Slot
                   </button>
@@ -245,7 +245,7 @@ export default function AdminDashboardPage() {
                       });
                       toast.success(`Capacity increased to ${newCap} slots`);
                     }}
-                    className="px-3 py-2 rounded-lg bg-emerald-950/40 border border-emerald-500/40 text-emerald-400 font-bold hover:bg-emerald-900/60 transition-colors text-xs font-mono"
+                    className="px-3 py-2 rounded-lg bg-orange-950/40 border border-orange-500/40 text-orange-400 font-bold hover:bg-orange-900/60 transition-colors text-xs font-mono"
                   >
                     +10 Slots
                   </button>
@@ -261,7 +261,7 @@ export default function AdminDashboardPage() {
                       });
                       toast.success(`Capacity increased to ${newCap} slots`);
                     }}
-                    className="px-3 py-2 rounded-lg bg-emerald-950/40 border border-emerald-500/40 text-emerald-400 font-bold hover:bg-emerald-900/60 transition-colors text-xs font-mono"
+                    className="px-3 py-2 rounded-lg bg-orange-950/40 border border-orange-500/40 text-orange-400 font-bold hover:bg-orange-900/60 transition-colors text-xs font-mono"
                   >
                     +50 Slots
                   </button>
@@ -269,7 +269,7 @@ export default function AdminDashboardPage() {
 
                 <Link
                   href="/admin/settings"
-                  className="text-xs text-cyan-400 hover:text-cyan-300 font-bold font-mono transition-colors"
+                  className="text-xs text-yellow-400 hover:text-yellow-300 font-bold font-mono transition-colors"
                 >
                   Manage All Settings →
                 </Link>
@@ -278,8 +278,8 @@ export default function AdminDashboardPage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Link href="/admin/payments" className="block">
-                <div className="p-5 rounded-xl bg-gray-950 hover:bg-gray-900 border border-cyan-500/30 hover:border-cyan-500/60 transition-all space-y-2 h-full shadow-lg">
-                  <div className="flex items-center justify-between text-cyan-400 font-bold font-mono">
+                <div className="p-5 rounded-xl bg-gray-950 hover:bg-gray-900 border border-yellow-500/30 hover:border-yellow-500/60 transition-all space-y-2 h-full shadow-lg">
+                  <div className="flex items-center justify-between text-yellow-400 font-bold font-mono">
                     <span>INSPECT PAYMENTS</span>
                     <span className="px-2.5 py-1 rounded bg-amber-950/60 text-amber-400 text-[10px]">
                       {stats.paymentsPending} PENDING
@@ -292,8 +292,8 @@ export default function AdminDashboardPage() {
               </Link>
 
               <Link href="/admin/attendance" className="block">
-                <div className="p-5 rounded-xl bg-gray-950 hover:bg-gray-900 border border-emerald-500/30 hover:border-emerald-500/60 transition-all space-y-2 h-full shadow-lg">
-                  <div className="flex items-center justify-between text-emerald-400 font-bold font-mono">
+                <div className="p-5 rounded-xl bg-gray-950 hover:bg-gray-900 border border-orange-500/30 hover:border-orange-500/60 transition-all space-y-2 h-full shadow-lg">
+                  <div className="flex items-center justify-between text-orange-400 font-bold font-mono">
                     <span>ATTENDANCE</span>
                     <QrCode className="w-5 h-5" />
                   </div>
@@ -304,8 +304,8 @@ export default function AdminDashboardPage() {
               </Link>
 
               <Link href="/admin/registrations" className="block">
-                <div className="p-5 rounded-xl bg-gray-950 hover:bg-gray-900 border border-blue-500/30 hover:border-blue-500/60 transition-all space-y-2 h-full shadow-lg">
-                  <div className="flex items-center justify-between text-blue-400 font-bold font-mono">
+                <div className="p-5 rounded-xl bg-gray-950 hover:bg-gray-900 border border-red-500/30 hover:border-red-500/60 transition-all space-y-2 h-full shadow-lg">
+                  <div className="flex items-center justify-between text-red-400 font-bold font-mono">
                     <span>PARTICIPANT ROSTER</span>
                     <Users className="w-5 h-5" />
                   </div>
@@ -336,10 +336,10 @@ export default function AdminDashboardPage() {
             <div>
               <div className="flex items-center justify-between border-b border-gray-800 pb-4">
                 <h3 className="text-sm font-bold text-white tracking-wider uppercase flex items-center gap-2 font-mono">
-                  <Radio className="w-4 h-4 text-emerald-400 animate-pulse" />
+                  <Radio className="w-4 h-4 text-orange-400 animate-pulse" />
                   <span>LIVE ADMIN ACTIVITY</span>
                 </h3>
-                <span className="text-[10px] text-emerald-400 font-bold">REALTIME FEED</span>
+                <span className="text-[10px] text-orange-400 font-bold">REALTIME FEED</span>
               </div>
 
               <div className="mt-5 space-y-3">
@@ -352,10 +352,10 @@ export default function AdminDashboardPage() {
                       <span
                         className={`w-2 h-2 rounded-full shrink-0 shadow-lg ${
                           act.type === 'pay_ver'
-                            ? 'bg-emerald-400 shadow-emerald-500/50'
+                            ? 'bg-orange-400 shadow-orange-500/50'
                             : act.type === 'pay_sub'
                             ? 'bg-amber-400 shadow-amber-500/50'
-                            : 'bg-cyan-400 shadow-cyan-500/50'
+                            : 'bg-yellow-400 shadow-yellow-500/50'
                         }`}
                       />
                       <span className="text-white truncate font-sans">{act.text}</span>

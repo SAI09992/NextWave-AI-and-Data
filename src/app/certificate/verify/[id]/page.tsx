@@ -55,11 +55,11 @@ export default function CertificateVerifyPage() {
         ) : result?.valid ? (
           <div className="space-y-6">
             {/* Status Pill */}
-            <div className="p-4 rounded-xl bg-emerald-950/30 border border-emerald-500/50 text-emerald-400 flex items-center gap-3">
+            <div className="p-4 rounded-xl bg-orange-950/30 border border-orange-500/50 text-orange-400 flex items-center gap-3">
               <ShieldCheck className="w-6 h-6 shrink-0" />
               <div>
                 <div className="font-bold text-sm">AUTHENTIC & VERIFIED</div>
-                <div className="text-[11px] text-emerald-300">
+                <div className="text-[11px] text-orange-300">
                   This credential is confirmed in the NextGen SOC master database.
                 </div>
               </div>
@@ -86,7 +86,7 @@ export default function CertificateVerifyPage() {
                 </div>
                 <div>
                   <span className="text-nexus-text-dim block text-[10px]">CREDIT TRACK:</span>
-                  <span className="text-emerald-400 font-bold">{result.certificate?.creditType}</span>
+                  <span className="text-orange-400 font-bold">{result.certificate?.creditType}</span>
                 </div>
               </div>
             </div>

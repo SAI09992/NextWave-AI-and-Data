@@ -38,7 +38,7 @@ export default function HeroVisual() {
       <div className="relative z-10 w-48 h-48 sm:w-60 sm:h-60 flex items-center justify-center">
         <svg
           viewBox="0 0 200 240"
-          className="w-full h-full drop-shadow-[0_0_35px_rgba(0,229,255,0.5)]"
+          className="w-full h-full drop-shadow-[0_0_35px_rgba(255,215,0,0.5)]"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -105,9 +105,9 @@ export default function HeroVisual() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ delay: 0.5 }}
-        className="absolute bottom-6 right-0 sm:-right-6 nexus-glass px-3.5 py-1.5 rounded-xl text-[11px] font-mono text-emerald-400 flex items-center gap-2 shadow-nexus-card border border-nexus-border/80"
+        className="absolute bottom-6 right-0 sm:-right-6 nexus-glass px-3.5 py-1.5 rounded-xl text-[11px] font-mono text-orange-400 flex items-center gap-2 shadow-nexus-card border border-nexus-border/80"
       >
-        <Activity className="w-3.5 h-3.5 animate-pulse text-emerald-400" />
+        <Activity className="w-3.5 h-3.5 animate-pulse text-orange-400" />
         <span>SIEM LOG FEED : 1.2M EPS</span>
       </motion.div>
     </div>

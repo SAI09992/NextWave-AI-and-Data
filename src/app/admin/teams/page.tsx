@@ -413,7 +413,7 @@ export default function AdminTeamsPage() {
             </div>
             <div className="p-4 rounded-xl nexus-glass border border-nexus-border text-center">
               <div className="text-[10px] text-nexus-text-muted">MEMBERS ASSIGNED</div>
-              <div className="text-xl font-bold text-emerald-400">{totalMembers}</div>
+              <div className="text-xl font-bold text-orange-400">{totalMembers}</div>
             </div>
             <div className="p-4 rounded-xl nexus-glass border border-amber-500/30 text-center">
               <div className="text-[10px] text-nexus-text-muted">NEED MEMBERS (&lt;3)</div>
@@ -467,7 +467,7 @@ export default function AdminTeamsPage() {
                             placeholder="Team name..."
                             autoFocus
                           />
-                          <button onClick={handleSaveTeamName} className="p-1 text-emerald-400 hover:text-emerald-300">
+                          <button onClick={handleSaveTeamName} className="p-1 text-orange-400 hover:text-orange-300">
                             <Save className="w-4 h-4" />
                           </button>
                           <button onClick={() => setEditTeamId(null)} className="p-1 text-red-400">
@@ -487,7 +487,7 @@ export default function AdminTeamsPage() {
                       <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold ${
                         sizeStatus === 'under' ? 'bg-amber-500/20 text-amber-400' :
                         sizeStatus === 'over' ? 'bg-red-500/20 text-red-400' :
-                        'bg-emerald-500/20 text-emerald-400'
+                        'bg-orange-500/20 text-orange-400'
                       }`}>
                         {memberCount}/5
                       </span>
@@ -503,7 +503,7 @@ export default function AdminTeamsPage() {
                       {memberCount < 5 && (
                         <button
                           onClick={() => setAddMemberTeamId(team.id)}
-                          className="p-1.5 rounded-lg bg-emerald-950/40 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-900/60 transition-colors"
+                          className="p-1.5 rounded-lg bg-orange-950/40 border border-orange-500/30 text-orange-400 hover:bg-orange-900/60 transition-colors"
                           title="Add member"
                         >
                           <UserPlus className="w-3.5 h-3.5" />
@@ -521,7 +521,7 @@ export default function AdminTeamsPage() {
 
                   {/* Add Member Input */}
                   {addMemberTeamId === team.id && (
-                    <div className="flex items-center gap-2 p-2 rounded-xl bg-nexus-surface border border-emerald-500/30">
+                    <div className="flex items-center gap-2 p-2 rounded-xl bg-nexus-surface border border-orange-500/30">
                       <input
                         value={addMemberRegNum}
                         onChange={(e) => setAddMemberRegNum(e.target.value)}
@@ -532,7 +532,7 @@ export default function AdminTeamsPage() {
                       <button
                         onClick={handleAddMember}
                         disabled={addingMember}
-                        className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded text-xs font-bold"
+                        className="px-3 py-1.5 bg-orange-600 hover:bg-orange-500 text-white rounded text-xs font-bold"
                       >
                         {addingMember ? <Loader2 className="w-3 h-3 animate-spin" /> : 'ADD'}
                       </button>
@@ -636,7 +636,7 @@ export default function AdminTeamsPage() {
                                   <select
                                     value={assignTeamSelectId}
                                     onChange={(e) => setAssignTeamSelectId(e.target.value)}
-                                    className="px-2 py-1.5 bg-nexus-surface border border-emerald-500/50 rounded-lg text-nexus-text text-xs focus:outline-none w-36"
+                                    className="px-2 py-1.5 bg-nexus-surface border border-orange-500/50 rounded-lg text-nexus-text text-xs focus:outline-none w-36"
                                   >
                                     <option value="">Select Team...</option>
                                     {teams.filter(t => t.members.length < 5).map(t => (
@@ -648,7 +648,7 @@ export default function AdminTeamsPage() {
                                   <button
                                     onClick={() => handleAssignUserToTeam(u.registerNumber, assignTeamSelectId)}
                                     disabled={!assignTeamSelectId}
-                                    className="px-2 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold transition-colors disabled:opacity-50"
+                                    className="px-2 py-1.5 rounded-lg bg-orange-600 hover:bg-orange-500 text-white font-bold transition-colors disabled:opacity-50"
                                   >
                                     <CheckCircle2 className="w-4 h-4" />
                                   </button>
@@ -662,7 +662,7 @@ export default function AdminTeamsPage() {
                               ) : (
                                 <button
                                   onClick={() => setAssigningUser(u.registerNumber)}
-                                  className="px-3 py-1.5 rounded-lg bg-emerald-950/40 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-900/60 font-bold transition-colors flex items-center gap-1"
+                                  className="px-3 py-1.5 rounded-lg bg-orange-950/40 border border-orange-500/30 text-orange-400 hover:bg-orange-900/60 font-bold transition-colors flex items-center gap-1"
                                 >
                                   <UserPlus className="w-3.5 h-3.5" /> ASSIGN
                                 </button>
@@ -735,7 +735,7 @@ export default function AdminTeamsPage() {
                   className="w-full px-3 py-2 rounded-lg bg-nexus-surface border border-nexus-border text-nexus-text text-xs font-mono file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-nexus-primary/20 file:text-nexus-primary hover:file:bg-nexus-primary/30"
                 />
                 {psDocUrl && (
-                  <div className="text-[10px] text-emerald-400 font-bold whitespace-nowrap">✓ File Attached</div>
+                  <div className="text-[10px] text-orange-400 font-bold whitespace-nowrap">✓ File Attached</div>
                 )}
               </div>
               <p className="text-[10px] text-nexus-text-dim mt-1">Max file size: 2MB. The PDF will be converted to Base64 and stored directly in the database.</p>
@@ -846,7 +846,7 @@ export default function AdminTeamsPage() {
               disabled={savingVisibility}
               className={`px-5 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 transition-all ${
                 teamPortalVisible
-                  ? 'bg-emerald-500 hover:bg-emerald-400 text-black'
+                  ? 'bg-orange-500 hover:bg-orange-400 text-black'
                   : 'bg-red-950/60 hover:bg-red-900/60 border border-red-500 text-red-400'
               }`}
             >
@@ -870,7 +870,7 @@ export default function AdminTeamsPage() {
               disabled={savingVisibility}
               className={`px-5 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 transition-all ${
                 psSelectionVisible
-                  ? 'bg-emerald-500 hover:bg-emerald-400 text-black'
+                  ? 'bg-orange-500 hover:bg-orange-400 text-black'
                   : 'bg-red-950/60 hover:bg-red-900/60 border border-red-500 text-red-400'
               }`}
             >

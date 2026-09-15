@@ -8,7 +8,7 @@ import { NexusButton as Button } from '@/components/ui/NexusButton';
 import { Sparkles, ArrowRight, Calendar, MapPin, Cpu, Database, BrainCircuit, Zap } from 'lucide-react';
 import dynamic from 'next/dynamic';
 
-const AIHeroVisual = dynamic(() => import('@/components/animations/AIHeroVisual'), { ssr: false });
+const MountainClimberVisual = dynamic(() => import('@/components/animations/MountainClimberVisual'), { ssr: false });
 
 export default function HeroSection() {
   const { data: session } = useSession();
@@ -16,9 +16,8 @@ export default function HeroSection() {
 
   return (
     <section className="relative pt-8 pb-16 md:pt-12 md:pb-24 overflow-hidden min-h-[92vh] flex items-center">
-      {/* Animated grid background */}
-      <div className="absolute inset-0 nexus-grid-bg opacity-40" />
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-nexus-bg/50 to-nexus-bg" />
+      {/* Transparent overlays */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-nexus-bg/10 to-nexus-bg/80 pointer-events-none" />
 
       <div className="container mx-auto px-4 z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-4 items-center">
@@ -29,9 +28,9 @@ export default function HeroSection() {
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, ease: 'easeOut' }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-950/40 border border-cyan-500/30 text-cyan-400 font-mono text-xs shadow-[0_0_20px_rgba(0,229,255,0.15)]"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-950/40 border border-yellow-500/30 text-yellow-400 font-mono text-xs shadow-[0_0_20px_rgba(255,215,0,0.15)]"
             >
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
+              <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.8)]" />
               <span>PRESENTED BY AKCE • KLU • KARE ALUMNI</span>
             </motion.div>
 
@@ -40,7 +39,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-950/30 border border-emerald-500/20 text-emerald-400 font-mono text-[10px] ml-4"
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-red-950/30 border border-red-500/20 text-red-400 font-mono text-[10px] ml-4"
             >
               <BrainCircuit className="w-3.5 h-3.5" />
               <span>AI ENGINE : ACTIVE</span>
@@ -55,7 +54,7 @@ export default function HeroSection() {
               <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter text-white leading-[1.0]">
                 NEXTWAVE
                 <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-500" style={{ textShadow: 'none' }}>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-orange-400 to-yellow-400" style={{ textShadow: 'none' }}>
                   AI <span className="text-nexus-text-muted font-light text-4xl sm:text-5xl md:text-6xl lg:text-7xl">AND</span> DATA
                 </span>
               </h1>
@@ -80,11 +79,11 @@ export default function HeroSection() {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="flex items-center gap-3 font-mono text-xs sm:text-sm tracking-widest"
             >
-              <span className="text-cyan-400 font-bold">LEARN.</span>
+              <span className="text-red-500 font-bold">LEARN.</span>
               <span className="text-nexus-primary/30">•</span>
-              <span className="text-indigo-400 font-bold">BUILD.</span>
+              <span className="text-orange-400 font-bold">BUILD.</span>
               <span className="text-nexus-primary/30">•</span>
-              <span className="text-emerald-400 font-bold">DEPLOY.</span>
+              <span className="text-yellow-400 font-bold">DEPLOY.</span>
             </motion.div>
 
             {/* Feature pills */}
@@ -136,12 +135,12 @@ export default function HeroSection() {
               className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-6 text-[11px] text-nexus-text-dim font-mono pt-4"
             >
               <div className="flex items-center gap-1.5">
-                <Calendar className="w-3.5 h-3.5 text-cyan-500" />
+                <Calendar className="w-3.5 h-3.5 text-red-500" />
                 <span>3rd & 4th October 2026</span>
               </div>
               <div className="hidden sm:block text-nexus-border">|</div>
               <div className="flex items-center gap-1.5">
-                <MapPin className="w-3.5 h-3.5 text-indigo-400" />
+                <MapPin className="w-3.5 h-3.5 text-yellow-400" />
                 <span>Dr. V. Vasudevan Seminar Hall, TIFAC CORE</span>
               </div>
             </motion.div>
@@ -154,10 +153,10 @@ export default function HeroSection() {
             transition={{ duration: 1.2, delay: 0.3, ease: 'easeOut' }}
             className="relative hidden lg:block h-[550px] w-full"
           >
-            <AIHeroVisual />
+            <MountainClimberVisual />
             {/* Decorative corner elements */}
             <div className="absolute top-0 left-0 w-16 h-16 border-l-2 border-t-2 border-nexus-primary/20 rounded-tl-xl" />
-            <div className="absolute bottom-0 right-0 w-16 h-16 border-r-2 border-b-2 border-indigo-500/20 rounded-br-xl" />
+            <div className="absolute bottom-0 right-0 w-16 h-16 border-r-2 border-b-2 border-red-500/20 rounded-br-xl" />
           </motion.div>
         </div>
       </div>

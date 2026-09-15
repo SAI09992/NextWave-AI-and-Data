@@ -109,10 +109,10 @@ export default function AdminAuditLogsPage() {
                       <span
                         className={`px-2 py-0.5 rounded font-bold text-[10px] ${
                           log.action.includes('VERIFIED')
-                            ? 'bg-emerald-950/60 text-emerald-400 border border-emerald-500/40'
+                            ? 'bg-orange-950/60 text-orange-400 border border-orange-500/40'
                             : log.action.includes('REJECTED')
                             ? 'bg-red-950/60 text-red-400 border border-red-500/40'
-                            : 'bg-cyan-950/60 text-nexus-primary border border-cyan-500/40'
+                            : 'bg-yellow-950/60 text-nexus-primary border border-yellow-500/40'
                         }`}
                       >
                         {log.action}

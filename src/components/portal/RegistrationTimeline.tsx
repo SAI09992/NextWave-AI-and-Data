@@ -87,10 +87,10 @@ export default function RegistrationTimeline({
     <div className="p-6 rounded-2xl bg-gray-900/50 backdrop-blur-md border border-gray-800 font-mono text-xs space-y-6 shadow-xl">
       <div className="flex items-center justify-between border-b border-gray-800 pb-3">
         <h3 className="text-sm font-bold text-white tracking-wider uppercase flex items-center gap-2">
-          <Clock className="w-4 h-4 text-cyan-400" />
+          <Clock className="w-4 h-4 text-yellow-400" />
           <span>PARTICIPANT LIFECYCLE PROGRESSION</span>
         </h3>
-        <span className="text-[11px] text-cyan-500 font-bold">REAL-TIME TIMELINE</span>
+        <span className="text-[11px] text-yellow-500 font-bold">REAL-TIME TIMELINE</span>
       </div>
 
       <div className="relative pl-6 space-y-6">
@@ -114,7 +114,7 @@ export default function RegistrationTimeline({
               <div
                 className={`absolute -left-[27px] top-0.5 w-6 h-6 rounded-full flex items-center justify-center text-xs transition-colors z-10 ${
                   isDone
-                    ? 'bg-emerald-950 text-emerald-400 border border-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.3)]'
+                    ? 'bg-orange-950 text-orange-400 border border-orange-500 shadow-[0_0_10px_rgba(16,185,129,0.3)]'
                     : isInProgress
                     ? 'bg-amber-950 text-amber-400 border border-amber-500 animate-pulse shadow-[0_0_10px_rgba(245,158,11,0.3)]'
                     : isRejected

@@ -33,10 +33,10 @@ export default function NextWaveNavbar() {
             <a
               key={link.label}
               href={link.href}
-              className="hover:text-cyan-400 transition-colors py-1 relative group"
+              className="hover:text-yellow-400 transition-colors py-1 relative group"
             >
               <span>{link.label}</span>
-              <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-cyan-400 transition-all duration-300 group-hover:w-full" />
+              <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-yellow-400 transition-all duration-300 group-hover:w-full" />
             </a>
           ))}
         </nav>
@@ -68,7 +68,7 @@ export default function NextWaveNavbar() {
                 </button>
               </Link>
               <Link href="/register" prefetch={true}>
-                <Button size="sm" variant="primary" glow className="gap-2 px-5 py-2.5 text-sm bg-cyan-600 hover:bg-cyan-500 text-white">
+                <Button size="sm" variant="primary" glow className="gap-2 px-5 py-2.5 text-sm bg-yellow-600 hover:bg-yellow-500 text-white">
                   <span>REGISTER NOW</span>
                   <ArrowRight className="w-4 h-4" />
                 </Button>

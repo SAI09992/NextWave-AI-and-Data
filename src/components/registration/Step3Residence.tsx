@@ -23,7 +23,7 @@ export default function Step3Residence({ form }: Props) {
   return (
     <div className="space-y-6 font-mono">
       <div className="border-b border-gray-800 pb-4">
-        <h3 className="text-lg font-bold text-cyan-400">
+        <h3 className="text-lg font-bold text-yellow-400">
           STEP 3 : RESIDENCE DETAILS
         </h3>
         <p className="text-sm text-gray-500">
@@ -36,8 +36,8 @@ export default function Step3Residence({ form }: Props) {
         <label
           className={`relative flex flex-col p-4 rounded-xl border-2 cursor-pointer transition-all ${
             currentResidence === 'DAY_SCHOLAR'
-              ? 'border-cyan-500 bg-cyan-900/20'
-              : 'border-gray-700 bg-gray-900/50 hover:border-cyan-500/50'
+              ? 'border-yellow-500 bg-yellow-900/20'
+              : 'border-gray-700 bg-gray-900/50 hover:border-yellow-500/50'
           }`}
           onClick={() => {
             setValue('residenceType', 'DAY_SCHOLAR', { shouldValidate: true });
@@ -46,7 +46,7 @@ export default function Step3Residence({ form }: Props) {
           }}
         >
           <div className="flex items-center gap-3">
-            <Home className={`w-5 h-5 ${currentResidence === 'DAY_SCHOLAR' ? 'text-cyan-400' : 'text-gray-400'}`} />
+            <Home className={`w-5 h-5 ${currentResidence === 'DAY_SCHOLAR' ? 'text-yellow-400' : 'text-gray-400'}`} />
             <span className={`font-bold ${currentResidence === 'DAY_SCHOLAR' ? 'text-white' : 'text-gray-400'}`}>
               Day Scholar
             </span>
@@ -56,13 +56,13 @@ export default function Step3Residence({ form }: Props) {
         <label
           className={`relative flex flex-col p-4 rounded-xl border-2 cursor-pointer transition-all ${
             currentResidence === 'HOSTEL'
-              ? 'border-emerald-500 bg-emerald-900/20'
-              : 'border-gray-700 bg-gray-900/50 hover:border-emerald-500/50'
+              ? 'border-red-500 bg-red-900/20'
+              : 'border-gray-700 bg-gray-900/50 hover:border-red-500/50'
           }`}
           onClick={() => setValue('residenceType', 'HOSTEL', { shouldValidate: true })}
         >
           <div className="flex items-center gap-3">
-            <Building className={`w-5 h-5 ${currentResidence === 'HOSTEL' ? 'text-emerald-400' : 'text-gray-400'}`} />
+            <Building className={`w-5 h-5 ${currentResidence === 'HOSTEL' ? 'text-red-400' : 'text-gray-400'}`} />
             <span className={`font-bold ${currentResidence === 'HOSTEL' ? 'text-white' : 'text-gray-400'}`}>
               Hosteller
             </span>
@@ -84,14 +84,14 @@ export default function Step3Residence({ form }: Props) {
           >
             <div className="space-y-2">
               <label className="text-sm text-gray-300 flex items-center gap-2">
-                <Building className="w-4 h-4 text-emerald-400" />
+                <Building className="w-4 h-4 text-red-400" />
                 <span>Hostel Name / Block *</span>
               </label>
               <input
                 type="text"
                 placeholder="e.g. MH1, LH2"
                 {...register('hostelName')}
-                className="w-full px-4 py-3 rounded-xl bg-gray-900/50 border border-gray-700 text-white placeholder:text-gray-600 focus:outline-none focus:border-emerald-500 transition-colors"
+                className="w-full px-4 py-3 rounded-xl bg-gray-900/50 border border-gray-700 text-white placeholder:text-gray-600 focus:outline-none focus:border-red-500 transition-colors"
               />
               {errors.hostelName && (
                 <p className="text-xs text-red-400">{errors.hostelName.message}</p>
@@ -100,14 +100,14 @@ export default function Step3Residence({ form }: Props) {
 
             <div className="space-y-2">
               <label className="text-sm text-gray-300 flex items-center gap-2">
-                <DoorOpen className="w-4 h-4 text-emerald-400" />
+                <DoorOpen className="w-4 h-4 text-red-400" />
                 <span>Room Number *</span>
               </label>
               <input
                 type="text"
                 placeholder="e.g. 101, 204B"
                 {...register('roomNumber')}
-                className="w-full px-4 py-3 rounded-xl bg-gray-900/50 border border-gray-700 text-white placeholder:text-gray-600 focus:outline-none focus:border-emerald-500 transition-colors"
+                className="w-full px-4 py-3 rounded-xl bg-gray-900/50 border border-gray-700 text-white placeholder:text-gray-600 focus:outline-none focus:border-red-500 transition-colors"
               />
               {errors.roomNumber && (
                 <p className="text-xs text-red-400">{errors.roomNumber.message}</p>

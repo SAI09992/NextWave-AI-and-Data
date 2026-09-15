@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import { Shield, Lock, CheckCircle2, AlertTriangle } from 'lucide-react';
 import { NexusButton } from '@/components/ui/NexusButton';
 import { BrandLogo } from '@/components/ui/BrandLogo';
+import CodeRevealWrapper from '@/components/animations/CodeRevealWrapper';
 import Link from 'next/link';
 
 function LoginContent() {
@@ -20,11 +21,12 @@ function LoginContent() {
     const isAdmin = (session.user as any).role === 'admin';
     return (
       <div className="flex-1 flex items-center justify-center p-4">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="w-full max-w-md nexus-glass-glow rounded-2xl p-8 border border-nexus-primary/40 text-center space-y-6"
-        >
+        <CodeRevealWrapper>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="w-full max-w-md nexus-glass-glow rounded-2xl p-8 border border-nexus-primary/40 text-center space-y-6"
+          >
           <div className="w-16 h-16 rounded-full bg-nexus-primary/10 border border-nexus-primary/40 mx-auto flex items-center justify-center text-nexus-primary">
             <CheckCircle2 className="w-8 h-8" />
           </div>
@@ -49,7 +51,8 @@ function LoginContent() {
               </NexusButton>
             </Link>
           </div>
-        </motion.div>
+          </motion.div>
+        </CodeRevealWrapper>
       </div>
     );
   }
@@ -74,12 +77,13 @@ function LoginContent() {
 
   return (
     <div className="flex-1 flex items-center justify-center p-4 min-h-[calc(100vh-4rem)] font-mono">
-      <motion.div
-        initial={{ opacity: 0, y: 15 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="w-full max-w-md nexus-glass-glow rounded-2xl p-6 sm:p-8 border border-nexus-border shadow-nexus-card space-y-6"
-      >
+      <CodeRevealWrapper>
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="w-full max-w-md nexus-glass-glow rounded-2xl p-6 sm:p-8 border border-nexus-border shadow-nexus-card space-y-6"
+        >
         {/* Header with Official Logo */}
         <div className="text-center space-y-3">
           <div className="flex justify-center">
@@ -103,7 +107,7 @@ function LoginContent() {
           <button
             onClick={handleGoogleLogin}
             disabled={loading}
-            className="w-full flex items-center justify-center gap-3 py-3.5 px-4 rounded-xl bg-nexus-surface-elevated hover:bg-nexus-surface-highlight border-2 border-nexus-border hover:border-nexus-primary text-nexus-text font-mono text-sm font-bold transition-all shadow-nexus-glow-sm disabled:opacity-50 hover:shadow-nexus-glow-cyan"
+            className="w-full flex items-center justify-center gap-3 py-3.5 px-4 rounded-xl bg-nexus-surface-elevated hover:bg-nexus-surface-highlight border-2 border-nexus-border hover:border-nexus-primary text-nexus-text font-mono text-sm font-bold transition-all shadow-cyber-glow-sm disabled:opacity-50 hover:shadow-cyber-glow"
           >
             <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24">
               <path
@@ -144,7 +148,8 @@ function LoginContent() {
             ⚠️ Enter name in the registration wizard strictly matching your SIS login.
           </p>
         </div>
-      </motion.div>
+        </motion.div>
+      </CodeRevealWrapper>
     </div>
   );
 }

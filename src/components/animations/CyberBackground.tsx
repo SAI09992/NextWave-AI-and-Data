@@ -323,15 +323,15 @@ export default function nexusBackground() {
   return (
     <div ref={containerRef} className="fixed inset-0 pointer-events-none -z-10 overflow-hidden bg-[#030712]">
       {/* 1. Animated Ambient Neon Aurora Mesh Blobs (Anime.js) */}
-      <div className="nexus-aurora-blob-1 absolute -top-[15%] -left-[10%] w-[650px] h-[650px] rounded-full bg-gradient-to-br from-cyan-500/25 via-blue-600/15 to-transparent blur-[140px]" />
-      <div className="nexus-aurora-blob-2 absolute top-[35%] -right-[15%] w-[750px] h-[750px] rounded-full bg-gradient-to-bl from-emerald-500/20 via-cyan-600/15 to-transparent blur-[150px]" />
-      <div className="nexus-aurora-blob-3 absolute -bottom-[15%] left-[25%] w-[700px] h-[700px] rounded-full bg-gradient-to-tr from-indigo-600/20 via-cyan-500/15 to-transparent blur-[140px]" />
+      <div className="nexus-aurora-blob-1 absolute -top-[15%] -left-[10%] w-[650px] h-[650px] rounded-full bg-gradient-to-br from-yellow-500/25 via-red-600/15 to-transparent blur-[140px]" />
+      <div className="nexus-aurora-blob-2 absolute top-[35%] -right-[15%] w-[750px] h-[750px] rounded-full bg-gradient-to-bl from-orange-500/20 via-yellow-600/15 to-transparent blur-[150px]" />
+      <div className="nexus-aurora-blob-3 absolute -bottom-[15%] left-[25%] w-[700px] h-[700px] rounded-full bg-gradient-to-tr from-indigo-600/20 via-yellow-500/15 to-transparent blur-[140px]" />
 
       {/* 2. nexus Circuit Grid Overlay */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#00E5FF0A_1px,transparent_1px),linear-gradient(to_bottom,#00E5FF0A_1px,transparent_1px)] bg-[size:48px_48px] opacity-40 [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,#000_60%,transparent_100%)]" />
 
       {/* 3. Sweeping Holographic Radar Laser Line */}
-      <div className="nexus-radar-sweep absolute left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-cyan-400/60 to-transparent shadow-[0_0_15px_#00E5FF]" />
+      <div className="nexus-radar-sweep absolute left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-yellow-400/60 to-transparent shadow-[0_0_15px_#00E5FF]" />
 
       {/* 4. Interactive Neural Constellation & Telemetry Canvas */}
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />

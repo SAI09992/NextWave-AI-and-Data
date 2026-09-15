@@ -15,8 +15,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   if (status === 'loading') {
     return (
       <div className="flex-1 flex items-center justify-center p-4 min-h-screen bg-cyber-bg">
-        <div className="font-mono text-cyan-400 text-sm flex items-center gap-3">
-          <span className="w-5 h-5 rounded-full border-2 border-cyan-500 border-t-transparent animate-spin" />
+        <div className="font-mono text-yellow-400 text-sm flex items-center gap-3">
+          <span className="w-5 h-5 rounded-full border-2 border-yellow-500 border-t-transparent animate-spin" />
           <span>AUTHENTICATING NEXTWAVE ADMIN ACCESS...</span>
         </div>
       </div>
@@ -37,7 +37,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             </p>
           </div>
           <Link href="/login?callbackUrl=/admin" className="block">
-            <button className="w-full flex items-center justify-center py-3 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold transition-all shadow-lg shadow-cyan-500/20">
+            <button className="w-full flex items-center justify-center py-3 rounded-xl bg-yellow-600 hover:bg-yellow-500 text-white font-bold transition-all shadow-lg shadow-yellow-500/20">
               SIGN IN AS ADMINISTRATOR
             </button>
           </Link>
@@ -63,7 +63,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </div>
           <div className="space-y-3">
             <Link href="/portal" className="block">
-              <button className="w-full py-3 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold transition-all shadow-lg shadow-cyan-500/20">
+              <button className="w-full py-3 rounded-xl bg-yellow-600 hover:bg-yellow-500 text-white font-bold transition-all shadow-lg shadow-yellow-500/20">
                 GO TO PARTICIPANT PORTAL
               </button>
             </Link>
@@ -83,8 +83,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <AdminSidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
       <main className="flex-1 overflow-x-hidden overflow-y-auto w-full relative">
         <div className="md:hidden p-4 border-b border-gray-800 flex justify-between items-center bg-gray-900/95 backdrop-blur-md sticky top-0 z-40">
-          <Link href="/admin" className="font-bold text-cyan-400 font-sans tracking-wide text-lg flex items-center gap-2">
-            <Shield className="w-5 h-5 text-emerald-400" />
+          <Link href="/admin" className="font-bold text-yellow-400 font-sans tracking-wide text-lg flex items-center gap-2">
+            <Shield className="w-5 h-5 text-orange-400" />
             <span>NEXTWAVE_ADMIN</span>
           </Link>
           <button 

@@ -139,11 +139,11 @@ export default function AdminAnalyticsPage() {
             </div>
 
             <div className="grid grid-cols-2 gap-2 text-center text-[11px] pt-2 border-t border-nexus-border/40">
-              <div className="p-2 rounded bg-cyan-950/20 border border-cyan-500/30 text-nexus-primary">
+              <div className="p-2 rounded bg-yellow-950/20 border border-yellow-500/30 text-nexus-primary">
                 <div className="font-bold">REGISTERED</div>
                 <div className="text-xs font-bold mt-0.5">{stats.totalRegistered || 0} Students</div>
               </div>
-              <div className="p-2 rounded bg-emerald-950/20 border border-emerald-500/30 text-emerald-400">
+              <div className="p-2 rounded bg-orange-950/20 border border-orange-500/30 text-orange-400">
                 <div className="font-bold">AVAILABLE</div>
                 <div className="text-xs font-bold mt-0.5">{Math.max(0, (stats.totalCapacity || 200) - (stats.totalRegistered || 0))} Seats</div>
               </div>
@@ -154,7 +154,7 @@ export default function AdminAnalyticsPage() {
           <div className="lg:col-span-7 p-6 rounded-2xl nexus-glass border border-nexus-border space-y-4">
             <div className="flex items-center justify-between border-b border-nexus-border pb-3">
               <h3 className="text-sm font-bold text-nexus-text flex items-center gap-2">
-                <TrendingUp className="w-4 h-4 text-emerald-400" />
+                <TrendingUp className="w-4 h-4 text-orange-400" />
                 <span>REGISTRATION VELOCITY (CUMULATIVE BY DATE)</span>
               </h3>
             </div>

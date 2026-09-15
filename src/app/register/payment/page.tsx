@@ -10,6 +10,7 @@ import PaymentScannerAnimation from '@/components/animations/PaymentScannerAnima
 import { ShieldCheck, Upload, QrCode, Copy, Check, Hash, FileCheck, ArrowRight, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import Link from 'next/link';
+import CodeRevealWrapper from '@/components/animations/CodeRevealWrapper';
 
 function PaymentContent() {
   const { data: session } = useSession();
@@ -189,8 +190,9 @@ function PaymentContent() {
   return (
     <div className="flex-1 py-8 px-4">
       <div className="container mx-auto max-w-2xl">
-        <AnimatePresence mode="wait">
-          {scannerActive ? (
+        <CodeRevealWrapper>
+          <AnimatePresence mode="wait">
+            {scannerActive ? (
             <PaymentScannerAnimation
               key="scanner"
               ocrDetails={ocrResult}
@@ -278,7 +280,7 @@ function PaymentContent() {
                           className="p-1.5 rounded-lg bg-nexus-surface border border-nexus-border text-nexus-text-muted hover:text-nexus-primary transition-colors"
                           title="Copy UPI ID"
                         >
-                          {copiedUpi ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+                          {copiedUpi ? <Check className="w-4 h-4 text-orange-400" /> : <Copy className="w-4 h-4" />}
                         </button>
                       </div>
                     </div>
@@ -350,7 +352,7 @@ function PaymentContent() {
                     onClick={() => fileInputRef.current?.click()}
                     className={`p-6 rounded-xl border-2 border-dashed text-center cursor-pointer transition-all ${
                       previewUrl
-                        ? 'border-emerald-500/60 bg-emerald-950/10'
+                        ? 'border-orange-500/60 bg-orange-950/10'
                         : 'border-nexus-border hover:border-nexus-primary/60 bg-nexus-surface/40'
                     }`}
                   >
@@ -362,7 +364,7 @@ function PaymentContent() {
                           alt="Receipt Preview"
                           className="max-h-44 mx-auto rounded-lg border border-nexus-border shadow-md object-contain"
                         />
-                        <div className="text-emerald-400 font-bold text-xs flex items-center justify-center gap-1.5">
+                        <div className="text-orange-400 font-bold text-xs flex items-center justify-center gap-1.5">
                           <Check className="w-4 h-4" />
                           <span>SCREENSHOT LOADED: {file?.name}</span>
                         </div>
@@ -406,7 +408,8 @@ function PaymentContent() {
               </form>
             </motion.div>
           )}
-        </AnimatePresence>
+          </AnimatePresence>
+        </CodeRevealWrapper>
       </div>
     </div>
   );

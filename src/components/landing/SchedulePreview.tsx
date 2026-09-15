@@ -55,15 +55,15 @@ export default function TimelineSection() {
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 space-y-4">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-950/40 border border-cyan-500/30 text-cyan-400 text-xs font-mono shadow-[0_0_10px_rgba(0,229,255,0.1)]">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-950/40 border border-yellow-500/30 text-yellow-400 text-xs font-mono shadow-[0_0_10px_rgba(255,215,0,0.1)]">
             <Calendar className="w-3.5 h-3.5" />
             <span>// 07. EVENT TIMELINE</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-black font-sans text-white">
-            2-DAY <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">CURRICULUM</span>
+            2-DAY <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-red-500">CURRICULUM</span>
           </h2>
           <div className="flex flex-wrap items-center justify-center gap-4 text-sm font-sans text-gray-400 pt-2">
-            <span className="flex items-center gap-1.5 text-cyan-400 font-semibold">
+            <span className="flex items-center gap-1.5 text-yellow-400 font-semibold">
               <Calendar className="w-4 h-4" /> October 3 – 4, 2026
             </span>
             <span className="hidden sm:inline text-gray-600">•</span>
@@ -80,7 +80,7 @@ export default function TimelineSection() {
               onClick={() => setActiveDay('day1')}
               className={`px-8 py-3 rounded-xl transition-all ${
                 activeDay === 'day1'
-                  ? 'bg-cyan-600 text-white shadow-[0_0_15px_rgba(0,229,255,0.4)]'
+                  ? 'bg-yellow-600 text-white shadow-[0_0_15px_rgba(255,215,0,0.4)]'
                   : 'text-gray-400 hover:text-white hover:bg-gray-800'
               }`}
             >
@@ -90,7 +90,7 @@ export default function TimelineSection() {
               onClick={() => setActiveDay('day2')}
               className={`px-8 py-3 rounded-xl transition-all ${
                 activeDay === 'day2'
-                  ? 'bg-blue-600 text-white shadow-[0_0_15px_rgba(59,130,246,0.4)]'
+                  ? 'bg-red-600 text-white shadow-[0_0_15px_rgba(59,130,246,0.4)]'
                   : 'text-gray-400 hover:text-white hover:bg-gray-800'
               }`}
             >
@@ -116,15 +116,15 @@ export default function TimelineSection() {
                   initial={{ opacity: 0, x: -15 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: idx * 0.1, duration: 0.4 }}
-                  className="p-6 rounded-2xl bg-gray-900/50 backdrop-blur-sm border border-gray-800 hover:border-cyan-500/40 transition-colors flex flex-col sm:flex-row items-start gap-6 group"
+                  className="p-6 rounded-2xl bg-gray-900/50 backdrop-blur-sm border border-gray-800 hover:border-yellow-500/40 transition-colors flex flex-col sm:flex-row items-start gap-6 group"
                 >
-                  <div className="sm:w-48 shrink-0 font-mono text-sm font-bold text-cyan-400 flex items-center gap-2 bg-gray-950 px-4 py-2 rounded-lg border border-gray-800 group-hover:border-cyan-900 transition-colors shadow-inner">
-                    <Clock className="w-4 h-4 shrink-0 text-cyan-600" />
+                  <div className="sm:w-48 shrink-0 font-mono text-sm font-bold text-yellow-400 flex items-center gap-2 bg-gray-950 px-4 py-2 rounded-lg border border-gray-800 group-hover:border-yellow-900 transition-colors shadow-inner">
+                    <Clock className="w-4 h-4 shrink-0 text-yellow-600" />
                     <span>{item.time}</span>
                   </div>
 
                   <div className="flex-1 space-y-2">
-                    <h4 className="text-lg font-bold font-sans text-white group-hover:text-cyan-300 transition-colors">
+                    <h4 className="text-lg font-bold font-sans text-white group-hover:text-yellow-300 transition-colors">
                       {item.title}
                     </h4>
                     <p className="text-sm text-gray-400 leading-relaxed font-sans">

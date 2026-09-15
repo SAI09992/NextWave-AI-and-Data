@@ -373,11 +373,11 @@ export default function AdminSettingsPage() {
       </div>
 
       {/* Section 1: Landing Page Coordinators & WhatsApp Links Editor */}
-      <div className="p-6 rounded-2xl nexus-glass-glow border-2 border-emerald-500/50 space-y-6">
+      <div className="p-6 rounded-2xl nexus-glass-glow border-2 border-orange-500/50 space-y-6">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-4 border-b border-nexus-border/80">
           <div>
-            <div className="text-sm font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-2">
-              <MessageSquare className="w-4 h-4 text-emerald-400" />
+            <div className="text-sm font-bold text-orange-400 uppercase tracking-wider flex items-center gap-2">
+              <MessageSquare className="w-4 h-4 text-orange-400" />
               <span>LANDING PAGE STUDENT COORDINATORS & WHATSAPP LINKS</span>
             </div>
             <p className="text-[11px] text-nexus-text-muted mt-1">
@@ -388,7 +388,7 @@ export default function AdminSettingsPage() {
           <button
             type="button"
             onClick={addLandingCoord}
-            className="px-3.5 py-2 rounded-xl bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 hover:bg-emerald-900/60 font-bold text-xs flex items-center gap-1.5 transition-colors shadow-sm"
+            className="px-3.5 py-2 rounded-xl bg-orange-950/60 border border-orange-500/40 text-orange-300 hover:bg-orange-900/60 font-bold text-xs flex items-center gap-1.5 transition-colors shadow-sm"
           >
             <Plus className="w-4 h-4" />
             <span>ADD COORDINATOR CARD</span>
@@ -399,11 +399,11 @@ export default function AdminSettingsPage() {
           {landingCoordinators.map((coord, idx) => (
             <div
               key={idx}
-              className="p-5 rounded-2xl bg-nexus-bg/90 border border-nexus-border/90 hover:border-emerald-500/40 space-y-4 transition-all"
+              className="p-5 rounded-2xl bg-nexus-bg/90 border border-nexus-border/90 hover:border-orange-500/40 space-y-4 transition-all"
             >
               <div className="flex items-center justify-between">
-                <span className="font-bold text-emerald-400 text-xs flex items-center gap-2">
-                  <span className="w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-[10px]">
+                <span className="font-bold text-orange-400 text-xs flex items-center gap-2">
+                  <span className="w-5 h-5 rounded-full bg-orange-500/20 border border-orange-500/40 flex items-center justify-center text-[10px]">
                     {idx + 1}
                   </span>
                   COORDINATOR #{idx + 1}
@@ -429,7 +429,7 @@ export default function AdminSettingsPage() {
                     value={coord.name}
                     onChange={(e) => updateLandingCoord(idx, 'name', e.target.value)}
                     placeholder="e.g. SAI DHANUSH"
-                    className="w-full px-3 py-2 rounded-lg bg-nexus-surface border border-nexus-border text-nexus-text text-xs focus:outline-none focus:border-emerald-400"
+                    className="w-full px-3 py-2 rounded-lg bg-nexus-surface border border-nexus-border text-nexus-text text-xs focus:outline-none focus:border-orange-400"
                   />
                 </div>
 
@@ -440,7 +440,7 @@ export default function AdminSettingsPage() {
                     value={coord.role}
                     onChange={(e) => updateLandingCoord(idx, 'role', e.target.value)}
                     placeholder="e.g. Student Technical Lead"
-                    className="w-full px-3 py-2 rounded-lg bg-nexus-surface border border-nexus-border text-nexus-text text-xs focus:outline-none focus:border-emerald-400"
+                    className="w-full px-3 py-2 rounded-lg bg-nexus-surface border border-nexus-border text-nexus-text text-xs focus:outline-none focus:border-orange-400"
                   />
                 </div>
 
@@ -451,7 +451,7 @@ export default function AdminSettingsPage() {
                     value={coord.department}
                     onChange={(e) => updateLandingCoord(idx, 'department', e.target.value)}
                     placeholder="e.g. CSE / 3rd Year"
-                    className="w-full px-3 py-2 rounded-lg bg-nexus-surface border border-nexus-border text-nexus-text text-xs focus:outline-none focus:border-emerald-400"
+                    className="w-full px-3 py-2 rounded-lg bg-nexus-surface border border-nexus-border text-nexus-text text-xs focus:outline-none focus:border-orange-400"
                   />
                 </div>
               </div>
@@ -467,13 +467,13 @@ export default function AdminSettingsPage() {
                     value={coord.phone}
                     onChange={(e) => updateLandingCoord(idx, 'phone', e.target.value)}
                     placeholder="e.g. +91 93812 76836"
-                    className="w-full px-3 py-2 rounded-lg bg-nexus-surface border border-nexus-border text-nexus-text text-xs focus:outline-none focus:border-emerald-400"
+                    className="w-full px-3 py-2 rounded-lg bg-nexus-surface border border-nexus-border text-nexus-text text-xs focus:outline-none focus:border-orange-400"
                   />
                 </div>
 
                 <div className="space-y-1">
                   <label className="text-nexus-text-dim block text-[11px] font-bold flex items-center gap-1.5">
-                    <MessageSquare className="w-3 h-3 text-emerald-400" />
+                    <MessageSquare className="w-3 h-3 text-orange-400" />
                     <span>CUSTOM WHATSAPP LINK (OPTIONAL)</span>
                   </label>
                   <input
@@ -481,7 +481,7 @@ export default function AdminSettingsPage() {
                     value={coord.whatsappUrl || ''}
                     onChange={(e) => updateLandingCoord(idx, 'whatsappUrl', e.target.value)}
                     placeholder="Leave empty for auto-generated https://wa.me/..."
-                    className="w-full px-3 py-2 rounded-lg bg-nexus-surface border border-nexus-border text-nexus-text text-xs focus:outline-none focus:border-emerald-400"
+                    className="w-full px-3 py-2 rounded-lg bg-nexus-surface border border-nexus-border text-nexus-text text-xs focus:outline-none focus:border-orange-400"
                   />
                 </div>
               </div>
@@ -510,7 +510,7 @@ export default function AdminSettingsPage() {
             disabled={togglingReg}
             className={`px-5 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2 ${
               settings.registrationOpen
-                ? 'bg-emerald-500 hover:bg-emerald-400 text-black shadow-nexus-glow-emerald'
+                ? 'bg-orange-500 hover:bg-orange-400 text-black shadow-nexus-glow-emerald'
                 : 'bg-red-950/60 hover:bg-red-900/60 border border-red-500 text-red-400'
             } ${togglingReg ? 'opacity-60 cursor-not-allowed' : ''}`}
           >
@@ -554,7 +554,7 @@ export default function AdminSettingsPage() {
                   key={v}
                   type="button"
                   onClick={() => setSettings((prev) => ({ ...prev, totalCapacity: prev.totalCapacity + v }))}
-                  className="px-3 py-1.5 rounded-lg bg-emerald-950/40 border border-emerald-500/40 text-emerald-400 font-bold hover:bg-emerald-900/60 transition-colors"
+                  className="px-3 py-1.5 rounded-lg bg-orange-950/40 border border-orange-500/40 text-orange-400 font-bold hover:bg-orange-900/60 transition-colors"
                 >
                   +{v}
                 </button>
@@ -623,7 +623,7 @@ export default function AdminSettingsPage() {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 p-3 rounded-lg bg-nexus-bg/90 border border-nexus-border text-center text-xs">
               <div className="p-2 rounded bg-nexus-surface/60 border border-nexus-border">
                 <span className="text-[10px] text-nexus-text-dim block font-bold">ORIGINAL REAL COUNT</span>
-                <span className="text-sm font-bold text-emerald-400">{realCount} Cadets</span>
+                <span className="text-sm font-bold text-orange-400">{realCount} Cadets</span>
                 <span className="text-[9px] text-nexus-text-muted block">Actual database records</span>
               </div>
               <div className="p-2 rounded bg-amber-950/40 border border-amber-500/30">
@@ -631,12 +631,12 @@ export default function AdminSettingsPage() {
                 <span className="text-sm font-bold text-amber-400">+{settings.registrationCountBoost}</span>
                 <span className="text-[9px] text-amber-300/70 block">Fake extra count</span>
               </div>
-              <div className="p-2 rounded bg-cyan-950/40 border border-cyan-500/30">
-                <span className="text-[10px] text-cyan-300 block font-bold">PUBLIC DISPLAYED TOTAL</span>
+              <div className="p-2 rounded bg-yellow-950/40 border border-yellow-500/30">
+                <span className="text-[10px] text-yellow-300 block font-bold">PUBLIC DISPLAYED TOTAL</span>
                 <span className="text-sm font-bold text-nexus-primary">
                   {realCount + settings.registrationCountBoost} / {settings.totalCapacity}
                 </span>
-                <span className="text-[9px] text-cyan-300/70 block">
+                <span className="text-[9px] text-yellow-300/70 block">
                   {Math.max(0, settings.totalCapacity - (realCount + settings.registrationCountBoost))} slots left publicly
                 </span>
               </div>
@@ -715,8 +715,8 @@ export default function AdminSettingsPage() {
         </div>
 
         {/* Section: WhatsApp Group Link & QR */}
-        <div className="p-6 rounded-2xl nexus-glass border border-emerald-500/40 space-y-4">
-          <div className="text-sm font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-2">
+        <div className="p-6 rounded-2xl nexus-glass border border-orange-500/40 space-y-4">
+          <div className="text-sm font-bold text-orange-400 uppercase tracking-wider flex items-center gap-2">
             <MessageSquare className="w-4 h-4" />
             <span>WHATSAPP GROUP LINK & QR CODE</span>
           </div>
@@ -734,7 +734,7 @@ export default function AdminSettingsPage() {
                   setSettings((prev) => ({ ...prev, whatsappGroupLink: e.target.value }))
                 }
                 placeholder="e.g. https://chat.whatsapp.com/ABCDefGHIjk123"
-                className="w-full px-3.5 py-2.5 rounded-lg bg-nexus-surface border border-nexus-border text-nexus-text text-sm focus:outline-none focus:border-emerald-400"
+                className="w-full px-3.5 py-2.5 rounded-lg bg-nexus-surface border border-nexus-border text-nexus-text text-sm focus:outline-none focus:border-orange-400"
               />
             </div>
 
@@ -774,7 +774,7 @@ export default function AdminSettingsPage() {
 
         {/* Section 6: Event Logistics & Support */}
         <div className="p-6 rounded-2xl nexus-glass border border-nexus-border space-y-4">
-          <div className="text-sm font-bold text-emerald-400 uppercase tracking-wider">
+          <div className="text-sm font-bold text-orange-400 uppercase tracking-wider">
             LOGISTICS & SUPPORT CHANNELS
           </div>
 
