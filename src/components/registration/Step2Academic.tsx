@@ -33,18 +33,6 @@ export default function Step2Academic({ form }: Props) {
     return '';
   });
 
-  // 2nd Year → auto-lock to CSE department (PE credit only)
-  const is2ndYear = currentYear === '2nd Year';
-
-  useEffect(() => {
-    if (is2ndYear) {
-      setDeptChoice('CSE');
-      setCustomDept('');
-      setValue('department', 'CSE', { shouldValidate: true });
-      setValue('creditType', 'UE_CSE', { shouldValidate: true });
-    }
-  }, [is2ndYear, setValue]);
-
   const handleDeptChoiceChange = (choice: 'CSE' | 'Other' | '') => {
     setDeptChoice(choice);
     if (choice === 'CSE') {
@@ -96,7 +84,7 @@ export default function Step2Academic({ form }: Props) {
 
       {/* Year & Department */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {/* Year of Study — moved first so department reacts to it */}
+        {/* Year of Study */}
         <div className="space-y-1.5">
           <label className="text-xs text-nexus-text flex items-center gap-1.5">
             <Layers className="w-3.5 h-3.5 text-emerald-400" />
@@ -121,61 +109,39 @@ export default function Step2Academic({ form }: Props) {
           <label className="text-xs text-nexus-text flex items-center gap-1.5">
             <BookOpen className="w-3.5 h-3.5 text-nexus-secondary" />
             <span>Department *</span>
-            {is2ndYear && (
-              <Lock className="w-3 h-3 text-nexus-text-dim ml-auto" />
-            )}
           </label>
 
-          {is2ndYear ? (
-            /* 2nd Year: CSE locked — PE credit only */
-            <>
+          <select
+            value={deptChoice}
+            onChange={(e) => handleDeptChoiceChange(e.target.value as any)}
+            className="w-full px-3.5 py-2.5 rounded-lg bg-nexus-surface border border-nexus-border text-nexus-text text-sm focus:outline-none focus:border-nexus-primary transition-colors font-mono"
+          >
+            <option value="">Select Department</option>
+            <option value="CSE">CSE & IT - PE (Program Elective)</option>
+            <option value="Other">Others - UE (University Elective)</option>
+          </select>
+          {errors.department && !deptChoice && (
+            <p className="text-[11px] text-red-400">{errors.department.message}</p>
+          )}
+
+          {/* If 'Other' is selected, ask them to specify manually */}
+          {deptChoice === 'Other' && (
+            <div className="pt-2 space-y-1">
+              <label className="text-[11px] text-nexus-text-dim block">
+                Specify Your Department Name *
+              </label>
               <input
                 type="text"
-                value="CSE & IT — PE (Program Elective)"
-                readOnly
-                disabled
-                className="w-full px-3.5 py-2.5 rounded-lg bg-nexus-bg-elevated border border-nexus-primary/40 text-nexus-primary text-sm font-bold cursor-not-allowed select-none"
+                value={customDept}
+                onChange={(e) => handleCustomDeptChange(e.target.value)}
+                placeholder="e.g. IT, ECE, EEE, Mechanical, Biotech, Civil"
+                className="w-full px-3 py-2 rounded-lg bg-nexus-bg border border-nexus-secondary/50 text-nexus-text text-xs focus:outline-none focus:border-nexus-secondary transition-colors"
+                autoFocus
               />
-              <p className="text-[10px] text-amber-400 font-sans">
-                ⚠️ 2nd Year registrations are only open for CSE & IT departments (PE Credit).
-              </p>
-            </>
-          ) : (
-            /* 3rd / 4th Year: CSE or Other department selection */
-            <>
-              <select
-                value={deptChoice}
-                onChange={(e) => handleDeptChoiceChange(e.target.value as any)}
-                className="w-full px-3.5 py-2.5 rounded-lg bg-nexus-surface border border-nexus-border text-nexus-text text-sm focus:outline-none focus:border-nexus-primary transition-colors font-mono"
-              >
-                <option value="">Select Department</option>
-                <option value="CSE">CSE & IT - PE (Program Elective)</option>
-                <option value="Other">Others - UE (University Elective)</option>
-              </select>
-              {errors.department && !deptChoice && (
+              {errors.department && deptChoice === 'Other' && (
                 <p className="text-[11px] text-red-400">{errors.department.message}</p>
               )}
-
-              {/* If 'Other' is selected, ask them to specify manually */}
-              {deptChoice === 'Other' && (
-                <div className="pt-2 space-y-1">
-                  <label className="text-[11px] text-nexus-text-dim block">
-                    Specify Your Department Name *
-                  </label>
-                  <input
-                    type="text"
-                    value={customDept}
-                    onChange={(e) => handleCustomDeptChange(e.target.value)}
-                    placeholder="e.g. IT, ECE, EEE, Mechanical, Biotech, Civil"
-                    className="w-full px-3 py-2 rounded-lg bg-nexus-bg border border-nexus-secondary/50 text-nexus-text text-xs focus:outline-none focus:border-nexus-secondary transition-colors"
-                    autoFocus
-                  />
-                  {errors.department && deptChoice === 'Other' && (
-                    <p className="text-[11px] text-red-400">{errors.department.message}</p>
-                  )}
-                </div>
-              )}
-            </>
+            </div>
           )}
         </div>
       </div>
