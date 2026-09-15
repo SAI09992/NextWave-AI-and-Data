@@ -78,10 +78,10 @@ export async function POST(req: NextRequest) {
 
     // 4. Calculate Expected Fee based on Credit Type
     const settings = (await db.select().from(eventSettings).limit(1))[0] || {
-      registrationFee: 300,
+      registrationFee: 200,
       totalCapacity: 500
     };
-    const expectedAmount = (settings as any).registrationFee || 300;
+    const expectedAmount = (settings as any).registrationFee || 200;
     const totalCapacity = (settings as any).totalCapacity || 500;
 
     // 4.5 SMART LOCK: Check Capacity if this is a new payment

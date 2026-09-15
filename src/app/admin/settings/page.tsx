@@ -71,7 +71,7 @@ export default function AdminSettingsPage() {
     tagline: 'Innovate. Connect. Build.',
     dates: 'August 29 – 30, 2026',
     venue: 'TIFAC Core Seminar Hall',
-    registrationFee: 300,
+    registrationFee: 200,
     totalCapacity: 200,
     registrationOpen: true,
     paymentUpiId: 'nexus@upi',
@@ -117,7 +117,7 @@ export default function AdminSettingsPage() {
           setSettings((prev) => ({
             ...prev,
             ...data.settings,
-            registrationFee: data.settings.registrationFee || data.settings.registrationFeeUe || 300,
+            registrationFee: data.settings.registrationFee || data.settings.registrationFeeUe || 200,
             dates: data.settings.dates || 'August 29 – 30, 2026',
             venue: data.settings.venue || 'TIFAC Core Seminar Hall',
             totalCapacity: data.settings.totalCapacity || 200,
