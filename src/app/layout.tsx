@@ -15,7 +15,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://scrs.klu.ac.in'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://nextwave-ai-and-data.vercel.app'),
   title: 'NextWave AI and Data',
   description:
     'Learn. Build. Lead the Future. A premium futuristic AI + Data event platform for NextWave.',
