@@ -445,7 +445,7 @@ function RegisterContent() {
                     disabled={!isConfirmed}
                     className="gap-2"
                   >
-                    <span>{submitting ? 'SUBMITTING...' : 'CONFIRM & PAY ₹300'}</span>
+                    <span>{submitting ? 'SUBMITTING...' : 'CONFIRM & PAY ₹200'}</span>
                     {!submitting && <ArrowRight className="w-4 h-4" />}
                   </NexusButton>
                 )}
