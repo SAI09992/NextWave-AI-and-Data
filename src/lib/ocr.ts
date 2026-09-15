@@ -89,7 +89,7 @@ export function parseTransactionText(
   const amountPatterns = [
     /(?:₹|INR|Rs\.?|Amount)\s*[:]?\s*([0-9,]+(?:\.[0-9]{2})?)/i,
     /(?:Paid\s*to|Debited|Total|Amount\s*Paid)\s*(?:₹|INR|Rs\.?)?\s*([0-9,]+(?:\.[0-9]{2})?)/i,
-    /\b(200|300|400|450|600|900)\b/,
+    /\b(200|300|400|407|450|600|900)\b/,
   ];
 
   for (const pattern of amountPatterns) {
