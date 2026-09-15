@@ -319,7 +319,7 @@ export default function AdminPaymentsPage() {
                       <div>Name: <span className="text-nexus-text font-bold">{selectedPayment.participant.name}</span></div>
                       <div>Roll No: <span className="text-nexus-text">{selectedPayment.participant.registerNumber}</span></div>
                       <div>Email: <span className="text-nexus-text truncate block">{selectedPayment.participant.email}</span></div>
-                      <div>Track: <span className="text-emerald-400 font-bold">{selectedPayment.participant.creditType}</span></div>
+                      <div>Track: <span className="text-emerald-400 font-bold">{selectedPayment.participant.creditType === 'UE_CSE' ? 'PE — CSE & IT' : 'UE — OTHER'}</span></div>
                     </div>
 
                     {/* Prominent User-Submitted UTR */}
@@ -343,7 +343,7 @@ export default function AdminPaymentsPage() {
                       cleanOcr.length >= 6 &&
                       (cleanUser === cleanOcr || cleanOcr.includes(cleanUser) || cleanUser.includes(cleanOcr));
 
-                    const expectedFee = selectedPayment.expectedAmount || 300;
+                    const expectedFee = selectedPayment.expectedAmount || 200;
                     const isAmountMatch = selectedPayment.amount === expectedFee;
 
                     return (
