@@ -20,7 +20,7 @@ export default function EventSpecsSection() {
     dates: 'October 3 – 4, 2026',
     time: '09:00 AM – 05:30 PM (IST)',
     venue: 'TIFAC Core Seminar Hall',
-    fee: 200,
+    fee: 250,
     certificate: 'Participation Certificate',
     eligibility: 'All Departments — 2nd, 3rd & 4th Year',
     totalSlots: 200,

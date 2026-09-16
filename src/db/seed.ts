@@ -14,7 +14,7 @@ export async function seedDatabase() {
       tagline: 'Innovate. Connect. Build.',
       dates: 'August 29 – 30, 2026',
       venue: 'Main nexus Range Auditorium & SOC Lab 4',
-      registrationFee: 200,
+      registrationFee: 250,
       countdownTarget: '2026-08-29T09:00:00+05:30',
       totalCapacity: 500,
       ueCapacity: 200,

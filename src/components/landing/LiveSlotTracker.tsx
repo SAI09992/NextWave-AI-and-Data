@@ -142,7 +142,7 @@ export default function LiveSlotTracker() {
 
             {/* Remaining Seats */}
             <div className="flex justify-between text-xs font-mono text-gray-400 pt-2">
-              <span>Registration Fee: ₹200</span>
+              <span>Registration Fee: ₹250</span>
               <span className="text-yellow-400 font-bold">{remaining} seats remaining</span>
             </div>
           </div>

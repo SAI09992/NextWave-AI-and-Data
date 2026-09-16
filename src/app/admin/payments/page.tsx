@@ -343,7 +343,7 @@ export default function AdminPaymentsPage() {
                       cleanOcr.length >= 6 &&
                       (cleanUser === cleanOcr || cleanOcr.includes(cleanUser) || cleanUser.includes(cleanOcr));
 
-                    const expectedFee = selectedPayment.expectedAmount || 200;
+                    const expectedFee = selectedPayment.expectedAmount || 250;
                     const isAmountMatch = selectedPayment.amount === expectedFee;
 
                     return (

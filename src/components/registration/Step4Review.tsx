@@ -22,7 +22,7 @@ export default function Step4Review({ form, onEditStep, isConfirmed, setIsConfir
         <h3 className="text-base font-bold text-yellow-400 flex items-center justify-between">
           <span>STEP 4 : APPLICATION PREVIEW & CONFIRMATION</span>
           <span className="text-xs px-2.5 py-1 rounded bg-yellow-950/40 text-yellow-400 border border-yellow-500/30 font-bold shadow-[0_0_10px_rgba(255,215,0,0.1)]">
-            FEE: ₹200
+            FEE: ₹250
           </span>
         </h3>
         <p className="text-xs text-gray-500 mt-0.5">
@@ -78,7 +78,7 @@ export default function Step4Review({ form, onEditStep, isConfirmed, setIsConfir
           <div>
             <span className="text-gray-500 block text-[10px]">CREDIT TRACK ELIGIBILITY:</span>
             <span className="text-orange-400 font-bold text-xs">
-              {values.creditType === 'PE_CSE' ? 'PE — CSE (₹200)' : values.creditType === 'PE_IT' ? 'PE — IT (₹200)' : 'UE — Other Departments (₹300)'}
+              {values.creditType === 'PE_CSE' ? 'PE — CSE (₹250)' : values.creditType === 'PE_IT' ? 'PE — IT (₹250)' : 'UE — Other Departments (₹250)'}
             </span>
           </div>
           <div>
@@ -152,7 +152,7 @@ export default function Step4Review({ form, onEditStep, isConfirmed, setIsConfir
         <div className="space-y-2 pt-2 border-t border-yellow-500/20 text-xs">
           <div className="flex justify-between text-gray-400">
             <span>2-Day Hands-on Workshop Fee</span>
-            <span>₹200</span>
+            <span>₹250</span>
           </div>
           <div className="flex justify-between text-gray-400">
             <span>AI Lab Environments & Certificate</span>
@@ -160,7 +160,7 @@ export default function Step4Review({ form, onEditStep, isConfirmed, setIsConfir
           </div>
           <div className="flex justify-between text-white font-extrabold text-sm pt-3 border-t border-yellow-500/30">
             <span>TOTAL AMOUNT PAYABLE ON NEXT STEP</span>
-            <span className="text-yellow-400">₹200</span>
+            <span className="text-yellow-400">₹250</span>
           </div>
         </div>
       </div>
@@ -177,7 +177,7 @@ export default function Step4Review({ form, onEditStep, isConfirmed, setIsConfir
               before:bg-center before:bg-no-repeat before:bg-[length:12px_12px] before:opacity-0 checked:before:opacity-100"
           />
           <span className={`text-[12px] leading-relaxed transition-colors ${isConfirmed ? 'text-orange-400 font-bold' : 'text-gray-400'}`}>
-            I verify that all the information provided above is accurate. I understand that submitting this form will confirm my registration slot and require an immediate payment of ₹200.
+            I verify that all the information provided above is accurate. I understand that submitting this form will confirm my registration slot and require an immediate payment of ₹250.
           </span>
         </label>
       </div>

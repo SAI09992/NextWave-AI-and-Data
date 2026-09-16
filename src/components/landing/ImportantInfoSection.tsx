@@ -22,7 +22,7 @@ const infoItems = [
   {
     icon: CreditCard,
     title: 'Payment Submission',
-    desc: 'Pay ₹200 via UPI (GPay, PhonePe, Paytm, etc.) and upload a clear screenshot with the 12-digit UTR number.',
+    desc: 'Pay ₹250 via UPI (GPay, PhonePe, Paytm, etc.) and upload a clear screenshot with the 12-digit UTR number.',
   },
   {
     icon: Calendar,

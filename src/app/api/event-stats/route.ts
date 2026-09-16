@@ -25,7 +25,7 @@ export async function GET() {
     const settings = (await db.select().from(eventSettings).limit(1))[0] || {
       totalCapacity: 200,
       registrationOpen: true,
-      registrationFee: 200,
+      registrationFee: 250,
       countdownTarget: '2026-08-29T09:00:00+05:30',
     };
 
@@ -87,7 +87,7 @@ const DEFAULT_COORDINATORS = [
       day1Attendance: attStats.day1,
       day2Attendance: attStats.day2,
       registrationOpen: (settings as any).registrationOpen && counts.total < ((settings as any).totalCapacity || 200),
-      registrationFee: (settings as any).registrationFee || 200,
+      registrationFee: (settings as any).registrationFee || 250,
       countdownTarget: (settings as any).countdownTarget || '2026-08-29T09:00:00+05:30',
       paymentUpiId: (settings as any).paymentUpiId || 'nexus@upi',
       paymentQrUrl: (settings as any).paymentQrUrl || null,
@@ -116,7 +116,7 @@ const DEFAULT_COORDINATORS = [
           day1Attendance: 0,
           day2Attendance: 0,
           registrationOpen: true,
-          registrationFee: 200,
+          registrationFee: 250,
           countdownTarget: '2026-08-29T09:00:00+05:30',
         },
       },

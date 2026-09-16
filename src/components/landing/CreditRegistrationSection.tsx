@@ -65,7 +65,7 @@ export default function CreditRegistrationSection() {
                 Open to all 2nd, 3rd & 4th year students across all departments.
               </p>
               <div className="flex items-end gap-3 text-yellow-400 pt-2">
-                <span className="text-6xl sm:text-7xl font-black font-sans leading-none tracking-tighter">₹200</span>
+                <span className="text-6xl sm:text-7xl font-black font-sans leading-none tracking-tighter">₹250</span>
                 <span className="text-nexus-text-dim font-mono text-sm mb-2">/ registration fee</span>
               </div>
             </div>
@@ -104,7 +104,7 @@ export default function CreditRegistrationSection() {
             {/* CTA Button */}
             <Link href="/register" className="block w-full">
               <Button variant="primary" glow className="w-full h-14 text-sm sm:text-base font-bold font-mono tracking-wider flex items-center justify-center gap-3">
-                <span>REGISTER NOW — ₹200</span>
+                <span>REGISTER NOW — ₹250</span>
                 <ArrowRight className="w-5 h-5" />
               </Button>
             </Link>

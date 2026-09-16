@@ -255,7 +255,7 @@ export const eventSettings = pgTable('event_settings', {
   tagline: text('tagline').notNull().default('Innovate. Connect. Build.'),
   dates: text('dates').notNull().default('August 29 – 30, 2026'),
   venue: text('venue').notNull().default('Main nexus Range Auditorium & SOC Lab 4'),
-  registrationFee: integer('registration_fee').notNull().default(200),
+  registrationFee: integer('registration_fee').notNull().default(250),
   totalCapacity: integer('total_capacity').notNull().default(500),
   ueCapacity: integer('ue_capacity').notNull().default(200),
   peopleCapacity: integer('people_capacity').notNull().default(300),
