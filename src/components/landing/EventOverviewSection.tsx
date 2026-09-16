@@ -3,11 +3,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { BrainCircuit, Database, Users, Sparkles, Terminal } from 'lucide-react';
+import { useEventSettings } from '@/components/providers/EventSettingsProvider';
 
 const overviewPoints = [
   {
     icon: BrainCircuit,
-    title: 'WHAT IS NEXTWAVE?',
+    title: 'WHAT IS IT?',
     desc: 'An intensive 2-day immersive bootcamp focused on the frontiers of Artificial Intelligence, Large Language Models, and Data Engineering architectures.',
   },
   {
@@ -28,6 +29,8 @@ const overviewPoints = [
 ];
 
 export default function EventQuickInfo() {
+  const { eventName } = useEventSettings();
+
   return (
     <section id="overview" className="py-16 sm:py-24 relative border-t border-gray-800/60 bg-transparent">
       <div className="container mx-auto px-4 relative z-10">
@@ -38,7 +41,7 @@ export default function EventQuickInfo() {
             <span>// 02. EXECUTIVE BRIEFING & OVERVIEW</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-black font-sans text-white tracking-tight">
-            WHAT IS <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-red-500">NEXTWAVE?</span>
+            WHAT IS <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-red-500 uppercase">{eventName}?</span>
           </h2>
           <p className="text-base sm:text-lg text-gray-400 font-sans max-w-2xl mx-auto">
             Core objectives, student target audience, and the operational bootcamp mission.

@@ -4,8 +4,10 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Timer, ArrowRight, Zap } from 'lucide-react';
 import Link from 'next/link';
+import { useEventSettings } from '@/components/providers/EventSettingsProvider';
 
 export default function RegistrationCountdown() {
+  const { countdownTarget } = useEventSettings();
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -16,8 +18,8 @@ export default function RegistrationCountdown() {
 
   useEffect(() => {
     setMounted(true);
-    // Target Date: 1st October 2026, 11:59:59 PM
-    const targetDate = new Date('2026-10-01T23:59:59').getTime();
+    // Target Date from context or fallback
+    const targetDate = new Date(countdownTarget || '2026-10-01T23:59:59').getTime();
 
     const updateTimer = () => {
       const now = new Date().getTime();

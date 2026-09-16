@@ -4,9 +4,11 @@ import React from 'react';
 import { BrandLogo } from '@/components/ui/BrandLogo';
 import { Github, Twitter, Linkedin, Mail } from 'lucide-react';
 import Link from 'next/link';
+import { useEventSettings } from '@/components/providers/EventSettingsProvider';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const { eventName, contactEmail } = useEventSettings();
 
   return (
     <footer className="relative bg-black/40 backdrop-blur-md border-t border-gray-800 pt-16 pb-8 overflow-hidden">
@@ -17,7 +19,7 @@ export default function Footer() {
           <div className="md:col-span-2 space-y-6">
             <BrandLogo variant="footer" />
             <p className="text-sm text-gray-500 font-sans max-w-sm leading-relaxed">
-              NextWave AI and Data is a premier technology bootcamp focused on Artificial Intelligence, LLMs, and Data Engineering architectures.
+              {eventName} is a premier technology bootcamp focused on Artificial Intelligence, LLMs, and Data Engineering architectures.
             </p>
             <div className="flex items-center gap-4">
               <a href="#" className="p-2.5 rounded-lg bg-gray-900 border border-gray-800 text-gray-400 hover:text-yellow-400 hover:border-yellow-500/30 transition-all">
@@ -59,9 +61,9 @@ export default function Footer() {
                 <Link href="/privacy" className="hover:text-yellow-400 transition-colors">Privacy Policy</Link>
               </li>
               <li>
-                <a href="mailto:contact@nextwave.ai" className="hover:text-yellow-400 transition-colors flex items-center gap-2">
+                <a href={`mailto:${contactEmail}`} className="hover:text-yellow-400 transition-colors flex items-center gap-2">
                   <Mail className="w-4 h-4" />
-                  contact@nextwave.ai
+                  {contactEmail}
                 </a>
               </li>
             </ul>
@@ -69,7 +71,7 @@ export default function Footer() {
         </div>
 
         <div className="pt-8 border-t border-gray-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-gray-600">
-          <p>© {currentYear} NextWave AI & Data. All rights reserved.</p>
+          <p>© {currentYear} {eventName}. All rights reserved.</p>
           <p className="flex items-center gap-1.5">
             Designed for the <span className="text-yellow-600 font-bold">Future</span>
           </p>

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { motion } from 'framer-motion';
 import { NexusButton as Button } from '@/components/ui/NexusButton';
+import { useEventSettings } from '@/components/providers/EventSettingsProvider';
 import { Sparkles, ArrowRight, Calendar, MapPin, Cpu, Database, BrainCircuit, Zap } from 'lucide-react';
 import dynamic from 'next/dynamic';
 
@@ -13,6 +14,7 @@ const MountainClimberVisual = dynamic(() => import('@/components/animations/Moun
 export default function HeroSection() {
   const { data: session } = useSession();
   const isAdmin = (session?.user as any)?.role === 'admin';
+  const { eventName, dates, venue, tagline } = useEventSettings();
 
   return (
     <section className="relative pt-8 pb-16 md:pt-12 md:pb-24 overflow-hidden min-h-[92vh] flex items-center">
@@ -51,12 +53,19 @@ export default function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: 'easeOut', delay: 0.15 }}
             >
-              <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter text-white leading-[1.0]">
-                NEXTWAVE
-                <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-orange-400 to-yellow-400" style={{ textShadow: 'none' }}>
-                  AI <span className="text-nexus-text-muted font-light text-4xl sm:text-5xl md:text-6xl lg:text-7xl">AND</span> DATA
-                </span>
+              <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter text-white leading-[1.0] uppercase">
+                {eventName.split(' ').map((word, idx, arr) => (
+                  <React.Fragment key={idx}>
+                    {idx === arr.length - 1 ? (
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-orange-400 to-yellow-400" style={{ textShadow: 'none' }}>
+                        {word}
+                      </span>
+                    ) : (
+                      <>{word} </>
+                    )}
+                    {idx === 0 && <br />}
+                  </React.Fragment>
+                ))}
               </h1>
             </motion.div>
 
@@ -77,13 +86,16 @@ export default function HeroSection() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="flex items-center gap-3 font-mono text-xs sm:text-sm tracking-widest"
+              className="flex items-center gap-3 font-mono text-xs sm:text-sm tracking-widest uppercase"
             >
-              <span className="text-red-500 font-bold">LEARN.</span>
-              <span className="text-nexus-primary/30">•</span>
-              <span className="text-orange-400 font-bold">BUILD.</span>
-              <span className="text-nexus-primary/30">•</span>
-              <span className="text-yellow-400 font-bold">DEPLOY.</span>
+              {tagline.split('.').filter(Boolean).map((word, idx, arr) => (
+                <React.Fragment key={idx}>
+                  <span className={idx === 0 ? "text-red-500 font-bold" : idx === 1 ? "text-orange-400 font-bold" : "text-yellow-400 font-bold"}>
+                    {word.trim()}.
+                  </span>
+                  {idx !== arr.length - 1 && <span className="text-nexus-primary/30">•</span>}
+                </React.Fragment>
+              ))}
             </motion.div>
 
             {/* Feature pills */}
@@ -136,12 +148,12 @@ export default function HeroSection() {
             >
               <div className="flex items-center gap-1.5">
                 <Calendar className="w-3.5 h-3.5 text-red-500" />
-                <span>3rd & 4th October 2026</span>
+                <span>{dates}</span>
               </div>
               <div className="hidden sm:block text-nexus-border">|</div>
               <div className="flex items-center gap-1.5">
                 <MapPin className="w-3.5 h-3.5 text-yellow-400" />
-                <span>Dr. V. Vasudevan Seminar Hall, TIFAC CORE</span>
+                <span>{venue}</span>
               </div>
             </motion.div>
           </div>

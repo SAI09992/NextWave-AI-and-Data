@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
+import { useEventSettings } from '@/components/providers/EventSettingsProvider';
 
 interface BrandLogoProps {
   variant?: 'navbar' | 'hero' | 'card' | 'footer' | 'icon-only';
@@ -25,6 +26,7 @@ export function BrandLogo({
   };
 
   const current = sizeClasses[variant] || sizeClasses.navbar;
+  const { eventName } = useEventSettings();
 
   const content = (
     <div className={cn('flex items-center gap-3 select-none group', className)}>
@@ -39,8 +41,8 @@ export function BrandLogo({
       {variant !== 'icon-only' && (
         <div className="flex flex-col text-left">
           <div className="flex items-center gap-1.5 leading-tight">
-            <span className={cn('font-sans font-black tracking-tight text-white group-hover:text-yellow-400 transition-colors', current.text)}>
-              NEXTWAVE <span className="text-yellow-500">AI</span>
+            <span className={cn('font-sans font-black tracking-tight text-white group-hover:text-yellow-400 transition-colors uppercase', current.text)}>
+              {eventName}
             </span>
           </div>
           <span className={cn('hidden sm:block font-mono font-semibold tracking-widest text-gray-500 group-hover:text-yellow-400/80 transition-colors uppercase', current.subtext)}>

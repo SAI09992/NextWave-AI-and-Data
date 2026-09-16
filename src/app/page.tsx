@@ -1,5 +1,8 @@
 import NextWaveNavbar from '@/components/landing/NexusNavbar';
 import HeroSection from '@/components/landing/HeroSection';
+import { db } from '@/db';
+import { eventSettings } from '@/db/schema';
+import { EventSettingsProvider } from '@/components/providers/EventSettingsProvider';
 import LiveRegistrationTracker from '@/components/landing/LiveSlotTracker';
 import EventQuickInfo from '@/components/landing/EventOverviewSection';
 import EventSpecsSection from '@/components/landing/EventSpecsSection';
@@ -18,11 +21,14 @@ import PreloaderWrapper from '@/components/animations/PreloaderWrapper';
 import CodeRevealWrapper from '@/components/animations/CodeRevealWrapper';
 import NextWaveBackground from '@/components/animations/NextWaveBackground';
 
-export default function LandingPage() {
+export default async function LandingPage() {
+  const settings = (await db.select().from(eventSettings).limit(1))[0];
+
   return (
     <main className="relative min-h-screen text-cyber-text overflow-x-hidden selection:bg-red-500 selection:text-black">
-      <PreloaderWrapper>
-        <div className="relative z-10 flex flex-col min-h-screen">
+      <EventSettingsProvider settings={settings || {}}>
+        <PreloaderWrapper>
+          <div className="relative z-10 flex flex-col min-h-screen">
           <NextWaveNavbar />
           <HeroSection />
           <LiveRegistrationTracker />
@@ -53,6 +59,7 @@ export default function LandingPage() {
           <Footer />
         </div>
       </PreloaderWrapper>
+      </EventSettingsProvider>
     </main>
   );
 }
