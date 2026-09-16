@@ -1,6 +1,6 @@
 export type UserRole = 'admin' | 'participant';
 
-export type CreditType = 'UE_CSE' | 'PEOPLE_OTHER';
+export type CreditType = 'PE_CSE' | 'PE_IT' | 'UE';
 
 export type RegistrationStatus = 'registered' | 'cancelled';
 
@@ -10,7 +10,7 @@ export type AttendanceStatus = 'present' | 'absent';
 
 export type AnnouncementPriority = 'normal' | 'important' | 'critical';
 
-export type AnnouncementAudience = 'all' | 'UE_CSE' | 'PEOPLE_OTHER';
+export type AnnouncementAudience = 'all' | 'PE_CSE' | 'PE_IT' | 'UE';
 
 export type CertificateStatus = 'valid' | 'revoked';
 

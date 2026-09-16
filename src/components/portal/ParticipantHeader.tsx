@@ -63,7 +63,7 @@ export default function ParticipantHeader({ registration }: Props) {
         <div className="p-3 rounded-xl bg-gray-950/50 border border-gray-800">
           <span className="text-gray-500 block text-[10px]">CREDIT TRACK:</span>
           <span className="text-orange-400 font-bold mt-1 block truncate">
-            {registration.creditType === 'UE_CSE' ? 'PE — CSE' : 'UE — OTHER'}
+            {registration.creditType === 'PE_CSE' ? 'PE — CSE' : registration.creditType === 'PE_IT' ? 'PE — IT' : 'UE — OTHER'}
           </span>
         </div>
         <div className="p-3 rounded-xl bg-gray-950/50 border border-gray-800">

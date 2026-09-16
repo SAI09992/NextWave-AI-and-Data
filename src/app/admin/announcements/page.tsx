@@ -16,7 +16,7 @@ export default function AdminAnnouncementsPage() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [priority, setPriority] = useState<'normal' | 'important' | 'critical'>('normal');
-  const [audience, setAudience] = useState<'all' | 'UE_CSE' | 'PEOPLE_OTHER'>('all');
+  const [audience, setAudience] = useState<'all' | 'PE_CSE' | 'PE_IT' | 'UE'>('all');
 
   const fetchAnnouncements = async () => {
     try {
@@ -143,8 +143,9 @@ export default function AdminAnnouncementsPage() {
                   className="w-full px-3 py-2 rounded-lg bg-nexus-surface border border-nexus-border text-nexus-text text-xs focus:outline-none focus:border-nexus-primary"
                 >
                   <option value="all">All Cadets</option>
-                  <option value="UE_CSE">PE — CSE Only</option>
-                  <option value="PEOPLE_OTHER">PEOPLE Other Only</option>
+                  <option value="PE_CSE">PE — CSE Only</option>
+                  <option value="PE_IT">PE — IT Only</option>
+                  <option value="UE">UE Other Only</option>
                 </select>
               </div>
             </div>

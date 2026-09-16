@@ -64,7 +64,7 @@ export const registrations = pgTable(
     year: text('year').notNull(),
     section: text('section').notNull(),
     college: text('college').notNull(),
-    creditType: text('credit_type', { enum: ['UE_CSE', 'PEOPLE_OTHER'] }).notNull(),
+    creditType: text('credit_type', { enum: ['PE_CSE', 'PE_IT', 'UE'] }).notNull(),
     residenceType: text('residence_type', { enum: ['HOSTEL', 'DAY_SCHOLAR'] }).notNull().default('DAY_SCHOLAR'),
     hostelName: text('hostel_name'),
     roomNumber: text('room_number'),
@@ -172,7 +172,7 @@ export const announcements = pgTable(
     priority: text('priority', { enum: ['normal', 'important', 'critical'] })
       .notNull()
       .default('normal'),
-    audience: text('audience', { enum: ['all', 'UE_CSE', 'PEOPLE_OTHER'] })
+    audience: text('audience', { enum: ['all', 'PE_CSE', 'PE_IT', 'UE'] })
       .notNull()
       .default('all'),
     published: boolean('published').notNull().default(true),

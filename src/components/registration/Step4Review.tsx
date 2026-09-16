@@ -78,7 +78,7 @@ export default function Step4Review({ form, onEditStep, isConfirmed, setIsConfir
           <div>
             <span className="text-gray-500 block text-[10px]">CREDIT TRACK ELIGIBILITY:</span>
             <span className="text-orange-400 font-bold text-xs">
-              {values.creditType === 'UE_CSE' ? 'PE — CSE & IT (₹200)' : 'UE — Other Departments (₹200)'}
+              {values.creditType === 'PE_CSE' ? 'PE — CSE (₹200)' : values.creditType === 'PE_IT' ? 'PE — IT (₹200)' : 'UE — Other Departments (₹300)'}
             </span>
           </div>
           <div>

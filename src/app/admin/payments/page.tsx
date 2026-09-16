@@ -228,7 +228,7 @@ export default function AdminPaymentsPage() {
                       </td>
                       <td className="p-4">
                         <span className="font-bold text-nexus-primary">
-                          {p.participant.creditType === 'UE_CSE' ? 'PE — CSE' : 'UE — OTHER'}
+                          {p.participant.creditType === 'PE_CSE' ? 'PE — CSE' : p.participant.creditType === 'PE_IT' ? 'PE — IT' : 'UE — OTHER'}
                         </span>
                       </td>
                       <td className="p-4 font-bold text-nexus-text">{p.utr}</td>
@@ -319,7 +319,7 @@ export default function AdminPaymentsPage() {
                       <div>Name: <span className="text-nexus-text font-bold">{selectedPayment.participant.name}</span></div>
                       <div>Roll No: <span className="text-nexus-text">{selectedPayment.participant.registerNumber}</span></div>
                       <div>Email: <span className="text-nexus-text truncate block">{selectedPayment.participant.email}</span></div>
-                      <div>Track: <span className="text-orange-400 font-bold">{selectedPayment.participant.creditType === 'UE_CSE' ? 'PE — CSE & IT' : 'UE — OTHER'}</span></div>
+                      <div>Track: <span className="text-orange-400 font-bold">{selectedPayment.participant.creditType === 'PE_CSE' ? 'PE — CSE' : selectedPayment.participant.creditType === 'PE_IT' ? 'PE — IT' : 'UE — OTHER'}</span></div>
                     </div>
 
                     {/* Prominent User-Submitted UTR */}

@@ -22,25 +22,30 @@ export default function Step2Academic({ form }: Props) {
 
   // Determine initial selection
   const isInitialCse = currentDept === 'CSE' || currentDept === 'Computer Science and Engineering';
-  const [deptChoice, setDeptChoice] = useState<'CSE' | 'Other' | ''>(() => {
+  const isInitialIt = currentDept === 'IT' || currentDept === 'Information Technology';
+  const [deptChoice, setDeptChoice] = useState<'CSE' | 'IT' | 'Other' | ''>(() => {
     if (!currentDept) return '';
     if (isInitialCse) return 'CSE';
+    if (isInitialIt) return 'IT';
     return 'Other';
   });
 
   const [customDept, setCustomDept] = useState(() => {
-    if (currentDept && !isInitialCse) return currentDept;
+    if (currentDept && !isInitialCse && !isInitialIt) return currentDept;
     return '';
   });
 
-  const handleDeptChoiceChange = (choice: 'CSE' | 'Other' | '') => {
+  const handleDeptChoiceChange = (choice: 'CSE' | 'IT' | 'Other' | '') => {
     setDeptChoice(choice);
     if (choice === 'CSE') {
       setValue('department', 'CSE', { shouldValidate: true });
-      setValue('creditType', 'UE_CSE', { shouldValidate: true });
+      setValue('creditType', 'PE_CSE', { shouldValidate: true });
+    } else if (choice === 'IT') {
+      setValue('department', 'IT', { shouldValidate: true });
+      setValue('creditType', 'PE_IT', { shouldValidate: true });
     } else if (choice === 'Other') {
       setValue('department', customDept, { shouldValidate: true });
-      setValue('creditType', 'PEOPLE_OTHER', { shouldValidate: true });
+      setValue('creditType', 'UE', { shouldValidate: true });
     } else {
       setValue('department', '', { shouldValidate: true });
     }
@@ -50,7 +55,7 @@ export default function Step2Academic({ form }: Props) {
     setCustomDept(val);
     if (deptChoice === 'Other') {
       setValue('department', val, { shouldValidate: true });
-      setValue('creditType', 'PEOPLE_OTHER', { shouldValidate: true });
+      setValue('creditType', 'UE', { shouldValidate: true });
     }
   };
 
@@ -117,8 +122,9 @@ export default function Step2Academic({ form }: Props) {
             className="w-full px-3.5 py-2.5 rounded-lg bg-nexus-surface border border-nexus-border text-nexus-text text-sm focus:outline-none focus:border-nexus-primary transition-colors font-mono"
           >
             <option value="">Select Department</option>
-            <option value="CSE">CSE & IT - PE (Program Elective)</option>
-            <option value="Other">Others - UE (University Elective)</option>
+            <option value="CSE">CSE - PE (Professional Elective)</option>
+            <option value="IT">IT - PE (Professional Elective)</option>
+            <option value="Other">Other Department - UE (University Elective)</option>
           </select>
           {errors.department && !deptChoice && (
             <p className="text-[11px] text-red-400">{errors.department.message}</p>

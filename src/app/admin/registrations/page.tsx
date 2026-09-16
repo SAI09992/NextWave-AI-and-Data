@@ -150,8 +150,9 @@ export default function AdminRegistrationsPage() {
           className="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-yellow-500 transition-colors appearance-none"
         >
           <option value="ALL">All Tracks</option>
-          <option value="UE_CSE">PE — CSE</option>
-          <option value="PEOPLE_OTHER">PEOPLE — Other</option>
+          <option value="PE_CSE">PE — CSE</option>
+          <option value="PE_IT">PE — IT</option>
+          <option value="UE">UE — Other</option>
         </select>
 
         {/* Payment Status Filter */}
@@ -206,7 +207,7 @@ export default function AdminRegistrationsPage() {
                     </td>
                     <td className="p-4">
                       <span className="font-bold text-orange-400">
-                        {r.creditType === 'UE_CSE' ? 'PE — CSE' : 'UE — OTHER'}
+                        {r.creditType === 'PE_CSE' ? 'PE — CSE' : r.creditType === 'PE_IT' ? 'PE — IT' : 'UE — OTHER'}
                       </span>
                     </td>
                     <td className="p-4">
@@ -341,7 +342,7 @@ export default function AdminRegistrationsPage() {
                   <div className="flex justify-between">
                     <span className="text-gray-500">Track Registered</span>
                     <span className="font-bold text-orange-400">
-                      {inspectingRecord.creditType === 'UE_CSE' ? 'PE — CSE' : 'UE — OTHER'}
+                      {inspectingRecord.creditType === 'PE_CSE' ? 'PE — CSE' : inspectingRecord.creditType === 'PE_IT' ? 'PE — IT' : 'UE — OTHER'}
                     </span>
                   </div>
                 </div>

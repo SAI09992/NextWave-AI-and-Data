@@ -48,7 +48,7 @@ function RegisterContent() {
       year: undefined as any,
       section: '',
       college: 'Kalasalingam Academy of Research and Education',
-      creditType: 'UE_CSE',
+      creditType: 'PE_CSE',
       residenceType: 'DAY_SCHOLAR',
       hostelName: '',
       roomNumber: '',

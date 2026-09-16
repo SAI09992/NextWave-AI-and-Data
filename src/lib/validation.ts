@@ -39,7 +39,7 @@ export const step2AcademicSchema = z.object({
   }),
   section: z.string().min(1, 'Section is required (e.g. A, B, C, or N/A)'),
   college: z.string().min(3, 'Please enter your college/institution name'),
-  creditType: z.enum(['UE_CSE', 'PEOPLE_OTHER'], {
+  creditType: z.enum(['PE_CSE', 'PE_IT', 'UE'], {
     errorMap: () => ({ message: 'Please select your credit eligibility type' }),
   }),
 });
@@ -115,7 +115,7 @@ export const announcementFormSchema = z.object({
   title: z.string().min(3, 'Title must be at least 3 characters').max(200),
   content: z.string().min(10, 'Content must be at least 10 characters'),
   priority: z.enum(['normal', 'important', 'critical']),
-  audience: z.enum(['all', 'UE_CSE', 'PEOPLE_OTHER']),
+  audience: z.enum(['all', 'PE_CSE', 'PE_IT', 'UE']),
   published: z.boolean().default(true),
 });
 

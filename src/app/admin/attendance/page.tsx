@@ -522,9 +522,9 @@ export default function AdminAttendanceAndSnacksPage() {
                         <div>
                           Track:{' '}
                           <span className="text-orange-400 font-bold">
-                            {lastScanResult.participant.creditType === 'UE_CSE'
+                            {lastScanResult.participant.creditType === 'PE_CSE'
                               ? 'PE — CSE'
-                              : 'PEOPLE — OTHER'}
+                              : lastScanResult.participant.creditType === 'PE_IT' ? 'PE — IT' : 'UE — OTHER'}
                           </span>
                         </div>
                       </div>
@@ -812,7 +812,7 @@ export default function AdminAttendanceAndSnacksPage() {
                           </td>
                           <td className="p-4">
                             <span className="font-bold text-orange-400">
-                              {cadet.creditType === 'UE_CSE' ? 'PE — CSE' : 'PEOPLE — OTHER'}
+                              {cadet.creditType === 'PE_CSE' ? 'PE — CSE' : cadet.creditType === 'PE_IT' ? 'PE — IT' : 'UE — OTHER'}
                             </span>
                           </td>
 
