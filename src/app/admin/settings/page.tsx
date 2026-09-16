@@ -117,7 +117,7 @@ export default function AdminSettingsPage() {
           setSettings((prev) => ({
             ...prev,
             ...data.settings,
-            registrationFee: data.settings.registrationFee || data.settings.registrationFeeUe || 200,
+            registrationFee: data.settings.registrationFee || 200,
             dates: data.settings.dates || 'August 29 – 30, 2026',
             venue: data.settings.venue || 'TIFAC Core Seminar Hall',
             totalCapacity: data.settings.totalCapacity || 200,
