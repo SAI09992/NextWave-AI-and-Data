@@ -78,7 +78,7 @@ export default function HeroSection() {
             >
               An intensive two-day hands-on AI and Data Science workshop for all engineering
               students (2nd, 3rd & 4th year). Dive into transformer architectures, live model training,
-              data pipelines, and production ML deployment at TIFAC Core Seminar Hall.
+              data pipelines, and production ML deployment at 9th Block Seminar Hall.
             </motion.p>
 
             {/* Tagline */}

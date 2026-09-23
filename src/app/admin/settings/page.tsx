@@ -69,14 +69,14 @@ export default function AdminSettingsPage() {
   const [settings, setSettings] = useState({
     eventName: 'NEXUS Tech Summit',
     tagline: 'Innovate. Connect. Build.',
-    dates: 'August 29 – 30, 2026',
-    venue: 'TIFAC Core Seminar Hall',
+    dates: 'October 3 – 4, 2026',
+    venue: '9th Block Seminar Hall',
     registrationFee: 250,
     totalCapacity: 200,
     registrationOpen: true,
     paymentUpiId: 'nexus@upi',
     paymentQrUrl: '',
-    countdownTarget: '2026-08-29T09:00:00+05:30',
+    countdownTarget: '2026-10-03T09:00:00+05:30',
     contactPhone: '+91 98765 43210',
     contactEmail: 'hello@nexus.dev',
     termsVersion: 'v1.0',
@@ -118,8 +118,8 @@ export default function AdminSettingsPage() {
             ...prev,
             ...data.settings,
             registrationFee: data.settings.registrationFee || 250,
-            dates: data.settings.dates || 'August 29 – 30, 2026',
-            venue: data.settings.venue || 'TIFAC Core Seminar Hall',
+            dates: data.settings.dates || 'October 3 – 4, 2026',
+            venue: data.settings.venue || '9th Block Seminar Hall',
             totalCapacity: data.settings.totalCapacity || 200,
             whatsappGroupLink: data.settings.whatsappGroupLink || '',
             whatsappGroupQrUrl: data.settings.whatsappGroupQrUrl || '',
@@ -763,7 +763,7 @@ export default function AdminSettingsPage() {
               onChange={(e) =>
                 setSettings((prev) => ({ ...prev, countdownTarget: e.target.value }))
               }
-              placeholder="e.g. 2026-08-29T09:00:00+05:30"
+              placeholder="e.g. 2026-10-03T09:00:00+05:30"
               className="w-full px-3.5 py-2.5 rounded-lg bg-nexus-surface border border-nexus-border text-nexus-text text-sm focus:outline-none focus:border-nexus-primary"
             />
             <p className="text-[11px] text-nexus-text-dim">

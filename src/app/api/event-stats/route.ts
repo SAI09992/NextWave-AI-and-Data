@@ -26,7 +26,7 @@ export async function GET() {
       totalCapacity: 200,
       registrationOpen: true,
       registrationFee: 250,
-      countdownTarget: '2026-08-29T09:00:00+05:30',
+      countdownTarget: '2026-10-03T09:00:00+05:30',
     };
 
     // 2. Count Active Registrations
@@ -88,7 +88,7 @@ const DEFAULT_COORDINATORS = [
       day2Attendance: attStats.day2,
       registrationOpen: (settings as any).registrationOpen && counts.total < ((settings as any).totalCapacity || 200),
       registrationFee: (settings as any).registrationFee || 250,
-      countdownTarget: (settings as any).countdownTarget || '2026-08-29T09:00:00+05:30',
+      countdownTarget: (settings as any).countdownTarget || '2026-10-03T09:00:00+05:30',
       paymentUpiId: (settings as any).paymentUpiId || 'nexus@upi',
       paymentQrUrl: (settings as any).paymentQrUrl || null,
       coordinators: (settings as any).coordinators || DEFAULT_COORDINATORS,
@@ -117,7 +117,7 @@ const DEFAULT_COORDINATORS = [
           day2Attendance: 0,
           registrationOpen: true,
           registrationFee: 250,
-          countdownTarget: '2026-08-29T09:00:00+05:30',
+          countdownTarget: '2026-10-03T09:00:00+05:30',
         },
       },
       { status: 200 }

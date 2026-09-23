@@ -17,8 +17,8 @@ export interface EventSettingsContextData {
 const defaultSettings: EventSettingsContextData = {
   eventName: 'NEXUS Tech Summit',
   tagline: 'Innovate. Connect. Build.',
-  dates: 'August 29 – 30, 2026',
-  venue: 'Main nexus Range Auditorium & SOC Lab 4',
+  dates: 'October 3 – 4, 2026',
+  venue: '9th Block Seminar Hall',
   contactPhone: '+91 98765 43210',
   contactEmail: 'soc-support@nextgensoc.io',
 };

@@ -19,7 +19,7 @@ export default function EventSpecsSection() {
     eventType: '2-Day Practical Workshop',
     dates: 'October 3 – 4, 2026',
     time: '09:00 AM – 05:30 PM (IST)',
-    venue: 'TIFAC Core Seminar Hall',
+    venue: '9th Block Seminar Hall',
     fee: 250,
     certificate: 'Participation Certificate',
     eligibility: 'All Departments — 2nd, 3rd & 4th Year',
