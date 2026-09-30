@@ -21,6 +21,8 @@ import PreloaderWrapper from '@/components/animations/PreloaderWrapper';
 import CodeRevealWrapper from '@/components/animations/CodeRevealWrapper';
 import NextWaveBackground from '@/components/animations/NextWaveBackground';
 
+export const revalidate = 60;
+
 export default async function LandingPage() {
   const settings = (await db.select().from(eventSettings).limit(1))[0];
 
