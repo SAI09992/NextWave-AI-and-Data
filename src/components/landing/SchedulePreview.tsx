@@ -68,7 +68,7 @@ export default function TimelineSection() {
             </span>
             <span className="hidden sm:inline text-gray-600">•</span>
             <span className="flex items-center gap-1.5 text-indigo-400 font-semibold">
-              <MapPin className="w-4 h-4" /> Dr. V. Vasudevan Seminar Hall, TIFAC CORE
+              <MapPin className="w-4 h-4" /> 9th Block Seminar Hall
             </span>
           </div>
         </div>
