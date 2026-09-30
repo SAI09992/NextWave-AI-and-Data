@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { RegistrationData } from '@/types';
 import { Bell, Calendar, Home, MapPin } from 'lucide-react';
 import { NexusButton } from '@/components/ui/NexusButton';
+import { formatCreditType } from '@/lib/utils';
 
 interface Props {
   registration: RegistrationData;
@@ -63,7 +64,7 @@ export default function ParticipantHeader({ registration }: Props) {
         <div className="p-3 rounded-xl bg-gray-950/50 border border-gray-800">
           <span className="text-gray-500 block text-[10px]">CREDIT TRACK:</span>
           <span className="text-orange-400 font-bold mt-1 block truncate">
-            {registration.creditType === 'PE_CSE' ? 'PE — CSE' : registration.creditType === 'PE_IT' ? 'PE — IT' : 'UE — OTHER'}
+            {formatCreditType(registration.creditType)}
           </span>
         </div>
         <div className="p-3 rounded-xl bg-gray-950/50 border border-gray-800">

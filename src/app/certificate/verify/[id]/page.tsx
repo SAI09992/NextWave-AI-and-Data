@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { ShieldCheck, XCircle, Award, Check, ExternalLink, ArrowLeft } from 'lucide-react';
 import { NexusButton } from '@/components/ui/NexusButton';
-import { formatDate } from '@/lib/utils';
+import { formatDate, formatCreditType } from '@/lib/utils';
 import Link from 'next/link';
 
 export default function CertificateVerifyPage() {
@@ -86,7 +86,7 @@ export default function CertificateVerifyPage() {
                 </div>
                 <div>
                   <span className="text-nexus-text-dim block text-[10px]">CREDIT TRACK:</span>
-                  <span className="text-orange-400 font-bold">{result.certificate?.creditType}</span>
+                  <span className="text-orange-400 font-bold">{formatCreditType(result.certificate?.creditType)}</span>
                 </div>
               </div>
             </div>

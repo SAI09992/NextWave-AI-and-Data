@@ -26,6 +26,7 @@ import {
   FileSpreadsheet,
 } from 'lucide-react';
 import { toast } from 'sonner';
+import { formatCreditType } from '@/lib/utils';
 
 interface CadetAttendance {
   id: string;
@@ -522,9 +523,7 @@ export default function AdminAttendanceAndSnacksPage() {
                         <div>
                           Track:{' '}
                           <span className="text-orange-400 font-bold">
-                            {lastScanResult.participant.creditType === 'PE_CSE'
-                              ? 'PE — CSE'
-                              : lastScanResult.participant.creditType === 'PE_IT' ? 'PE — IT' : 'UE — OTHER'}
+                            {formatCreditType(lastScanResult.participant.creditType)}
                           </span>
                         </div>
                       </div>
@@ -812,7 +811,7 @@ export default function AdminAttendanceAndSnacksPage() {
                           </td>
                           <td className="p-4">
                             <span className="font-bold text-orange-400">
-                              {cadet.creditType === 'PE_CSE' ? 'PE — CSE' : cadet.creditType === 'PE_IT' ? 'PE — IT' : 'UE — OTHER'}
+                              {formatCreditType(cadet.creditType)}
                             </span>
                           </td>
 

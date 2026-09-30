@@ -41,3 +41,13 @@ export function generateCertificateId(prefix: string = "NGSOC-2026-CERT"): strin
   const randomSuffix = Math.floor(1000 + Math.random() * 9000);
   return `${prefix}-${randomSuffix}`;
 }
+
+export function formatCreditType(creditType: string): string {
+  switch (creditType) {
+    case 'PE_CSE': return 'PE — CSE';
+    case 'PE_IT': return 'PE — IT';
+    case 'UE': return 'UE — OTHER';
+    case 'NON_CGPA': return 'NON CGPA';
+    default: return creditType;
+  }
+}

@@ -74,7 +74,9 @@ export default function EligibilitySection() {
                 'A deployed full-stack AI application for your resume',
                 'Access to the NextWave Alumni Discord Server',
                 'Hands-on experience with Pinecone, LangChain, and LLMs',
-                'Credits: Program Elective (PE) for CSE & IT; University Elective (UE) for others'
+                'PE Credit for 3rd & 4th Year CSE & IT Students',
+                'UE Credit for 3rd & 4th Year Other Department Students',
+                'Non CGPA — 2 Group 3 Certificates for 2nd Year Students'
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-3 text-sm text-gray-300 font-sans">
                   <CheckCircle2 className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />

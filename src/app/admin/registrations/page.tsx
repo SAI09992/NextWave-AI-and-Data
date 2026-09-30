@@ -16,6 +16,7 @@ import {
   Home,
 } from 'lucide-react';
 import { toast } from 'sonner';
+import { formatCreditType } from '@/lib/utils';
 
 export default function AdminRegistrationsPage() {
   const [registrations, setRegistrations] = useState<any[]>([]);
@@ -153,6 +154,7 @@ export default function AdminRegistrationsPage() {
           <option value="PE_CSE">PE — CSE</option>
           <option value="PE_IT">PE — IT</option>
           <option value="UE">UE — Other</option>
+          <option value="NON_CGPA">NON CGPA</option>
         </select>
 
         {/* Payment Status Filter */}
@@ -207,7 +209,7 @@ export default function AdminRegistrationsPage() {
                     </td>
                     <td className="p-4">
                       <span className="font-bold text-orange-400">
-                        {r.creditType === 'PE_CSE' ? 'PE — CSE' : r.creditType === 'PE_IT' ? 'PE — IT' : 'UE — OTHER'}
+                        {formatCreditType(r.creditType)}
                       </span>
                     </td>
                     <td className="p-4">
@@ -342,7 +344,7 @@ export default function AdminRegistrationsPage() {
                   <div className="flex justify-between">
                     <span className="text-gray-500">Track Registered</span>
                     <span className="font-bold text-orange-400">
-                      {inspectingRecord.creditType === 'PE_CSE' ? 'PE — CSE' : inspectingRecord.creditType === 'PE_IT' ? 'PE — IT' : 'UE — OTHER'}
+                      {formatCreditType(inspectingRecord.creditType)}
                     </span>
                   </div>
                 </div>

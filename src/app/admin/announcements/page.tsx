@@ -16,7 +16,7 @@ export default function AdminAnnouncementsPage() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [priority, setPriority] = useState<'normal' | 'important' | 'critical'>('normal');
-  const [audience, setAudience] = useState<'all' | 'PE_CSE' | 'PE_IT' | 'UE'>('all');
+  const [audience, setAudience] = useState<'all' | 'PE_CSE' | 'PE_IT' | 'UE' | 'NON_CGPA'>('all');
 
   const fetchAnnouncements = async () => {
     try {
@@ -146,6 +146,7 @@ export default function AdminAnnouncementsPage() {
                   <option value="PE_CSE">PE — CSE Only</option>
                   <option value="PE_IT">PE — IT Only</option>
                   <option value="UE">UE Other Only</option>
+                  <option value="NON_CGPA">NON CGPA (2nd Year) Only</option>
                 </select>
               </div>
             </div>
