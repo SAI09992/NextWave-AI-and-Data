@@ -127,7 +127,7 @@ export default function CertificatePage() {
               </div>
               <div className="text-left font-mono">
                 <div className="text-base font-bold text-nexus-text tracking-wider">
-                  NEXUS Tech Summit nexus COMMAND
+                  NextWave AI And Data COMMAND
                 </div>
                 <div className="text-[10px] text-nexus-primary uppercase tracking-widest">
                   NEXUS Group

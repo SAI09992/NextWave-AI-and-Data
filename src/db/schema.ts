@@ -251,7 +251,7 @@ export const auditLogs = pgTable(
 // 10. Event Settings Table
 export const eventSettings = pgTable('event_settings', {
   id: text('id').primaryKey(),
-  eventName: text('event_name').notNull().default('NEXUS Tech Summit'),
+  eventName: text('event_name').notNull().default('NextWave AI And Data'),
   tagline: text('tagline').notNull().default('Innovate. Connect. Build.'),
   dates: text('dates').notNull().default('October 3 – 4, 2026'),
   venue: text('venue').notNull().default('9th Block Seminar Hall'),

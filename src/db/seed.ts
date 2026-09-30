@@ -3,14 +3,14 @@ import { eventSettings, users, schedules, announcements } from './schema';
 import { eq } from 'drizzle-orm';
 
 export async function seedDatabase() {
-  console.log('--- Seeding NEXUS Tech Summit Database ---');
+  console.log('--- Seeding NextWave AI And Data Database ---');
 
   // 1. Seed Event Settings if not present
   const existingSettings = await db.select().from(eventSettings).limit(1);
   if (existingSettings.length === 0) {
     await db.insert(eventSettings).values({
       id: 'settings_default',
-      eventName: 'NEXUS Tech Summit',
+      eventName: 'NextWave AI And Data',
       tagline: 'Innovate. Connect. Build.',
       dates: 'October 3 – 4, 2026',
       venue: '9th Block Seminar Hall',
@@ -117,7 +117,7 @@ export async function seedDatabase() {
   if (existingAnnouncements.length === 0) {
     await db.insert(announcements).values({
       id: 'ann_welcome',
-      title: 'Welcome to NEXUS Tech Summit Analyst Bootcamp 2026',
+      title: 'Welcome to NextWave AI And Data Bootcamp 2026',
       content: 'Registration is officially live! Please complete your academic details, submit your UPI fee receipt with UTR, and check your participant portal for real-time verification updates.',
       priority: 'important',
       audience: 'all',

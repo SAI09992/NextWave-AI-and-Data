@@ -302,7 +302,7 @@ function RegisterContent() {
               REGISTRATIONS CLOSED
             </h2>
             <p className="text-xs font-mono text-nexus-text-muted mt-2 leading-relaxed">
-              Registration time has completed. Admissions for NEXUS Tech Summit Bootcamp are officially closed.
+              Registration time has completed. Admissions for NextWave AI And Data Bootcamp are officially closed.
             </p>
           </div>
           <div className="pt-2">

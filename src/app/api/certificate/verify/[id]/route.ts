@@ -30,7 +30,7 @@ export async function GET(
         {
           success: false,
           valid: false,
-          error: 'Certificate record not found in NEXUS Tech Summit Cryptographic Registry.',
+          error: 'Certificate record not found in NextWave AI And Data Cryptographic Registry.',
         },
         { status: 404 }
       );

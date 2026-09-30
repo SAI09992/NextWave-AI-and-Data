@@ -67,7 +67,7 @@ export default function AdminSettingsPage() {
   );
 
   const [settings, setSettings] = useState({
-    eventName: 'NEXUS Tech Summit',
+    eventName: 'NextWave AI And Data',
     tagline: 'Innovate. Connect. Build.',
     dates: 'October 3 – 4, 2026',
     venue: '9th Block Seminar Hall',

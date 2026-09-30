@@ -40,7 +40,7 @@ export default function CertificateVerifyPage() {
             <Award className="w-7 h-7" />
           </div>
           <h1 className="text-xl font-bold text-nexus-text">
-            NEXUS Tech Summit CERTIFICATE REGISTRY
+            NextWave AI And Data CERTIFICATE REGISTRY
           </h1>
           <p className="text-[11px] text-nexus-text-muted">
             CRYPTOGRAPHIC PUBLIC VERIFICATION PORTAL
