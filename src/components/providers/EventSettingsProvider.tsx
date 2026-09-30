@@ -36,7 +36,7 @@ export function EventSettingsProvider({
   children: React.ReactNode;
   settings: Partial<EventSettingsContextData>;
 }) {
-  const mergedSettings = { ...defaultSettings, ...settings };
+  const mergedSettings = { ...defaultSettings, ...settings, eventName: 'NextWave AI And Data' };
 
   return (
     <EventSettingsContext.Provider value={mergedSettings}>
