@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { StatusBadge } from '@/components/ui/StatusBadge';
 import { NexusButton } from '@/components/ui/NexusButton';
-import { formatDate, formatCreditType } from '@/lib/utils';
+import { formatDate, formatCreditType, formatCreditTypeDetailed } from '@/lib/utils';
 import {
   CreditCard,
   ShieldCheck,
@@ -228,7 +228,7 @@ export default function AdminPaymentsPage() {
                       </td>
                       <td className="p-4">
                         <span className="font-bold text-nexus-primary">
-                          {formatCreditType(p.participant.creditType)}
+                          {p.participant.creditType === 'NON_CGPA' ? formatCreditTypeDetailed(p.participant.creditType, p.participant.department) : formatCreditType(p.participant.creditType)}
                         </span>
                       </td>
                       <td className="p-4 font-bold text-nexus-text">{p.utr}</td>
@@ -319,7 +319,7 @@ export default function AdminPaymentsPage() {
                       <div>Name: <span className="text-nexus-text font-bold">{selectedPayment.participant.name}</span></div>
                       <div>Roll No: <span className="text-nexus-text">{selectedPayment.participant.registerNumber}</span></div>
                       <div>Email: <span className="text-nexus-text truncate block">{selectedPayment.participant.email}</span></div>
-                      <div>Track: <span className="text-orange-400 font-bold">{formatCreditType(selectedPayment.participant.creditType)}</span></div>
+                      <div>Track: <span className="text-orange-400 font-bold">{selectedPayment.participant.creditType === 'NON_CGPA' ? formatCreditTypeDetailed(selectedPayment.participant.creditType, selectedPayment.participant.department) : formatCreditType(selectedPayment.participant.creditType)}</span></div>
                     </div>
 
                     {/* Prominent User-Submitted UTR */}

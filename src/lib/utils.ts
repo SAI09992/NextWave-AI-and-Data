@@ -51,3 +51,14 @@ export function formatCreditType(creditType: string): string {
     default: return creditType;
   }
 }
+
+/** Department-aware credit description for 2nd year NON_CGPA students */
+export function formatCreditTypeDetailed(creditType: string, department?: string): string {
+  if (creditType !== 'NON_CGPA') return formatCreditType(creditType);
+  const dept = (department || '').toUpperCase().trim();
+  const isCseOrIt = dept === 'CSE' || dept === 'IT' || dept === 'COMPUTER SCIENCE AND ENGINEERING' || dept === 'INFORMATION TECHNOLOGY';
+  if (isCseOrIt) {
+    return 'NON CGPA — 1 Group 3 Certificate + Program Elective';
+  }
+  return 'NON CGPA — 1 Group 3 Certificate + University Elective';
+}

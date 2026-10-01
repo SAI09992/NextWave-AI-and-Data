@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { NexusButton } from '@/components/ui/NexusButton';
-import { formatDate, formatCreditType } from '@/lib/utils';
+import { formatDate, formatCreditType, formatCreditTypeDetailed } from '@/lib/utils';
 import { Award, QrCode, Search, RefreshCw, ExternalLink, ShieldCheck, Check } from 'lucide-react';
 import { toast } from 'sonner';
 import Link from 'next/link';
@@ -175,7 +175,7 @@ export default function AdminCertificatesPage() {
                         <div className="text-[10px] text-nexus-text-dim">{c.registration.registerNumber}</div>
                       </td>
                       <td className="p-4 text-nexus-text">{c.registration.registrationId}</td>
-                      <td className="p-4 text-orange-400 font-bold">{formatCreditType(c.registration.creditType)}</td>
+                      <td className="p-4 text-orange-400 font-bold">{c.registration.creditType === 'NON_CGPA' ? formatCreditTypeDetailed(c.registration.creditType, c.registration.department) : formatCreditType(c.registration.creditType)}</td>
                       <td className="p-4 text-nexus-text-dim">{formatDate(c.certificate.issuedAt)}</td>
                       <td className="p-4">
                         <span className="px-2.5 py-1 rounded-full bg-orange-950/60 border border-orange-500/40 text-orange-400 text-[10px] font-bold">

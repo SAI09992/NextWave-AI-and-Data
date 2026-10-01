@@ -26,7 +26,7 @@ import {
   FileSpreadsheet,
 } from 'lucide-react';
 import { toast } from 'sonner';
-import { formatCreditType } from '@/lib/utils';
+import { formatCreditType, formatCreditTypeDetailed } from '@/lib/utils';
 
 interface CadetAttendance {
   id: string;
@@ -523,7 +523,7 @@ export default function AdminAttendanceAndSnacksPage() {
                         <div>
                           Track:{' '}
                           <span className="text-orange-400 font-bold">
-                            {formatCreditType(lastScanResult.participant.creditType)}
+                            {lastScanResult.participant.creditType === 'NON_CGPA' ? formatCreditTypeDetailed(lastScanResult.participant.creditType, lastScanResult.participant.department) : formatCreditType(lastScanResult.participant.creditType)}
                           </span>
                         </div>
                       </div>
@@ -811,7 +811,7 @@ export default function AdminAttendanceAndSnacksPage() {
                           </td>
                           <td className="p-4">
                             <span className="font-bold text-orange-400">
-                              {formatCreditType(cadet.creditType)}
+                              {cadet.creditType === 'NON_CGPA' ? formatCreditTypeDetailed(cadet.creditType, cadet.department) : formatCreditType(cadet.creditType)}
                             </span>
                           </td>
 

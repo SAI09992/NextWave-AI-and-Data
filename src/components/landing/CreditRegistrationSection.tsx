@@ -95,9 +95,11 @@ export default function CreditRegistrationSection() {
                 {/* Non CGPA for 2nd year */}
                 <div className="flex items-start gap-2 p-3 rounded-lg bg-indigo-950/30 border border-indigo-500/30">
                   <Check className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
-                  <div>
-                    <span className="text-white font-bold">2nd Year — All Department Students:</span>{' '}
-                    <span className="text-indigo-400 font-bold">Non CGPA</span> — 2 Group 3 Certificates
+                  <div className="space-y-1">
+                    <span className="text-white font-bold block">2nd Year — All Department Students:</span>
+                    <span className="text-indigo-400 font-bold">Non CGPA</span> — 1 Group 3 Certificate +{' '}
+                    <span className="text-yellow-400 font-bold">Program Elective</span> (CSE &amp; IT) /{' '}
+                    <span className="text-orange-400 font-bold">University Elective</span> (Other Depts)
                   </div>
                 </div>
                 {/* Subject info */}

@@ -22,7 +22,7 @@ export default function Step2Academic({ form }: Props) {
 
   const isSecondYear = currentYear === '2nd Year';
 
-  // Determine initial selection for 3rd/4th year flow
+  // Determine initial selection for department dropdown (shared across all years)
   const isInitialCse = currentDept === 'CSE' || currentDept === 'Computer Science and Engineering';
   const isInitialIt = currentDept === 'IT' || currentDept === 'Information Technology';
   const [deptChoice, setDeptChoice] = useState<'CSE' | 'IT' | 'Other' | ''>(() => {
@@ -37,20 +37,11 @@ export default function Step2Academic({ form }: Props) {
     return '';
   });
 
-  // For 2nd year: direct department input
-  const [secondYearDept, setSecondYearDept] = useState(() => {
-    if (isSecondYear && currentDept) return currentDept;
-    return '';
-  });
-
   // When year changes, reset department and credit type accordingly
   useEffect(() => {
     if (isSecondYear) {
-      // 2nd year: auto-set to NON_CGPA, keep department if already set
+      // 2nd year: auto-set to NON_CGPA, keep department choice if already set
       setValue('creditType', 'NON_CGPA', { shouldValidate: true });
-      if (!secondYearDept && currentDept) {
-        setSecondYearDept(currentDept);
-      }
     } else if (currentYear === '3rd Year' || currentYear === '4th Year') {
       // If switching from 2nd year to 3rd/4th, reset credit type based on dept choice
       if (deptChoice === 'CSE') {
@@ -63,18 +54,18 @@ export default function Step2Academic({ form }: Props) {
     }
   }, [currentYear]);
 
-  // 3rd/4th year: department choice handler
+  // Department choice handler (works for both 2nd and 3rd/4th year)
   const handleDeptChoiceChange = (choice: 'CSE' | 'IT' | 'Other' | '') => {
     setDeptChoice(choice);
     if (choice === 'CSE') {
       setValue('department', 'CSE', { shouldValidate: true });
-      setValue('creditType', 'PE_CSE', { shouldValidate: true });
+      setValue('creditType', isSecondYear ? 'NON_CGPA' : 'PE_CSE', { shouldValidate: true });
     } else if (choice === 'IT') {
       setValue('department', 'IT', { shouldValidate: true });
-      setValue('creditType', 'PE_IT', { shouldValidate: true });
+      setValue('creditType', isSecondYear ? 'NON_CGPA' : 'PE_IT', { shouldValidate: true });
     } else if (choice === 'Other') {
       setValue('department', customDept, { shouldValidate: true });
-      setValue('creditType', 'UE', { shouldValidate: true });
+      setValue('creditType', isSecondYear ? 'NON_CGPA' : 'UE', { shouldValidate: true });
     } else {
       setValue('department', '', { shouldValidate: true });
     }
@@ -84,15 +75,8 @@ export default function Step2Academic({ form }: Props) {
     setCustomDept(val);
     if (deptChoice === 'Other') {
       setValue('department', val, { shouldValidate: true });
-      setValue('creditType', 'UE', { shouldValidate: true });
+      setValue('creditType', isSecondYear ? 'NON_CGPA' : 'UE', { shouldValidate: true });
     }
-  };
-
-  // 2nd year: direct department handler
-  const handleSecondYearDeptChange = (val: string) => {
-    setSecondYearDept(val);
-    setValue('department', val, { shouldValidate: true });
-    setValue('creditType', 'NON_CGPA', { shouldValidate: true });
   };
 
   return (
@@ -150,78 +134,69 @@ export default function Step2Academic({ form }: Props) {
           <div>
             <p className="text-xs text-indigo-300 font-bold">NON CGPA — 2ND YEAR TRACK</p>
             <p className="text-[11px] text-indigo-400/80 mt-0.5 leading-relaxed">
-              2nd year students from all departments are registered under the <strong>Non CGPA</strong> track. 
-              You will receive <strong>2 Group 3 Certificates</strong> upon completion. Simply enter your department below.
+              2nd year students are registered under the <strong>Non CGPA</strong> track. 
+              You will receive <strong>1 Group 3 Certificate</strong> + <strong>Program Elective</strong> (CSE &amp; IT) or <strong>University Elective</strong> (Other Departments). Select your department below.
             </p>
           </div>
         </div>
       )}
 
-      {/* Department Selection — different flow for 2nd year vs 3rd/4th year */}
-      {isSecondYear ? (
-        /* 2nd Year: Direct department input — no credit type selection */
-        <div className="space-y-1.5">
-          <label className="text-xs text-nexus-text flex items-center gap-1.5">
-            <BookOpen className="w-3.5 h-3.5 text-nexus-secondary" />
-            <span>Department *</span>
-          </label>
-          <input
-            type="text"
-            value={secondYearDept}
-            onChange={(e) => handleSecondYearDeptChange(e.target.value)}
-            placeholder="Enter your department (e.g. CSE, IT, ECE, EEE, Mechanical)"
-            className="w-full px-3.5 py-2.5 rounded-lg bg-nexus-surface border border-nexus-border text-nexus-text text-sm focus:outline-none focus:border-nexus-primary transition-colors"
-            autoFocus={isSecondYear}
-          />
-          {errors.department && (
-            <p className="text-[11px] text-red-400">{errors.department.message}</p>
+      {/* Department Selection — unified dropdown for all years */}
+      <div className="space-y-1.5">
+        <label className="text-xs text-nexus-text flex items-center gap-1.5">
+          <BookOpen className="w-3.5 h-3.5 text-nexus-secondary" />
+          <span>{isSecondYear ? 'Department *' : 'Department & Credit Type *'}</span>
+        </label>
+
+        <select
+          value={deptChoice}
+          onChange={(e) => handleDeptChoiceChange(e.target.value as any)}
+          className="w-full px-3.5 py-2.5 rounded-lg bg-nexus-surface border border-nexus-border text-nexus-text text-sm focus:outline-none focus:border-nexus-primary transition-colors font-mono"
+        >
+          <option value="">Select Department</option>
+          {isSecondYear ? (
+            <>
+              <option value="CSE">CSE — Non CGPA (1 Group 3 Cert + Program Elective)</option>
+              <option value="IT">IT — Non CGPA (1 Group 3 Cert + Program Elective)</option>
+              <option value="Other">Other Department — Non CGPA (1 Group 3 Cert + University Elective)</option>
+            </>
+          ) : (
+            <>
+              <option value="CSE">CSE - PE (Program Elective)</option>
+              <option value="IT">IT - PE (Program Elective)</option>
+              <option value="Other">Other Department - UE (University Elective)</option>
+            </>
           )}
-          {/* Hidden credit type set to NON_CGPA */}
+        </select>
+        {errors.department && !deptChoice && (
+          <p className="text-[11px] text-red-400">{errors.department.message}</p>
+        )}
+
+        {/* If 'Other' is selected, ask them to specify manually */}
+        {deptChoice === 'Other' && (
+          <div className="pt-2 space-y-1">
+            <label className="text-[11px] text-nexus-text-dim block">
+              Specify Your Department Name *
+            </label>
+            <input
+              type="text"
+              value={customDept}
+              onChange={(e) => handleCustomDeptChange(e.target.value)}
+              placeholder="e.g. ECE, EEE, Mechanical, Biotech, Civil"
+              className="w-full px-3 py-2 rounded-lg bg-nexus-bg border border-nexus-secondary/50 text-nexus-text text-xs focus:outline-none focus:border-nexus-secondary transition-colors"
+              autoFocus
+            />
+            {errors.department && deptChoice === 'Other' && (
+              <p className="text-[11px] text-red-400">{errors.department.message}</p>
+            )}
+          </div>
+        )}
+
+        {/* Hidden credit type for 2nd year */}
+        {isSecondYear && (
           <input type="hidden" {...register('creditType')} value="NON_CGPA" />
-        </div>
-      ) : (
-        /* 3rd/4th Year: Credit-based department selection */
-        <div className="space-y-1.5">
-          <label className="text-xs text-nexus-text flex items-center gap-1.5">
-            <BookOpen className="w-3.5 h-3.5 text-nexus-secondary" />
-            <span>Department & Credit Type *</span>
-          </label>
-
-          <select
-            value={deptChoice}
-            onChange={(e) => handleDeptChoiceChange(e.target.value as any)}
-            className="w-full px-3.5 py-2.5 rounded-lg bg-nexus-surface border border-nexus-border text-nexus-text text-sm focus:outline-none focus:border-nexus-primary transition-colors font-mono"
-          >
-            <option value="">Select Department</option>
-            <option value="CSE">CSE - PE (Program Elective)</option>
-            <option value="IT">IT - PE (Program Elective)</option>
-            <option value="Other">Other Department - UE (University Elective)</option>
-          </select>
-          {errors.department && !deptChoice && (
-            <p className="text-[11px] text-red-400">{errors.department.message}</p>
-          )}
-
-          {/* If 'Other' is selected, ask them to specify manually */}
-          {deptChoice === 'Other' && (
-            <div className="pt-2 space-y-1">
-              <label className="text-[11px] text-nexus-text-dim block">
-                Specify Your Department Name *
-              </label>
-              <input
-                type="text"
-                value={customDept}
-                onChange={(e) => handleCustomDeptChange(e.target.value)}
-                placeholder="e.g. ECE, EEE, Mechanical, Biotech, Civil"
-                className="w-full px-3 py-2 rounded-lg bg-nexus-bg border border-nexus-secondary/50 text-nexus-text text-xs focus:outline-none focus:border-nexus-secondary transition-colors"
-                autoFocus
-              />
-              {errors.department && deptChoice === 'Other' && (
-                <p className="text-[11px] text-red-400">{errors.department.message}</p>
-              )}
-            </div>
-          )}
-        </div>
-      )}
+        )}
+      </div>
 
       {/* Section & College */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -256,3 +231,4 @@ export default function Step2Academic({ form }: Props) {
     </div>
   );
 }
+

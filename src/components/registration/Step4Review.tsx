@@ -4,7 +4,7 @@ import React from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { FullRegistrationInput } from '@/lib/validation';
 import { Edit3, User, BookOpen, FileText, Home } from 'lucide-react';
-import { formatCreditType } from '@/lib/utils';
+import { formatCreditType, formatCreditTypeDetailed } from '@/lib/utils';
 
 interface Props {
   form: UseFormReturn<FullRegistrationInput>;
@@ -79,7 +79,10 @@ export default function Step4Review({ form, onEditStep, isConfirmed, setIsConfir
           <div>
             <span className="text-gray-500 block text-[10px]">CREDIT TRACK ELIGIBILITY:</span>
             <span className="text-orange-400 font-bold text-xs">
-              {formatCreditType(values.creditType)} {values.creditType !== 'NON_CGPA' ? '(₹250)' : '— 2nd Year (₹250)'}
+              {values.creditType !== 'NON_CGPA' 
+                ? <>{formatCreditType(values.creditType)} (₹250)</>
+                : <>{formatCreditTypeDetailed(values.creditType, values.department)} — 2nd Year (₹250)</>
+              }
             </span>
           </div>
           <div>

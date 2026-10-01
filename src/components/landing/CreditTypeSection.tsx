@@ -76,7 +76,7 @@ export default function EligibilitySection() {
                 'Hands-on experience with Pinecone, LangChain, and LLMs',
                 'PE Credit for 3rd & 4th Year CSE & IT Students',
                 'UE Credit for 3rd & 4th Year Other Department Students',
-                'Non CGPA — 2 Group 3 Certificates for 2nd Year Students'
+                'Non CGPA — 1 Group 3 Certificate + PE (CSE/IT) or UE (Other Depts) for 2nd Year Students'
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-3 text-sm text-gray-300 font-sans">
                   <CheckCircle2 className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />

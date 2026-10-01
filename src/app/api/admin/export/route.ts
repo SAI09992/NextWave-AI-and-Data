@@ -52,7 +52,7 @@ export async function GET(req: NextRequest) {
           'Year': r.year,
           'Section': r.section,
           'College': r.college,
-          'Credit Type': r.creditType,
+          'Credit Type': r.creditType === 'NON_CGPA' ? ((() => { const dept = (r.department || '').toUpperCase().trim(); const isCseIt = dept === 'CSE' || dept === 'IT' || dept === 'COMPUTER SCIENCE AND ENGINEERING' || dept === 'INFORMATION TECHNOLOGY'; return isCseIt ? 'NON CGPA — 1 Group 3 Certificate + Program Elective' : 'NON CGPA — 1 Group 3 Certificate + University Elective'; })()) : r.creditType,
           'Payment Status': r.paymentStatus || 'unpaid',
           'UTR': r.utr || '',
           'Amount (INR)': r.amount || 0,
