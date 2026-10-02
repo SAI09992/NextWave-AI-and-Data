@@ -11,9 +11,7 @@ import {
   Trash2,
   AlertTriangle,
   X,
-  CheckCircle2,
   Eye,
-  Home,
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { formatCreditType, formatCreditTypeDetailed } from '@/lib/utils';
@@ -24,6 +22,7 @@ export default function AdminRegistrationsPage() {
   const [search, setSearch] = useState('');
   const [creditFilter, setCreditFilter] = useState('ALL');
   const [paymentFilter, setPaymentFilter] = useState('ALL');
+  const [residenceFilter, setResidenceFilter] = useState('ALL');
 
   // Deletion modal state
   const [deletingRecord, setDeletingRecord] = useState<any | null>(null);
@@ -51,9 +50,9 @@ export default function AdminRegistrationsPage() {
     fetchRegistrations();
   }, []);
 
-  const handleExportCsv = () => {
-    window.location.href = '/api/admin/export?type=registrations';
-    toast.success('Downloading registration CSV export...');
+  const handleExportCsv = (format: 'csv' | 'xlsx' = 'csv') => {
+    window.location.href = `/api/admin/export?type=registrations&format=${format}`;
+    toast.success(`Downloading registration ${format.toUpperCase()} export...`);
   };
 
   const handleDelete = async () => {
@@ -66,7 +65,7 @@ export default function AdminRegistrationsPage() {
       const data = await res.json();
       if (res.ok && data.success) {
         toast.success(data.message || 'Registration deleted successfully.');
-        setRegistrations((prev) => prev.filter((r) => r.id !== deletingRecord.id));
+        setRegistrations((prev: any[]) => prev.filter((r: any) => r.id !== deletingRecord.id));
         setDeletingRecord(null);
       } else {
         toast.error(data.error || 'Failed to delete registration.');
@@ -79,20 +78,23 @@ export default function AdminRegistrationsPage() {
     }
   };
 
-  const filtered = registrations.filter((r) => {
+  const filtered = registrations.filter((r: any) => {
     if (creditFilter !== 'ALL' && r.creditType !== creditFilter) return false;
     if (paymentFilter !== 'ALL') {
       const status = r.paymentStatus || 'unpaid';
       if (status !== paymentFilter) return false;
     }
+    if (residenceFilter !== 'ALL' && r.residenceType !== residenceFilter) return false;
     if (search) {
       const q = search.toLowerCase();
       return (
-        r.name.toLowerCase().includes(q) ||
-        r.email.toLowerCase().includes(q) ||
-        r.registrationId.toLowerCase().includes(q) ||
-        r.registerNumber.toLowerCase().includes(q) ||
-        r.department.toLowerCase().includes(q)
+        r.name?.toLowerCase().includes(q) ||
+        r.email?.toLowerCase().includes(q) ||
+        r.registrationId?.toLowerCase().includes(q) ||
+        r.registerNumber?.toLowerCase().includes(q) ||
+        r.department?.toLowerCase().includes(q) ||
+        (r.hostelName && r.hostelName.toLowerCase().includes(q)) ||
+        (r.roomNumber && r.roomNumber.toLowerCase().includes(q))
       );
     }
     return true;
@@ -112,13 +114,22 @@ export default function AdminRegistrationsPage() {
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           <button
-            onClick={handleExportCsv}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-yellow-600 hover:bg-yellow-500 text-white font-bold font-sans text-sm transition-colors shadow-lg shadow-yellow-500/20"
+            onClick={() => handleExportCsv('csv')}
+            className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-yellow-600 hover:bg-yellow-500 text-white font-bold font-sans text-xs transition-colors shadow-lg shadow-yellow-500/20"
+            title="Download CSV spreadsheet including Residence & Hostel details"
           >
             <Download className="w-4 h-4" />
             <span>EXPORT CSV</span>
+          </button>
+          <button
+            onClick={() => handleExportCsv('xlsx')}
+            className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-emerald-700 hover:bg-emerald-600 text-white font-bold font-sans text-xs transition-colors shadow-lg shadow-emerald-600/20"
+            title="Download Excel spreadsheet"
+          >
+            <Download className="w-4 h-4" />
+            <span>EXPORT EXCEL</span>
           </button>
           <button
             onClick={fetchRegistrations}
@@ -131,23 +142,34 @@ export default function AdminRegistrationsPage() {
       </div>
 
       {/* Filter Bar */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
         {/* Search */}
         <div className="relative">
           <Search className="w-4 h-4 text-gray-500 absolute left-3 top-2.5" />
           <input
             type="text"
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search Name, Reg ID, Roll No..."
+            onChange={(e: any) => setSearch(e.target.value)}
+            placeholder="Search Name, Reg ID, Hostel..."
             className="w-full pl-9 pr-3.5 py-2 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-yellow-500 transition-colors placeholder:text-gray-600"
           />
         </div>
 
+        {/* Residence Filter */}
+        <select
+          value={residenceFilter}
+          onChange={(e: any) => setResidenceFilter(e.target.value)}
+          className="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-yellow-500 transition-colors appearance-none"
+        >
+          <option value="ALL">All Residence Types</option>
+          <option value="DAY_SCHOLAR">Day Scholar</option>
+          <option value="HOSTEL">Hosteller</option>
+        </select>
+
         {/* Credit Filter */}
         <select
           value={creditFilter}
-          onChange={(e) => setCreditFilter(e.target.value)}
+          onChange={(e: any) => setCreditFilter(e.target.value)}
           className="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-yellow-500 transition-colors appearance-none"
         >
           <option value="ALL">All Tracks</option>
@@ -160,7 +182,7 @@ export default function AdminRegistrationsPage() {
         {/* Payment Status Filter */}
         <select
           value={paymentFilter}
-          onChange={(e) => setPaymentFilter(e.target.value)}
+          onChange={(e: any) => setPaymentFilter(e.target.value)}
           className="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-yellow-500 transition-colors appearance-none"
         >
           <option value="ALL">All Payment Statuses</option>
@@ -182,6 +204,7 @@ export default function AdminRegistrationsPage() {
                 <th className="p-4">Roll Number</th>
                 <th className="p-4">Dept / Year</th>
                 <th className="p-4">Track</th>
+                <th className="p-4">Residence</th>
                 <th className="p-4">Payment</th>
                 <th className="p-4">Registered At</th>
                 <th className="p-4 text-center">Actions</th>
@@ -190,12 +213,12 @@ export default function AdminRegistrationsPage() {
             <tbody className="divide-y divide-gray-800 text-gray-300">
               {filtered.length === 0 ? (
                 <tr>
-                  <td colSpan={8} className="p-8 text-center text-gray-500">
+                  <td colSpan={9} className="p-8 text-center text-gray-500">
                     No registrations found.
                   </td>
                 </tr>
               ) : (
-                filtered.map((r) => (
+                filtered.map((r: any) => (
                   <tr key={r.id} className="hover:bg-gray-800/50 transition-colors">
                     <td className="p-4 font-bold text-yellow-400 font-mono">{r.registrationId}</td>
                     <td className="p-4">
@@ -211,6 +234,22 @@ export default function AdminRegistrationsPage() {
                       <span className="font-bold text-orange-400">
                         {r.creditType === 'NON_CGPA' ? formatCreditTypeDetailed(r.creditType, r.department) : formatCreditType(r.creditType)}
                       </span>
+                    </td>
+                    <td className="p-4">
+                      {r.residenceType === 'HOSTEL' ? (
+                        <div>
+                          <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-purple-950/60 text-purple-400 border border-purple-500/30">
+                            HOSTELLER
+                          </span>
+                          <div className="text-[10px] text-gray-400 mt-0.5 truncate max-w-[130px]" title={`${r.hostelName || 'Hostel'} - Room ${r.roomNumber || 'N/A'}`}>
+                            {r.hostelName || 'Hostel'} ({r.roomNumber || 'N/A'})
+                          </div>
+                        </div>
+                      ) : (
+                        <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-blue-950/60 text-blue-400 border border-blue-500/30">
+                          DAY SCHOLAR
+                        </span>
+                      )}
                     </td>
                     <td className="p-4">
                       <StatusBadge status={r.paymentStatus || 'unpaid'} />
@@ -356,13 +395,13 @@ export default function AdminRegistrationsPage() {
                   <div className="flex justify-between">
                     <span className="text-gray-500">Residence Type</span>
                     <span className="font-bold text-white">
-                      {inspectingRecord.residenceType === 'DAY_SCHOLAR' ? 'DAY SCHOLAR' : 'HOSTELLER'}
+                      {inspectingRecord.residenceType === 'HOSTEL' ? 'HOSTELLER' : 'DAY SCHOLAR'}
                     </span>
                   </div>
-                  {inspectingRecord.residenceType === 'HOSTEL' && (
+                  {inspectingRecord.residenceType === 'HOSTEL' ? (
                     <>
                       <div className="flex justify-between">
-                        <span className="text-gray-500">Hostel Name</span>
+                        <span className="text-gray-500">Hostel Name / Block</span>
                         <span className="font-bold text-white">{inspectingRecord.hostelName || 'N/A'}</span>
                       </div>
                       <div className="flex justify-between">
@@ -370,6 +409,11 @@ export default function AdminRegistrationsPage() {
                         <span className="font-bold text-white font-mono">{inspectingRecord.roomNumber || 'N/A'}</span>
                       </div>
                     </>
+                  ) : (
+                    <div className="flex justify-between">
+                      <span className="text-gray-500">Accommodation</span>
+                      <span className="text-gray-400">Non-resident (Day Scholar)</span>
+                    </div>
                   )}
                 </div>
               </div>

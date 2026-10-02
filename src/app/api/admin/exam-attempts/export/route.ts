@@ -19,6 +19,11 @@ export async function GET() {
         name: registrations.name,
         email: registrations.email,
         phone: registrations.phone,
+        registerNumber: registrations.registerNumber,
+        department: registrations.department,
+        residenceType: registrations.residenceType,
+        hostelName: registrations.hostelName,
+        roomNumber: registrations.roomNumber,
         attemptStatus: examAttempts.status,
         score: examAttempts.score,
         round2Score: examAttempts.round2Score,
@@ -36,6 +41,11 @@ export async function GET() {
       'Name',
       'Email',
       'Phone',
+      'Register Number',
+      'Department',
+      'Residence Type',
+      'Hostel Name',
+      'Room Number',
       'Exam Status',
       'Round 1 Score (Quiz)',
       'Round 2 Score (Understanding)',
@@ -64,11 +74,21 @@ export async function GET() {
         endStr = reg.endedAt ? new Date(reg.endedAt).toLocaleString() : '';
       }
 
+      const isHostel = reg.residenceType === 'HOSTEL';
+      const residenceStr = isHostel ? 'Hosteller' : 'Day Scholar';
+      const hostelStr = isHostel ? (reg.hostelName || 'N/A') : 'N/A';
+      const roomStr = isHostel ? (reg.roomNumber || 'N/A') : 'N/A';
+
       return [
         `"${reg.registrationId || ''}"`,
         `"${reg.name || ''}"`,
         `"${reg.email || ''}"`,
         `"${reg.phone || ''}"`,
+        `"${reg.registerNumber || ''}"`,
+        `"${reg.department || ''}"`,
+        `"${residenceStr}"`,
+        `"${hostelStr}"`,
+        `"${roomStr}"`,
         `"${status}"`,
         `"${scoreStr}"`,
         `"${r2Str}"`,
@@ -79,7 +99,7 @@ export async function GET() {
       ].join(',');
     });
 
-    const csvContent = [headers.join(','), ...rows].join('\n');
+    const csvContent = '\uFEFF' + [headers.join(','), ...rows].join('\n');
 
     return new NextResponse(csvContent, {
       status: 200,

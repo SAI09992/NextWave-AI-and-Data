@@ -24,6 +24,9 @@ export async function GET() {
         section: registrations.section,
         college: registrations.college,
         creditType: registrations.creditType,
+        residenceType: registrations.residenceType,
+        hostelName: registrations.hostelName,
+        roomNumber: registrations.roomNumber,
         paymentStatus: payments.status,
         createdAt: registrations.createdAt,
       })

@@ -42,6 +42,9 @@ export async function GET() {
         registerNumber: item.registration.registerNumber,
         department: item.registration.department,
         creditType: item.registration.creditType,
+        residenceType: item.registration.residenceType,
+        hostelName: item.registration.hostelName,
+        roomNumber: item.registration.roomNumber,
       },
     }));
 
