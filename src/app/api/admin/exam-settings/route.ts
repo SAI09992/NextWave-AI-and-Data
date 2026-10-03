@@ -22,12 +22,13 @@ export async function PUT(req: NextRequest) {
   try {
     await requireAdmin();
     const body = await req.json();
-    const { warningLimit, durationMinutes, examActive } = body;
+    const { warningLimit, durationMinutes, examActive, activeTestRound } = body;
     
     await db.update(examSettings).set({
       warningLimit,
       durationMinutes,
       examActive,
+      activeTestRound: activeTestRound || 'round1_day1',
       updatedAt: new Date()
     }).where(eq(examSettings.id, 'default'));
     
