@@ -14,6 +14,7 @@ export async function GET() {
     await db.execute(sql`ALTER TABLE exam_questions ADD COLUMN IF NOT EXISTS round TEXT NOT NULL DEFAULT 'round1_day1';`);
     await db.execute(sql`CREATE INDEX IF NOT EXISTS exam_questions_round_idx ON exam_questions (round);`);
     await db.execute(sql`ALTER TABLE exam_attempts ADD COLUMN IF NOT EXISTS round1_score INTEGER;`);
+    await db.execute(sql`ALTER TABLE exam_attempts ADD COLUMN IF NOT EXISTS r1_d2_score INTEGER;`);
     await db.execute(sql`ALTER TABLE exam_attempts ADD COLUMN IF NOT EXISTS round TEXT NOT NULL DEFAULT 'round1_day1';`);
 
     return NextResponse.json({ success: true, message: 'Database schema successfully updated!' });
