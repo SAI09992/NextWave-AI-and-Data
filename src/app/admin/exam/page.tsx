@@ -1,8 +1,18 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Loader2, Save, Plus, Trash2, Edit3, Shield, Users, ShieldAlert, Download, AlertTriangle } from 'lucide-react';
+import { Loader2, Save, Plus, Trash2, Edit3, Shield, Users, ShieldAlert, Download, AlertTriangle, Filter } from 'lucide-react';
 import { toast } from 'sonner';
+
+const ROUND_OPTIONS = [
+  { value: 'round1_day1', label: 'Round 1 (Day 1)' },
+  { value: 'round1_day2', label: 'Round 1 (Day 2)' },
+];
+
+const getRoundLabel = (value: string) => {
+  const found = ROUND_OPTIONS.find(r => r.value === value);
+  return found ? found.label : value;
+};
 
 export default function AdminExamPage() {
   const [activeTab, setActiveTab] = useState<'settings' | 'questions' | 'attempts'>('settings');
@@ -16,13 +26,15 @@ export default function AdminExamPage() {
   const [questions, setQuestions] = useState<any[]>([]);
   const [loadingQuestions, setLoadingQuestions] = useState(true);
   const [editQuestion, setEditQuestion] = useState<any>(null);
+  const [questionRoundFilter, setQuestionRoundFilter] = useState<string>('all');
 
   // Attempts State
   const [attempts, setAttempts] = useState<any[]>([]);
   const [loadingAttempts, setLoadingAttempts] = useState(false);
   const [unblocking, setUnblocking] = useState<string | null>(null);
-  const [editingMarks, setEditingMarks] = useState<{ id: string | null, internalRegId: string, r2: string, r3: string } | null>(null);
+  const [editingMarks, setEditingMarks] = useState<{ id: string | null, internalRegId: string, r1: string, r2: string, r3: string } | null>(null);
   const [savingMarks, setSavingMarks] = useState(false);
+  const [attemptRoundFilter, setAttemptRoundFilter] = useState<string>('all');
 
   useEffect(() => {
     fetchSettings();
@@ -112,6 +124,7 @@ export default function AdminExamPage() {
           attemptId: editingMarks.id,
           internalRegId: editingMarks.internalRegId,
           action: 'update_marks',
+          round1Score: editingMarks.r1,
           round2Score: editingMarks.r2,
           round3Score: editingMarks.r3
         })
@@ -184,6 +197,18 @@ export default function AdminExamPage() {
     }
   };
 
+  // Filtered questions based on round filter
+  const filteredQuestions = questionRoundFilter === 'all' 
+    ? questions 
+    : questions.filter(q => (q.round || 'round1_day1') === questionRoundFilter);
+
+  // Filtered attempts based on round filter
+  const filteredAttempts = attemptRoundFilter === 'all'
+    ? attempts
+    : attemptRoundFilter === 'not_attempted'
+    ? attempts.filter(a => !a.status || a.status === 'not_started')
+    : attempts.filter(a => (a.round || 'round1_day1') === attemptRoundFilter);
+
   return (
     <div className="p-4 md:p-8 space-y-6">
       <div>
@@ -248,6 +273,27 @@ export default function AdminExamPage() {
                   </label>
                 </div>
 
+                {/* Active Test Round Selector */}
+                <div className="p-4 rounded-xl bg-nexus-surface/40 border border-nexus-border/50">
+                  <label className="text-[10px] text-nexus-text-muted block mb-1 font-bold">ACTIVE TEST ROUND</label>
+                  <select
+                    value={settings?.activeTestRound || 'round1_day1'}
+                    onChange={(e) => setSettings({ ...settings, activeTestRound: e.target.value })}
+                    className="w-full px-3 py-2 rounded-lg bg-nexus-bg border border-nexus-border text-nexus-text text-sm font-mono appearance-none cursor-pointer"
+                  >
+                    {ROUND_OPTIONS.map(opt => (
+                      <option key={opt.value} value={opt.value}>{opt.label}</option>
+                    ))}
+                  </select>
+                  <p className="text-[10px] text-nexus-text-dim mt-2">Participants will only see questions assigned to the active round. Only one round can be active at a time.</p>
+                  <div className="mt-2 flex items-center gap-2">
+                    <div className={`w-2 h-2 rounded-full ${settings?.examActive ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`} />
+                    <span className="text-[10px] font-mono text-nexus-text-muted">
+                      Currently Active: <span className="text-nexus-primary font-bold">{getRoundLabel(settings?.activeTestRound || 'round1_day1')}</span>
+                    </span>
+                  </div>
+                </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="p-4 rounded-xl bg-nexus-surface/40 border border-nexus-border/50">
                     <label className="text-[10px] text-nexus-text-muted block mb-1 font-bold">WARNING LIMIT (MAX VIOLATIONS)</label>
@@ -290,26 +336,61 @@ export default function AdminExamPage() {
       {/* QUESTIONS TAB */}
       {activeTab === 'questions' && (
         <div className="space-y-4">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between flex-wrap gap-3">
             <h2 className="font-mono text-sm font-bold text-nexus-text">Manage MCQs</h2>
-            <button
-              onClick={() => setEditQuestion({ questionText: '', options: ['', '', '', ''], correctOptionIndex: 0, orderIndex: questions.length + 1 })}
-              className="px-4 py-2 rounded-lg bg-orange-500/20 text-orange-400 border border-orange-500/50 hover:bg-orange-500/30 text-xs font-bold flex items-center gap-2"
-            >
-              <Plus className="w-3.5 h-3.5" /> ADD QUESTION
-            </button>
+            <div className="flex items-center gap-3">
+              {/* Round Filter for Questions */}
+              <div className="flex items-center gap-2">
+                <Filter className="w-3.5 h-3.5 text-nexus-text-muted" />
+                <select
+                  value={questionRoundFilter}
+                  onChange={(e) => setQuestionRoundFilter(e.target.value)}
+                  className="px-3 py-1.5 rounded-lg bg-nexus-surface border border-nexus-border text-nexus-text text-xs font-mono appearance-none cursor-pointer"
+                >
+                  <option value="all">All Rounds ({questions.length})</option>
+                  {ROUND_OPTIONS.map(opt => (
+                    <option key={opt.value} value={opt.value}>
+                      {opt.label} ({questions.filter(q => (q.round || 'round1_day1') === opt.value).length})
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <button
+                onClick={() => setEditQuestion({ questionText: '', options: ['', '', '', ''], correctOptionIndex: 0, orderIndex: questions.length + 1, round: settings?.activeTestRound || 'round1_day1' })}
+                className="px-4 py-2 rounded-lg bg-orange-500/20 text-orange-400 border border-orange-500/50 hover:bg-orange-500/30 text-xs font-bold flex items-center gap-2"
+              >
+                <Plus className="w-3.5 h-3.5" /> ADD QUESTION
+              </button>
+            </div>
           </div>
 
           {editQuestion && (
             <div className="p-4 rounded-xl border border-orange-500/50 bg-orange-950/20 space-y-4 mb-6">
-              <div>
-                <label className="text-[10px] text-nexus-text-muted block mb-1">QUESTION TEXT</label>
-                <textarea
-                  value={editQuestion.questionText}
-                  onChange={(e) => setEditQuestion({ ...editQuestion, questionText: e.target.value })}
-                  className="w-full px-3 py-2 rounded-lg bg-nexus-surface border border-nexus-border text-nexus-text text-sm font-mono min-h-[80px]"
-                />
+              <div className="flex items-center gap-4">
+                <div className="flex-1">
+                  <label className="text-[10px] text-nexus-text-muted block mb-1">QUESTION TEXT</label>
+                  <textarea
+                    value={editQuestion.questionText}
+                    onChange={(e) => setEditQuestion({ ...editQuestion, questionText: e.target.value })}
+                    className="w-full px-3 py-2 rounded-lg bg-nexus-surface border border-nexus-border text-nexus-text text-sm font-mono min-h-[80px]"
+                  />
+                </div>
               </div>
+              
+              {/* Round Selector for Question */}
+              <div>
+                <label className="text-[10px] text-nexus-text-muted block mb-1">ASSIGN TO ROUND</label>
+                <select
+                  value={editQuestion.round || 'round1_day1'}
+                  onChange={(e) => setEditQuestion({ ...editQuestion, round: e.target.value })}
+                  className="px-3 py-2 rounded-lg bg-nexus-surface border border-nexus-border text-nexus-text text-sm font-mono appearance-none cursor-pointer w-full md:w-auto"
+                >
+                  {ROUND_OPTIONS.map(opt => (
+                    <option key={opt.value} value={opt.value}>{opt.label}</option>
+                  ))}
+                </select>
+              </div>
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {editQuestion.options.map((opt: string, idx: number) => (
                   <div key={idx} className="flex items-center gap-2">
@@ -353,12 +434,12 @@ export default function AdminExamPage() {
           <div className="space-y-3">
             {loadingQuestions ? (
               <div className="flex justify-center p-8"><Loader2 className="w-6 h-6 animate-spin text-nexus-primary" /></div>
-            ) : questions.length === 0 ? (
+            ) : filteredQuestions.length === 0 ? (
               <div className="p-8 text-center text-nexus-text-muted text-xs font-mono border border-nexus-border border-dashed rounded-2xl">
-                No questions added yet. Add at least 25 for the exam.
+                {questions.length === 0 ? 'No questions added yet. Add at least 25 for the exam.' : `No questions found for ${getRoundLabel(questionRoundFilter)}.`}
               </div>
             ) : (
-              questions.map((q, idx) => (
+              filteredQuestions.map((q, idx) => (
                 <div key={q.id} className="p-4 rounded-xl nexus-glass border border-nexus-border relative group">
                   <div className="absolute top-4 right-4 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                     <button onClick={() => setEditQuestion(q)} className="p-1.5 text-nexus-text-muted hover:text-nexus-primary bg-nexus-surface rounded-lg border border-nexus-border">
@@ -368,9 +449,18 @@ export default function AdminExamPage() {
                       <Trash2 className="w-3.5 h-3.5" />
                     </button>
                   </div>
-                  <div className="font-mono text-sm text-nexus-text font-bold mb-3 pr-20">
-                    <span className="text-nexus-primary mr-2">Q{idx + 1}.</span>
+                  <div className="font-mono text-sm text-nexus-text font-bold mb-1 pr-20 flex items-center gap-2">
+                    <span className="text-nexus-primary mr-1">Q{idx + 1}.</span>
                     {q.questionText}
+                  </div>
+                  <div className="mb-3">
+                    <span className={`px-2 py-0.5 rounded text-[10px] font-bold font-mono ${
+                      (q.round || 'round1_day1') === 'round1_day1' 
+                        ? 'bg-cyan-950/40 text-cyan-400 border border-cyan-500/30' 
+                        : 'bg-purple-950/40 text-purple-400 border border-purple-500/30'
+                    }`}>
+                      {getRoundLabel(q.round || 'round1_day1')}
+                    </span>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-2 pl-6">
                     {q.options.map((opt: string, oIdx: number) => (
@@ -390,31 +480,50 @@ export default function AdminExamPage() {
       {/* ATTEMPTS TAB */}
       {activeTab === 'attempts' && (
         <div className="space-y-4">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between flex-wrap gap-3">
             <h2 className="font-mono text-sm font-bold text-nexus-text flex items-center gap-2">
               <Users className="w-4 h-4" /> EXAM ATTEMPTS
             </h2>
-            <a 
-              href="/api/admin/exam-attempts/export"
-              download="exam_results.csv"
-              className="px-4 py-2 rounded-lg bg-yellow-950/40 border border-yellow-500/50 hover:bg-yellow-900/50 text-yellow-400 transition-colors text-xs font-bold inline-flex items-center gap-2"
-            >
-              <Download className="w-4 h-4" /> EXPORT LOGS & SCORES
-            </a>
+            <div className="flex items-center gap-3 flex-wrap">
+              {/* Round Filter for Attempts */}
+              <div className="flex items-center gap-2">
+                <Filter className="w-3.5 h-3.5 text-nexus-text-muted" />
+                <select
+                  value={attemptRoundFilter}
+                  onChange={(e) => setAttemptRoundFilter(e.target.value)}
+                  className="px-3 py-1.5 rounded-lg bg-nexus-surface border border-nexus-border text-nexus-text text-xs font-mono appearance-none cursor-pointer"
+                >
+                  <option value="all">All ({attempts.length})</option>
+                  <option value="not_attempted">Not Attempted ({attempts.filter(a => !a.status || a.status === 'not_started').length})</option>
+                  {ROUND_OPTIONS.map(opt => (
+                    <option key={opt.value} value={opt.value}>
+                      {opt.label} ({attempts.filter(a => (a.round || 'round1_day1') === opt.value && a.status && a.status !== 'not_started').length})
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <a 
+                href="/api/admin/exam-attempts/export"
+                download="exam_results.csv"
+                className="px-4 py-2 rounded-lg bg-yellow-950/40 border border-yellow-500/50 hover:bg-yellow-900/50 text-yellow-400 transition-colors text-xs font-bold inline-flex items-center gap-2"
+              >
+                <Download className="w-4 h-4" /> EXPORT LOGS & SCORES
+              </a>
+            </div>
           </div>
 
           {loadingAttempts ? (
             <div className="flex justify-center p-8"><Loader2 className="w-6 h-6 animate-spin text-nexus-primary" /></div>
-          ) : attempts.length === 0 ? (
+          ) : filteredAttempts.length === 0 ? (
             <div className="p-8 text-center text-nexus-text-muted text-xs font-mono border border-nexus-border border-dashed rounded-2xl">
               No attempts recorded yet.
             </div>
           ) : (
             (() => {
-              const total = attempts.length;
-              const r1Count = attempts.filter(a => a.score !== null).length;
-              const r2Count = attempts.filter(a => a.round2Score !== null).length;
-              const r3Count = attempts.filter(a => a.round3Score !== null).length;
+              const total = filteredAttempts.length;
+              const r1Count = filteredAttempts.filter(a => a.score !== null || a.round1Score !== null).length;
+              const r2Count = filteredAttempts.filter(a => a.round2Score !== null).length;
+              const r3Count = filteredAttempts.filter(a => a.round3Score !== null).length;
 
               return (
                 <div className="overflow-x-auto rounded-xl border border-nexus-border">
@@ -423,8 +532,10 @@ export default function AdminExamPage() {
                       <tr>
                         <th className="p-4 font-bold w-12 text-center text-nexus-text-muted">#</th>
                         <th className="p-4 font-bold">CADET / REG ID</th>
+                        <th className="p-4 font-bold">ROUND</th>
                         <th className="p-4 font-bold">STATUS</th>
-                        <th className="p-4 font-bold">R1 (QUIZ) <span className="text-yellow-500/50 text-[10px] ml-1">({r1Count}/{total})</span></th>
+                        <th className="p-4 font-bold">R1 (QUIZ/AUTO) <span className="text-cyan-500/50 text-[10px] ml-1">({filteredAttempts.filter(a => a.score !== null).length}/{total})</span></th>
+                        <th className="p-4 font-bold">R1 (MANUAL) <span className="text-yellow-500/50 text-[10px] ml-1">({filteredAttempts.filter(a => a.round1Score !== null).length}/{total})</span></th>
                         <th className="p-4 font-bold">R2 (UNDERSTANDING) <span className="text-orange-500/50 text-[10px] ml-1">({r2Count}/{total})</span></th>
                         <th className="p-4 font-bold">R3 SCORE <span className="text-amber-500/50 text-[10px] ml-1">({r3Count}/{total})</span></th>
                         <th className="p-4 font-bold">WARNINGS</th>
@@ -432,7 +543,7 @@ export default function AdminExamPage() {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-nexus-border/50">
-                  {attempts.map((attempt, index) => (
+                  {filteredAttempts.map((attempt, index) => (
                     <tr key={attempt.internalRegId} className="hover:bg-nexus-surface/30">
                       <td className="p-4 font-bold text-nexus-text-muted text-center border-r border-nexus-border/30">
                         {index + 1}
@@ -440,6 +551,17 @@ export default function AdminExamPage() {
                       <td className="p-4">
                         <div className="font-bold text-nexus-text">{attempt.name}</div>
                         <div className="text-[10px] text-nexus-text-muted">{attempt.registrationId}</div>
+                      </td>
+                      <td className="p-4">
+                        <span className={`px-2 py-0.5 rounded text-[10px] font-bold font-mono ${
+                          (attempt.round || 'round1_day1') === 'round1_day1' 
+                            ? 'bg-cyan-950/40 text-cyan-400 border border-cyan-500/30' 
+                            : (attempt.round || 'round1_day1') === 'round1_day2'
+                            ? 'bg-purple-950/40 text-purple-400 border border-purple-500/30'
+                            : 'bg-nexus-surface text-nexus-text-muted border border-nexus-border'
+                        }`}>
+                          {attempt.status && attempt.status !== 'not_started' ? getRoundLabel(attempt.round || 'round1_day1') : '-'}
+                        </span>
                       </td>
                       <td className="p-4">
                         <span className={`px-2 py-1 rounded-md text-[10px] font-bold ${
@@ -451,8 +573,11 @@ export default function AdminExamPage() {
                           {attempt.status ? attempt.status.toUpperCase().replace('_', ' ') : 'NOT ATTEMPTED'}
                         </span>
                       </td>
+                      <td className="p-4 font-bold text-cyan-400">
+                        {attempt.score !== null ? `${attempt.score} / ${questions.filter(q => (q.round || 'round1_day1') === (attempt.round || 'round1_day1')).length}` : '-'}
+                      </td>
                       <td className="p-4 font-bold text-yellow-400">
-                        {attempt.score !== null ? `${attempt.score} / ${questions.length}` : '-'}
+                        {attempt.round1Score !== null && attempt.round1Score !== undefined ? attempt.round1Score : '-'}
                       </td>
                       <td className="p-4 font-bold text-orange-400">
                         {attempt.round2Score !== null ? attempt.round2Score : '-'}
@@ -471,7 +596,7 @@ export default function AdminExamPage() {
                       <td className="p-4 text-right">
                         <div className="flex items-center justify-end gap-2">
                           <button
-                            onClick={() => setEditingMarks({ id: attempt.id || null, internalRegId: attempt.internalRegId, r2: attempt.round2Score !== null && attempt.round2Score !== undefined ? attempt.round2Score.toString() : '', r3: attempt.round3Score !== null && attempt.round3Score !== undefined ? attempt.round3Score.toString() : '' })}
+                            onClick={() => setEditingMarks({ id: attempt.id || null, internalRegId: attempt.internalRegId, r1: attempt.round1Score !== null && attempt.round1Score !== undefined ? attempt.round1Score.toString() : '', r2: attempt.round2Score !== null && attempt.round2Score !== undefined ? attempt.round2Score.toString() : '', r3: attempt.round3Score !== null && attempt.round3Score !== undefined ? attempt.round3Score.toString() : '' })}
                             className="px-3 py-1.5 rounded-lg bg-nexus-surface border border-nexus-border hover:bg-nexus-bg-elevated transition-colors font-bold text-[10px] flex items-center gap-1.5 text-nexus-text"
                           >
                             <Edit3 className="w-3.5 h-3.5" />
@@ -511,9 +636,22 @@ export default function AdminExamPage() {
       {editingMarks && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="bg-[#0a0a0f] border border-nexus-border rounded-2xl p-6 w-full max-w-sm space-y-4">
-            <h3 className="font-mono font-bold text-nexus-text">EDIT MANUAL MARKS</h3>
+            <h3 className="font-mono font-bold text-nexus-text">EDIT MARKS</h3>
+            <p className="text-[10px] text-nexus-text-dim font-mono">
+              If entering marks for a student who hasn&apos;t attempted the exam, their status will be changed to &quot;Completed&quot; and they won&apos;t be able to take the test.
+            </p>
             
             <div className="space-y-3">
+              <div>
+                <label className="text-xs font-mono text-nexus-text-muted mb-1 block">R1 (Manual Score)</label>
+                <input 
+                  type="number" 
+                  value={editingMarks.r1} 
+                  onChange={(e) => setEditingMarks({...editingMarks, r1: e.target.value})}
+                  className="w-full bg-nexus-surface/50 border border-nexus-border rounded-lg px-3 py-2 text-sm font-mono focus:border-yellow-500 outline-none"
+                  placeholder="Enter R1 score"
+                />
+              </div>
               <div>
                 <label className="text-xs font-mono text-nexus-text-muted mb-1 block">R2 (Understanding)</label>
                 <input 

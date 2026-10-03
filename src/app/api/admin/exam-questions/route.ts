@@ -17,14 +17,15 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   try {
     await requireAdmin();
-    const { id, questionText, options, correctOptionIndex, orderIndex } = await req.json();
+    const { id, questionText, options, correctOptionIndex, orderIndex, round } = await req.json();
 
     if (id) {
       await db.update(examQuestions).set({
         questionText,
         options,
         correctOptionIndex,
-        orderIndex
+        orderIndex,
+        round: round || 'round1_day1'
       }).where(eq(examQuestions.id, id));
     } else {
       const newId = `eq_${Date.now()}`;
@@ -33,7 +34,8 @@ export async function POST(req: NextRequest) {
         questionText,
         options,
         correctOptionIndex,
-        orderIndex
+        orderIndex,
+        round: round || 'round1_day1'
       });
     }
 
