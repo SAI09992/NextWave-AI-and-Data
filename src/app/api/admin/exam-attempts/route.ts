@@ -4,6 +4,8 @@ import { db } from '@/db';
 import { examAttempts, registrations } from '@/db/schema';
 import { eq, desc } from 'drizzle-orm';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     await requireAdmin();
