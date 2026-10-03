@@ -32,7 +32,7 @@ export default function AdminExamPage() {
   const [attempts, setAttempts] = useState<any[]>([]);
   const [loadingAttempts, setLoadingAttempts] = useState(false);
   const [unblocking, setUnblocking] = useState<string | null>(null);
-  const [editingMarks, setEditingMarks] = useState<{ id: string | null, internalRegId: string, r1: string, r2: string, r3: string } | null>(null);
+  const [editingMarks, setEditingMarks] = useState<{ id: string | null, internalRegId: string, r1d1: string, r1d2: string, r2: string, r3: string } | null>(null);
   const [savingMarks, setSavingMarks] = useState(false);
   const [attemptRoundFilter, setAttemptRoundFilter] = useState<string>('all');
 
@@ -124,7 +124,8 @@ export default function AdminExamPage() {
           attemptId: editingMarks.id,
           internalRegId: editingMarks.internalRegId,
           action: 'update_marks',
-          round1Score: editingMarks.r1,
+          score: editingMarks.r1d1,
+          r1d2Score: editingMarks.r1d2,
           round2Score: editingMarks.r2,
           round3Score: editingMarks.r3
         })
@@ -521,7 +522,8 @@ export default function AdminExamPage() {
           ) : (
             (() => {
               const total = filteredAttempts.length;
-              const r1Count = filteredAttempts.filter(a => a.score !== null || a.round1Score !== null).length;
+              const r1d1Count = filteredAttempts.filter(a => a.score !== null).length;
+              const r1d2Count = filteredAttempts.filter(a => a.r1d2Score !== null).length;
               const r2Count = filteredAttempts.filter(a => a.round2Score !== null).length;
               const r3Count = filteredAttempts.filter(a => a.round3Score !== null).length;
 
@@ -534,8 +536,8 @@ export default function AdminExamPage() {
                         <th className="p-4 font-bold">CADET / REG ID</th>
                         <th className="p-4 font-bold">ROUND</th>
                         <th className="p-4 font-bold">STATUS</th>
-                        <th className="p-4 font-bold">R1 (QUIZ/AUTO) <span className="text-cyan-500/50 text-[10px] ml-1">({filteredAttempts.filter(a => a.score !== null).length}/{total})</span></th>
-                        <th className="p-4 font-bold">R1 (MANUAL) <span className="text-yellow-500/50 text-[10px] ml-1">({filteredAttempts.filter(a => a.round1Score !== null).length}/{total})</span></th>
+                        <th className="p-4 font-bold">R1(D1) <span className="text-cyan-500/50 text-[10px] ml-1">({r1d1Count}/{total})</span></th>
+                        <th className="p-4 font-bold">R1(D2) <span className="text-purple-500/50 text-[10px] ml-1">({r1d2Count}/{total})</span></th>
                         <th className="p-4 font-bold">R2 (UNDERSTANDING) <span className="text-orange-500/50 text-[10px] ml-1">({r2Count}/{total})</span></th>
                         <th className="p-4 font-bold">R3 SCORE <span className="text-amber-500/50 text-[10px] ml-1">({r3Count}/{total})</span></th>
                         <th className="p-4 font-bold">WARNINGS</th>
@@ -574,10 +576,10 @@ export default function AdminExamPage() {
                         </span>
                       </td>
                       <td className="p-4 font-bold text-cyan-400">
-                        {attempt.score !== null ? `${attempt.score} / ${questions.filter(q => (q.round || 'round1_day1') === (attempt.round || 'round1_day1')).length}` : '-'}
+                        {attempt.score !== null ? attempt.score : '-'}
                       </td>
-                      <td className="p-4 font-bold text-yellow-400">
-                        {attempt.round1Score !== null && attempt.round1Score !== undefined ? attempt.round1Score : '-'}
+                      <td className="p-4 font-bold text-purple-400">
+                        {attempt.r1d2Score !== null && attempt.r1d2Score !== undefined ? attempt.r1d2Score : '-'}
                       </td>
                       <td className="p-4 font-bold text-orange-400">
                         {attempt.round2Score !== null ? attempt.round2Score : '-'}
@@ -596,7 +598,7 @@ export default function AdminExamPage() {
                       <td className="p-4 text-right">
                         <div className="flex items-center justify-end gap-2">
                           <button
-                            onClick={() => setEditingMarks({ id: attempt.id || null, internalRegId: attempt.internalRegId, r1: attempt.round1Score !== null && attempt.round1Score !== undefined ? attempt.round1Score.toString() : '', r2: attempt.round2Score !== null && attempt.round2Score !== undefined ? attempt.round2Score.toString() : '', r3: attempt.round3Score !== null && attempt.round3Score !== undefined ? attempt.round3Score.toString() : '' })}
+                            onClick={() => setEditingMarks({ id: attempt.id || null, internalRegId: attempt.internalRegId, r1d1: attempt.score !== null ? attempt.score.toString() : '', r1d2: attempt.r1d2Score !== null && attempt.r1d2Score !== undefined ? attempt.r1d2Score.toString() : '', r2: attempt.round2Score !== null && attempt.round2Score !== undefined ? attempt.round2Score.toString() : '', r3: attempt.round3Score !== null && attempt.round3Score !== undefined ? attempt.round3Score.toString() : '' })}
                             className="px-3 py-1.5 rounded-lg bg-nexus-surface border border-nexus-border hover:bg-nexus-bg-elevated transition-colors font-bold text-[10px] flex items-center gap-1.5 text-nexus-text"
                           >
                             <Edit3 className="w-3.5 h-3.5" />
@@ -643,13 +645,21 @@ export default function AdminExamPage() {
             
             <div className="space-y-3">
               <div>
-                <label className="text-xs font-mono text-nexus-text-muted mb-1 block">R1 (Manual Score)</label>
+                <label className="text-xs font-mono text-nexus-text-muted mb-1 block">R1(D1) Score</label>
                 <input 
                   type="number" 
-                  value={editingMarks.r1} 
-                  onChange={(e) => setEditingMarks({...editingMarks, r1: e.target.value})}
+                  value={editingMarks.r1d1} 
+                  onChange={(e) => setEditingMarks({...editingMarks, r1d1: e.target.value})}
+                  className="w-full bg-nexus-surface/50 border border-nexus-border rounded-lg px-3 py-2 text-sm font-mono focus:border-yellow-500 outline-none mb-3"
+                  placeholder="Enter R1(D1) score"
+                />
+                <label className="text-xs font-mono text-nexus-text-muted mb-1 block">R1(D2) Score</label>
+                <input 
+                  type="number" 
+                  value={editingMarks.r1d2} 
+                  onChange={(e) => setEditingMarks({...editingMarks, r1d2: e.target.value})}
                   className="w-full bg-nexus-surface/50 border border-nexus-border rounded-lg px-3 py-2 text-sm font-mono focus:border-yellow-500 outline-none"
-                  placeholder="Enter R1 score"
+                  placeholder="Enter R1(D2) score"
                 />
               </div>
               <div>

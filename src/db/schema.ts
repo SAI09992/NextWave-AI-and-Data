@@ -366,7 +366,7 @@ export const examAttempts = pgTable(
       .notNull()
       .default('not_started'),
     score: integer('score'),
-    round1Score: integer('round1_score'),
+    r1d2Score: integer('r1_d2_score'),
     warningsCount: integer('warnings_count').notNull().default(0),
     violationLogs: jsonb('violation_logs').default([]),
     answers: jsonb('answers').default({}),

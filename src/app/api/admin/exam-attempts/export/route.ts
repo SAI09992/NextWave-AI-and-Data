@@ -26,7 +26,7 @@ export async function GET() {
         roomNumber: registrations.roomNumber,
         attemptStatus: examAttempts.status,
         score: examAttempts.score,
-        round1Score: examAttempts.round1Score,
+        r1d2Score: examAttempts.r1d2Score,
         round2Score: examAttempts.round2Score,
         round3Score: examAttempts.round3Score,
         round: examAttempts.round,
@@ -50,8 +50,8 @@ export async function GET() {
       'Room Number',
       'Exam Status',
       'Round',
-      'Round 1 Score (Quiz/Auto)',
-      'Round 1 Score (Manual)',
+      'R1(D1) Score',
+      'R1(D2) Score',
       'Round 2 Score (Understanding)',
       'Round 3 Score',
       'Warnings',
@@ -73,7 +73,7 @@ export async function GET() {
       if (reg.attemptStatus) {
         status = reg.attemptStatus.toUpperCase().replace('_', ' ');
         scoreStr = reg.score !== null ? `${reg.score} / ${totalQuestions}` : 'In Progress / Terminated';
-        r1Str = reg.round1Score !== null && reg.round1Score !== undefined ? reg.round1Score.toString() : '-';
+        r1Str = reg.r1d2Score !== null && reg.r1d2Score !== undefined ? reg.r1d2Score.toString() : '-';
         r2Str = reg.round2Score !== null && reg.round2Score !== undefined ? reg.round2Score.toString() : '-';
         r3Str = reg.round3Score !== null && reg.round3Score !== undefined ? reg.round3Score.toString() : '-';
         warningsStr = reg.warningsCount?.toString() || '0';

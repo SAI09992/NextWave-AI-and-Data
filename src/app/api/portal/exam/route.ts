@@ -148,12 +148,19 @@ export async function POST(req: NextRequest) {
         }
       }
 
-      await db.update(examAttempts).set({
+      const updates: any = {
         answers: userAnswers,
-        score,
         status: 'completed',
         endedAt: new Date()
-      }).where(eq(examAttempts.id, attempt.id));
+      };
+      
+      if (activeRound === 'round1_day2') {
+        updates.r1d2Score = score;
+      } else {
+        updates.score = score;
+      }
+
+      await db.update(examAttempts).set(updates).where(eq(examAttempts.id, attempt.id));
 
       return NextResponse.json({ success: true, score });
     }
