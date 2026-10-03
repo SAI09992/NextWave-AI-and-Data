@@ -576,10 +576,10 @@ export default function AdminExamPage() {
                         </span>
                       </td>
                       <td className="p-4 font-bold text-cyan-400">
-                        {attempt.score !== null && attempt.score !== undefined && attempt.score !== '' ? attempt.score : '-'}
+                        {attempt.score !== null && attempt.score !== undefined ? attempt.score : '-'}
                       </td>
                       <td className="p-4 font-bold text-purple-400">
-                        {attempt.r1d2Score !== null && attempt.r1d2Score !== undefined && attempt.r1d2Score !== '' ? attempt.r1d2Score : '-'}
+                        {attempt.r1d2Score !== null && attempt.r1d2Score !== undefined ? attempt.r1d2Score : '-'}
                       </td>
                       <td className="p-4 font-bold text-orange-400">
                         {attempt.round2Score !== null ? attempt.round2Score : '-'}

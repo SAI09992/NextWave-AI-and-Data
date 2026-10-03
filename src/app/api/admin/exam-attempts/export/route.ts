@@ -72,10 +72,10 @@ export async function GET() {
 
       if (reg.attemptStatus) {
         status = reg.attemptStatus.toUpperCase().replace('_', ' ');
-        scoreStr = reg.score !== null && reg.score !== undefined && reg.score !== '' ? reg.score.toString() : '-';
-        r1Str = reg.r1d2Score !== null && reg.r1d2Score !== undefined && reg.r1d2Score !== '' ? reg.r1d2Score.toString() : '-';
-        r2Str = reg.round2Score !== null && reg.round2Score !== undefined && reg.round2Score !== '' ? reg.round2Score.toString() : '-';
-        r3Str = reg.round3Score !== null && reg.round3Score !== undefined && reg.round3Score !== '' ? reg.round3Score.toString() : '-';
+        scoreStr = reg.score !== null && reg.score !== undefined ? reg.score.toString() : '-';
+        r1Str = reg.r1d2Score !== null && reg.r1d2Score !== undefined ? reg.r1d2Score.toString() : '-';
+        r2Str = reg.round2Score !== null && reg.round2Score !== undefined ? reg.round2Score.toString() : '-';
+        r3Str = reg.round3Score !== null && reg.round3Score !== undefined ? reg.round3Score.toString() : '-';
         warningsStr = reg.warningsCount?.toString() || '0';
         startStr = reg.startedAt ? new Date(reg.startedAt).toLocaleString() : '';
         endStr = reg.endedAt ? new Date(reg.endedAt).toLocaleString() : '';
