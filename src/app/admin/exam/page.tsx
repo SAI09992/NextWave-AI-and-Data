@@ -576,10 +576,10 @@ export default function AdminExamPage() {
                         </span>
                       </td>
                       <td className="p-4 font-bold text-cyan-400">
-                        {attempt.score !== null ? attempt.score : '-'}
+                        {attempt.score !== null && attempt.score !== undefined && attempt.score !== '' ? attempt.score : '-'}
                       </td>
                       <td className="p-4 font-bold text-purple-400">
-                        {attempt.r1d2Score !== null && attempt.r1d2Score !== undefined ? attempt.r1d2Score : '-'}
+                        {attempt.r1d2Score !== null && attempt.r1d2Score !== undefined && attempt.r1d2Score !== '' ? attempt.r1d2Score : '-'}
                       </td>
                       <td className="p-4 font-bold text-orange-400">
                         {attempt.round2Score !== null ? attempt.round2Score : '-'}
@@ -598,7 +598,7 @@ export default function AdminExamPage() {
                       <td className="p-4 text-right">
                         <div className="flex items-center justify-end gap-2">
                           <button
-                            onClick={() => setEditingMarks({ id: attempt.id || null, internalRegId: attempt.internalRegId, r1d1: attempt.score !== null ? attempt.score.toString() : '', r1d2: attempt.r1d2Score !== null && attempt.r1d2Score !== undefined ? attempt.r1d2Score.toString() : '', r2: attempt.round2Score !== null && attempt.round2Score !== undefined ? attempt.round2Score.toString() : '', r3: attempt.round3Score !== null && attempt.round3Score !== undefined ? attempt.round3Score.toString() : '' })}
+                            onClick={() => setEditingMarks({ id: attempt.id || null, internalRegId: attempt.internalRegId, r1d1: attempt.score !== null && attempt.score !== undefined ? attempt.score.toString() : '', r1d2: attempt.r1d2Score !== null && attempt.r1d2Score !== undefined ? attempt.r1d2Score.toString() : '', r2: attempt.round2Score !== null && attempt.round2Score !== undefined ? attempt.round2Score.toString() : '', r3: attempt.round3Score !== null && attempt.round3Score !== undefined ? attempt.round3Score.toString() : '' })}
                             className="px-3 py-1.5 rounded-lg bg-nexus-surface border border-nexus-border hover:bg-nexus-bg-elevated transition-colors font-bold text-[10px] flex items-center gap-1.5 text-nexus-text"
                           >
                             <Edit3 className="w-3.5 h-3.5" />
