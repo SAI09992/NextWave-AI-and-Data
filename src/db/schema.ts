@@ -332,7 +332,6 @@ export const examSettings = pgTable('exam_settings', {
   warningLimit: integer('warning_limit').notNull().default(3),
   durationMinutes: integer('duration_minutes').notNull().default(25),
   examActive: boolean('exam_active').notNull().default(false),
-  activeTestRound: text('active_test_round').notNull().default('round1_day1'),
   updatedAt: timestamp('updated_at').notNull().defaultNow(),
 });
 
@@ -345,12 +344,10 @@ export const examQuestions = pgTable(
     options: jsonb('options').notNull(),
     correctOptionIndex: integer('correct_option_index').notNull(),
     orderIndex: integer('order_index').notNull().default(0),
-    round: text('round').notNull().default('round1_day1'),
     createdAt: timestamp('created_at').notNull().defaultNow(),
   },
   (table) => [
     index('exam_questions_order_idx').on(table.orderIndex),
-    index('exam_questions_round_idx').on(table.round),
   ]
 );
 
@@ -366,11 +363,9 @@ export const examAttempts = pgTable(
       .notNull()
       .default('not_started'),
     score: integer('score'),
-    round1Score: integer('round1_score'),
     warningsCount: integer('warnings_count').notNull().default(0),
     violationLogs: jsonb('violation_logs').default([]),
     answers: jsonb('answers').default({}),
-    round: text('round').notNull().default('round1_day1'),
     round2Score: integer('round2_score'),
     round3Score: integer('round3_score'),
     startedAt: timestamp('started_at'),

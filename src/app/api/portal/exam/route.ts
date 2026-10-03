@@ -29,7 +29,7 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ success: false, error: 'Exam is not active.' }, { status: 403 });
     }
 
-    const { warningLimit, durationMinutes, activeTestRound } = settings[0];
+    const { warningLimit, durationMinutes } = settings[0];
 
     // Get or Create Attempt
     let attempts = await db.select().from(examAttempts).where(eq(examAttempts.registrationId, reg.id)).limit(1);
@@ -41,7 +41,6 @@ export async function GET(req: NextRequest) {
         id: newAttemptId,
         registrationId: reg.id,
         status: 'in_progress',
-        round: activeTestRound,
         startedAt: new Date(),
       });
       attempts = await db.select().from(examAttempts).where(eq(examAttempts.id, newAttemptId));
@@ -53,13 +52,13 @@ export async function GET(req: NextRequest) {
     }
 
     if (attempt.status === 'not_started') {
-      await db.update(examAttempts).set({ status: 'in_progress', startedAt: new Date(), round: activeTestRound }).where(eq(examAttempts.id, attempt.id));
+      await db.update(examAttempts).set({ status: 'in_progress', startedAt: new Date() }).where(eq(examAttempts.id, attempt.id));
       attempt.status = 'in_progress';
       attempt.startedAt = new Date();
     }
 
-    // Fetch questions filtered by the active round
-    const rawQuestions = await db.select().from(examQuestions).where(eq(examQuestions.round, activeTestRound));
+    // Fetch and Jumble Questions
+    const rawQuestions = await db.select().from(examQuestions);
     
     // Jumble the questions array
     const jumbledQuestions = shuffleArray(rawQuestions).map(q => {
@@ -131,12 +130,8 @@ export async function POST(req: NextRequest) {
     if (action === 'submit_answers' || action === 'auto_submit') {
       const userAnswers = payload.answers || {}; // { questionId: selectedText }
       
-      // Get active round from settings
-      const settingsList = await db.select().from(examSettings).where(eq(examSettings.id, 'default')).limit(1);
-      const activeRound = settingsList[0]?.activeTestRound || 'round1_day1';
-      
-      // Calculate score - only count questions from the active round
-      const rawQuestions = await db.select().from(examQuestions).where(eq(examQuestions.round, activeRound));
+      // Calculate score
+      const rawQuestions = await db.select().from(examQuestions);
       let score = 0;
 
       for (const q of rawQuestions) {

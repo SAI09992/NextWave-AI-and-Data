@@ -26,10 +26,8 @@ export async function GET() {
         roomNumber: registrations.roomNumber,
         attemptStatus: examAttempts.status,
         score: examAttempts.score,
-        round1Score: examAttempts.round1Score,
         round2Score: examAttempts.round2Score,
         round3Score: examAttempts.round3Score,
-        round: examAttempts.round,
         warningsCount: examAttempts.warningsCount,
         startedAt: examAttempts.startedAt,
         endedAt: examAttempts.endedAt,
@@ -49,9 +47,7 @@ export async function GET() {
       'Hostel Name',
       'Room Number',
       'Exam Status',
-      'Round',
-      'Round 1 Score (Quiz/Auto)',
-      'Round 1 Score (Manual)',
+      'Round 1 Score (Quiz)',
       'Round 2 Score (Understanding)',
       'Round 3 Score',
       'Warnings',
@@ -62,24 +58,20 @@ export async function GET() {
     const rows = allRegistrations.map(reg => {
       let status = 'Not Attempted';
       let scoreStr = 'Not Attempted';
-      let r1Str = '-';
       let r2Str = '-';
       let r3Str = '-';
       let warningsStr = '0';
       let startStr = '';
       let endStr = '';
-      let roundStr = '-';
 
       if (reg.attemptStatus) {
         status = reg.attemptStatus.toUpperCase().replace('_', ' ');
         scoreStr = reg.score !== null ? `${reg.score} / ${totalQuestions}` : 'In Progress / Terminated';
-        r1Str = reg.round1Score !== null && reg.round1Score !== undefined ? reg.round1Score.toString() : '-';
         r2Str = reg.round2Score !== null && reg.round2Score !== undefined ? reg.round2Score.toString() : '-';
         r3Str = reg.round3Score !== null && reg.round3Score !== undefined ? reg.round3Score.toString() : '-';
         warningsStr = reg.warningsCount?.toString() || '0';
         startStr = reg.startedAt ? new Date(reg.startedAt).toLocaleString() : '';
         endStr = reg.endedAt ? new Date(reg.endedAt).toLocaleString() : '';
-        roundStr = reg.round || 'round1_day1';
       }
 
       const isHostel = reg.residenceType === 'HOSTEL';
@@ -98,9 +90,7 @@ export async function GET() {
         `"${hostelStr}"`,
         `"${roomStr}"`,
         `"${status}"`,
-        `"${roundStr}"`,
         `"${scoreStr}"`,
-        `"${r1Str}"`,
         `"${r2Str}"`,
         `"${r3Str}"`,
         `"${warningsStr}"`,
