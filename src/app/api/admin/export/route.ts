@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/db';
-import { registrations, payments, attendance } from '@/db/schema';
+import { registrations, payments, attendance, examAttempts } from '@/db/schema';
 import { requireAdmin } from '@/lib/auth';
 import { eq } from 'drizzle-orm';
 
@@ -37,9 +37,16 @@ export async function GET(req: NextRequest) {
           amount: payments.amount,
           screenshotUrl: payments.screenshotUrl,
           createdAt: registrations.createdAt,
+          score: examAttempts.score,
+          round1Score: examAttempts.round1Score,
+          r1d2Score: examAttempts.r1d2Score,
+          round2Score: examAttempts.round2Score,
+          round3Score: examAttempts.round3Score,
+          examStatus: examAttempts.status,
         })
         .from(registrations)
-        .leftJoin(payments, eq(registrations.id, payments.registrationId));
+        .leftJoin(payments, eq(registrations.id, payments.registrationId))
+        .leftJoin(examAttempts, eq(registrations.id, examAttempts.registrationId));
 
       const excelData = (records as any[]).map((r: any) => {
         let screenshot = r.screenshotUrl || '';
@@ -50,6 +57,10 @@ export async function GET(req: NextRequest) {
         }
 
         const isHostel = r.residenceType === 'HOSTEL';
+        const r1d1Val = r.score !== null && r.score !== undefined ? r.score : (r.round1Score !== null && r.round1Score !== undefined ? r.round1Score : '-');
+        const r1d2Val = r.r1d2Score !== null && r.r1d2Score !== undefined ? r.r1d2Score : '-';
+        const r2Val = r.round2Score !== null && r.round2Score !== undefined ? r.round2Score : '-';
+        const r3Val = r.round3Score !== null && r.round3Score !== undefined ? r.round3Score : '-';
 
         return {
           'Registration ID': r.registrationId || '',
@@ -73,6 +84,11 @@ export async function GET(req: NextRequest) {
           'Room Number': isHostel ? (r.roomNumber || 'N/A') : 'N/A',
           'Registration Status': (r.status || 'registered').toUpperCase(),
           'Payment Status': (r.paymentStatus || 'unpaid').toUpperCase(),
+          'Exam Status': r.examStatus ? r.examStatus.toUpperCase().replace('_', ' ') : 'NOT ATTEMPTED',
+          'R1(D1) Score': r1d1Val,
+          'R1(D2) Score': r1d2Val,
+          'Round 2 Score': r2Val,
+          'Round 3 Score': r3Val,
           'UTR': r.utr || '',
           'Amount (INR)': r.amount || 0,
           'Registered At': r.createdAt ? new Date(r.createdAt).toLocaleString() : '',

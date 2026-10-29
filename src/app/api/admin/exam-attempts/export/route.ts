@@ -26,6 +26,7 @@ export async function GET() {
         roomNumber: registrations.roomNumber,
         attemptStatus: examAttempts.status,
         score: examAttempts.score,
+        round1Score: examAttempts.round1Score,
         r1d2Score: examAttempts.r1d2Score,
         round2Score: examAttempts.round2Score,
         round3Score: examAttempts.round3Score,
@@ -70,16 +71,19 @@ export async function GET() {
       let endStr = '';
       let roundStr = '-';
 
-      if (reg.attemptStatus) {
-        status = reg.attemptStatus.toUpperCase().replace('_', ' ');
-        scoreStr = reg.score !== null && reg.score !== undefined ? reg.score.toString() : '-';
+      const r1d1Val = reg.score !== null && reg.score !== undefined ? reg.score : (reg.round1Score !== null && reg.round1Score !== undefined ? reg.round1Score : null);
+      const hasScores = r1d1Val !== null || reg.r1d2Score !== null || reg.round2Score !== null || reg.round3Score !== null;
+
+      if (reg.attemptStatus || hasScores) {
+        status = reg.attemptStatus ? reg.attemptStatus.toUpperCase().replace('_', ' ') : 'COMPLETED';
+        scoreStr = r1d1Val !== null ? r1d1Val.toString() : '-';
         r1Str = reg.r1d2Score !== null && reg.r1d2Score !== undefined ? reg.r1d2Score.toString() : '-';
         r2Str = reg.round2Score !== null && reg.round2Score !== undefined ? reg.round2Score.toString() : '-';
         r3Str = reg.round3Score !== null && reg.round3Score !== undefined ? reg.round3Score.toString() : '-';
         warningsStr = reg.warningsCount?.toString() || '0';
         startStr = reg.startedAt ? new Date(reg.startedAt).toLocaleString() : '';
         endStr = reg.endedAt ? new Date(reg.endedAt).toLocaleString() : '';
-        roundStr = reg.round || 'round1_day1';
+        roundStr = reg.round || '-';
       }
 
       const isHostel = reg.residenceType === 'HOSTEL';

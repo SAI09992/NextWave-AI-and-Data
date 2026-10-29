@@ -91,17 +91,23 @@ export default function AdminExamPage() {
   };
 
   const handleReset = async (attemptId: string) => {
-    if (!confirm('Are you sure you want to completely reset this attempt? This will delete their score and allow them to retake the exam.')) return;
+    const currentRound = settings?.activeTestRound || 'round1_day1';
+    const roundLabel = getRoundLabel(currentRound);
+    if (!confirm(`Are you sure you want to reset this attempt for ${roundLabel}? This will allow the student to retake ${roundLabel} without deleting marks from other rounds.`)) return;
     setUnblocking(attemptId);
     try {
       const res = await fetch('/api/admin/exam-attempts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ attemptId, action: 'unblock' })
+        body: JSON.stringify({ 
+          attemptId, 
+          action: 'unblock',
+          roundToReset: currentRound
+        })
       });
       const data = await res.json();
       if (data.success) {
-        toast.success('Attempt successfully reset!');
+        toast.success(`Attempt for ${roundLabel} successfully reset!`);
         fetchAttempts(); // Refresh list
       } else {
         toast.error(data.error || 'Failed to reset attempt');
@@ -207,7 +213,11 @@ export default function AdminExamPage() {
   const filteredAttempts = attemptRoundFilter === 'all'
     ? attempts
     : attemptRoundFilter === 'not_attempted'
-    ? attempts.filter(a => !a.status || a.status === 'not_started')
+    ? attempts.filter(a => (!a.status || a.status === 'not_started') && a.score === null && a.r1d2Score === null)
+    : attemptRoundFilter === 'round1_day1'
+    ? attempts.filter(a => a.score !== null || (a.round === 'round1_day1' && a.status && a.status !== 'not_started'))
+    : attemptRoundFilter === 'round1_day2'
+    ? attempts.filter(a => a.r1d2Score !== null || (a.round === 'round1_day2' && a.status && a.status !== 'not_started'))
     : attempts.filter(a => (a.round || 'round1_day1') === attemptRoundFilter);
 
   return (
@@ -495,12 +505,13 @@ export default function AdminExamPage() {
                   className="px-3 py-1.5 rounded-lg bg-nexus-surface border border-nexus-border text-nexus-text text-xs font-mono appearance-none cursor-pointer"
                 >
                   <option value="all">All ({attempts.length})</option>
-                  <option value="not_attempted">Not Attempted ({attempts.filter(a => !a.status || a.status === 'not_started').length})</option>
-                  {ROUND_OPTIONS.map(opt => (
-                    <option key={opt.value} value={opt.value}>
-                      {opt.label} ({attempts.filter(a => (a.round || 'round1_day1') === opt.value && a.status && a.status !== 'not_started').length})
-                    </option>
-                  ))}
+                  <option value="not_attempted">Not Attempted ({attempts.filter(a => (!a.status || a.status === 'not_started') && a.score === null && a.r1d2Score === null).length})</option>
+                  <option value="round1_day1">
+                    Round 1 (Day 1) ({attempts.filter(a => a.score !== null || (a.round === 'round1_day1' && a.status && a.status !== 'not_started')).length})
+                  </option>
+                  <option value="round1_day2">
+                    Round 1 (Day 2) ({attempts.filter(a => a.r1d2Score !== null || (a.round === 'round1_day2' && a.status && a.status !== 'not_started')).length})
+                  </option>
                 </select>
               </div>
               <a 
@@ -555,15 +566,23 @@ export default function AdminExamPage() {
                         <div className="text-[10px] text-nexus-text-muted">{attempt.registrationId}</div>
                       </td>
                       <td className="p-4">
-                        <span className={`px-2 py-0.5 rounded text-[10px] font-bold font-mono ${
-                          (attempt.round || 'round1_day1') === 'round1_day1' 
-                            ? 'bg-cyan-950/40 text-cyan-400 border border-cyan-500/30' 
-                            : (attempt.round || 'round1_day1') === 'round1_day2'
-                            ? 'bg-purple-950/40 text-purple-400 border border-purple-500/30'
-                            : 'bg-nexus-surface text-nexus-text-muted border border-nexus-border'
-                        }`}>
-                          {attempt.status && attempt.status !== 'not_started' ? getRoundLabel(attempt.round || 'round1_day1') : '-'}
-                        </span>
+                        <div className="flex flex-wrap gap-1">
+                          {attempt.score !== null && (
+                            <span className="px-2 py-0.5 rounded text-[10px] font-bold font-mono bg-cyan-950/40 text-cyan-400 border border-cyan-500/30">
+                              R1(D1)
+                            </span>
+                          )}
+                          {attempt.r1d2Score !== null && (
+                            <span className="px-2 py-0.5 rounded text-[10px] font-bold font-mono bg-purple-950/40 text-purple-400 border border-purple-500/30">
+                              R1(D2)
+                            </span>
+                          )}
+                          {attempt.score === null && attempt.r1d2Score === null && (
+                            <span className="px-2 py-0.5 rounded text-[10px] font-bold font-mono bg-nexus-surface text-nexus-text-muted border border-nexus-border">
+                              {attempt.status && attempt.status !== 'not_started' ? getRoundLabel(attempt.round || 'round1_day1') : '-'}
+                            </span>
+                          )}
+                        </div>
                       </td>
                       <td className="p-4">
                         <span className={`px-2 py-1 rounded-md text-[10px] font-bold ${
@@ -576,7 +595,7 @@ export default function AdminExamPage() {
                         </span>
                       </td>
                       <td className="p-4 font-bold text-cyan-400">
-                        {attempt.score !== null && attempt.score !== undefined ? attempt.score : '-'}
+                        {attempt.score !== null && attempt.score !== undefined ? attempt.score : (attempt.round1Score !== null && attempt.round1Score !== undefined ? attempt.round1Score : '-')}
                       </td>
                       <td className="p-4 font-bold text-purple-400">
                         {attempt.r1d2Score !== null && attempt.r1d2Score !== undefined ? attempt.r1d2Score : '-'}
@@ -598,7 +617,17 @@ export default function AdminExamPage() {
                       <td className="p-4 text-right">
                         <div className="flex items-center justify-end gap-2">
                           <button
-                            onClick={() => setEditingMarks({ id: attempt.id || null, internalRegId: attempt.internalRegId, r1d1: attempt.score !== null && attempt.score !== undefined ? attempt.score.toString() : '', r1d2: attempt.r1d2Score !== null && attempt.r1d2Score !== undefined ? attempt.r1d2Score.toString() : '', r2: attempt.round2Score !== null && attempt.round2Score !== undefined ? attempt.round2Score.toString() : '', r3: attempt.round3Score !== null && attempt.round3Score !== undefined ? attempt.round3Score.toString() : '' })}
+                            onClick={() => {
+                              const r1Val = attempt.score !== null && attempt.score !== undefined ? attempt.score : (attempt.round1Score !== null && attempt.round1Score !== undefined ? attempt.round1Score : null);
+                              setEditingMarks({ 
+                                id: attempt.id || null, 
+                                internalRegId: attempt.internalRegId, 
+                                r1d1: r1Val !== null ? r1Val.toString() : '', 
+                                r1d2: attempt.r1d2Score !== null && attempt.r1d2Score !== undefined ? attempt.r1d2Score.toString() : '', 
+                                r2: attempt.round2Score !== null && attempt.round2Score !== undefined ? attempt.round2Score.toString() : '', 
+                                r3: attempt.round3Score !== null && attempt.round3Score !== undefined ? attempt.round3Score.toString() : '' 
+                              });
+                            }}
                             className="px-3 py-1.5 rounded-lg bg-nexus-surface border border-nexus-border hover:bg-nexus-bg-elevated transition-colors font-bold text-[10px] flex items-center gap-1.5 text-nexus-text"
                           >
                             <Edit3 className="w-3.5 h-3.5" />

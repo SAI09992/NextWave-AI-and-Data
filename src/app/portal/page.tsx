@@ -529,55 +529,76 @@ function ExamPortalCard() {
   if (!data?.examActive) return null;
 
   const attempt = data.attempt;
+  const activeTestRound = data.activeTestRound || 'round1_day1';
+  const isDay2 = activeTestRound === 'round1_day2';
+  const activeRoundLabel = isDay2 ? 'Round 1 (Day 2)' : 'Round 1 (Day 1)';
+
+  const d1Score = attempt?.score !== null && attempt?.score !== undefined ? attempt.score : (attempt?.round1Score !== null && attempt?.round1Score !== undefined ? attempt.round1Score : null);
+  const d2Score = attempt?.r1d2Score !== null && attempt?.r1d2Score !== undefined ? attempt.r1d2Score : null;
+
+  const isCurrentRoundCompleted = isDay2 ? (d2Score !== null) : (d1Score !== null);
+  const isCurrentRoundTerminated = attempt?.status === 'terminated' && attempt?.round === activeTestRound;
+  const isCurrentRoundInProgress = attempt?.status === 'in_progress' && attempt?.round === activeTestRound;
 
   return (
-    <div className="p-6 rounded-2xl bg-yellow-950/10 backdrop-blur-md border border-yellow-500/40 space-y-4 shadow-xl">
-      <div className="flex items-center gap-4">
-        <div className="w-12 h-12 rounded-xl bg-yellow-950/60 border border-yellow-500 text-yellow-400 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(255,215,0,0.2)]">
-          <ShieldCheck className="w-6 h-6" />
+    <div className="p-6 rounded-2xl bg-yellow-950/10 backdrop-blur-md border border-yellow-500/40 space-y-5 shadow-xl">
+      <div className="flex items-center justify-between flex-wrap gap-4">
+        <div className="flex items-center gap-4">
+          <div className="w-12 h-12 rounded-xl bg-yellow-950/60 border border-yellow-500 text-yellow-400 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(255,215,0,0.2)]">
+            <ShieldCheck className="w-6 h-6" />
+          </div>
+          <div>
+            <h3 className="text-lg font-bold font-sans text-yellow-400">
+              SECURE EXAM PORTAL
+            </h3>
+            <p className="text-xs text-gray-400 mt-0.5 font-sans">
+              Active Assessment: <span className="text-yellow-300 font-bold font-mono">{activeRoundLabel}</span>
+            </p>
+          </div>
         </div>
-        <div>
-          <h3 className="text-lg font-bold font-sans text-yellow-400">
-            SECURE EXAM PORTAL
-          </h3>
-          <p className="text-xs text-gray-400 mt-0.5 font-sans">
-            The mandatory technical assessment is now active.
-          </p>
+
+        {/* Live Round Badge */}
+        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 text-xs font-mono font-bold">
+          <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+          LIVE NOW
         </div>
       </div>
-      
-      {!attempt || attempt.status === 'not_started' ? (
-        <div className="pt-2">
-          <p className="text-sm text-gray-300 font-sans mb-4">
-            You have not started your exam yet. Ensure you are in a quiet environment before proceeding.
-          </p>
-          <Link href="/portal/exam">
-            <button className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-yellow-600 hover:bg-yellow-500 text-white font-bold font-sans transition-colors w-full sm:w-auto shadow-lg shadow-yellow-500/20">
-              <ShieldCheck className="w-5 h-5" />
-              <span>START SECURE EXAM</span>
-            </button>
-          </Link>
-        </div>
-      ) : attempt.status === 'completed' ? (
-        <div className="p-4 rounded-xl bg-orange-950/20 border border-orange-500/30 text-center">
-          <div className="text-orange-400 font-bold font-sans text-sm">EXAM COMPLETED</div>
-          <div className="text-xs text-gray-500 mt-1 font-sans">Your responses have been recorded successfully.</div>
-        </div>
-      ) : attempt.status === 'terminated' ? (
+
+      {/* Action State for Current Active Round */}
+      {isCurrentRoundTerminated ? (
         <div className="p-4 rounded-xl bg-red-950/20 border border-red-500/30 text-center">
-          <div className="text-red-400 font-bold font-sans text-sm">EXAM TERMINATED</div>
-          <div className="text-xs text-gray-500 mt-1 font-sans">Your exam was blocked due to multiple anti-cheat violations.</div>
+          <div className="text-red-400 font-bold font-sans text-sm">{activeRoundLabel.toUpperCase()} TERMINATED</div>
+          <div className="text-xs text-gray-500 mt-1 font-sans">Your exam was blocked due to anti-cheat violations. Contact an event coordinator.</div>
         </div>
-      ) : (
+      ) : isCurrentRoundCompleted ? (
+        <div className="p-4 rounded-xl bg-orange-950/20 border border-orange-500/30 text-center">
+          <div className="text-orange-400 font-bold font-sans text-sm">✓ {activeRoundLabel.toUpperCase()} COMPLETED</div>
+          <div className="text-xs text-gray-500 mt-1 font-sans">
+            Your responses have been recorded successfully.
+          </div>
+        </div>
+      ) : isCurrentRoundInProgress ? (
         <div className="pt-2">
-          <div className="p-4 rounded-xl bg-amber-950/20 border border-amber-500/30 text-center mb-4">
-            <div className="text-amber-400 font-bold font-sans text-sm">EXAM IN PROGRESS</div>
-            <div className="text-xs text-gray-500 mt-1 font-sans">You left the exam before submitting! Return immediately.</div>
+          <div className="p-3.5 rounded-xl bg-amber-950/20 border border-amber-500/30 text-center mb-4">
+            <div className="text-amber-400 font-bold font-sans text-sm">{activeRoundLabel.toUpperCase()} IN PROGRESS</div>
+            <div className="text-xs text-gray-400 mt-1 font-sans">You left the exam before submitting! Return immediately.</div>
           </div>
           <Link href="/portal/exam">
             <button className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold font-sans transition-colors w-full shadow-lg shadow-amber-500/20">
               <ShieldCheck className="w-5 h-5" />
-              <span>RESUME EXAM</span>
+              <span>RESUME {activeRoundLabel.toUpperCase()}</span>
+            </button>
+          </Link>
+        </div>
+      ) : (
+        <div className="pt-1">
+          <p className="text-xs text-gray-300 font-sans mb-3">
+            {activeRoundLabel} is now open. Make sure you are in a quiet environment before starting.
+          </p>
+          <Link href="/portal/exam">
+            <button className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-yellow-600 hover:bg-yellow-500 text-white font-bold font-sans transition-colors w-full sm:w-auto shadow-lg shadow-yellow-500/20">
+              <ShieldCheck className="w-5 h-5" />
+              <span>START {activeRoundLabel.toUpperCase()}</span>
             </button>
           </Link>
         </div>

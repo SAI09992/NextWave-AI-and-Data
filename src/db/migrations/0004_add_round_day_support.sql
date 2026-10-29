@@ -7,4 +7,5 @@ ALTER TABLE exam_questions ADD COLUMN IF NOT EXISTS round TEXT NOT NULL DEFAULT 
 CREATE INDEX IF NOT EXISTS exam_questions_round_idx ON exam_questions (round);
 
 ALTER TABLE exam_attempts ADD COLUMN IF NOT EXISTS round1_score INTEGER;
+ALTER TABLE exam_attempts ADD COLUMN IF NOT EXISTS r1_d2_score INTEGER;
 ALTER TABLE exam_attempts ADD COLUMN IF NOT EXISTS round TEXT NOT NULL DEFAULT 'round1_day1';
